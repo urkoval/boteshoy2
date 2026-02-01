@@ -16,6 +16,8 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - OpenGraph/Twitter cards.
 - ~~Redirecciones 301 desde URLs antiguas (/lottery/*, /about)~~ ✅ **Hecho (2026-02-01)**
 - ~~Encabezados SEO en páginas de juego (H1/H2 descriptivos)~~ ✅ **Hecho (2026-02-01)**
+- ~~Favicon y manifest añadidos~~ ✅ **Hecho (2026-02-01)**
+- Mejorar diseño del favicon para mejor legibilidad en pestañas de Chrome.
 
 ### Contenido
 - Mejorar home con contenidos generales (guías, explicación de conceptos y enlaces internos).
