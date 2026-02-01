@@ -32,16 +32,6 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico">
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKHX0L9HGY"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-BKHX0L9HGY');
-    </script>
-    
     @stack('head')
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col">
@@ -85,5 +75,43 @@
     <footer class="bg-slate-900 text-slate-500 text-center py-6 mt-auto">
         <p class="text-sm">&copy; {{ date('Y') }} BotesHoy.com - Resultados de loterías españolas</p>
     </footer>
+    
+    <!-- Banner de cookies -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm">Usamos cookies para mejorar tu experiencia y analizar el tráfico. Al navegar aceptas nuestra política.</p>
+            <div class="flex gap-2">
+                <button onclick="acceptCookies()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition">
+                    Aceptar
+                </button>
+                <a href="/politica-cookies" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded text-sm font-medium transition">
+                    Política
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    if(!localStorage.getItem('cookies-accepted')) {
+        document.getElementById('cookie-banner').classList.remove('hidden');
+    }
+
+    function acceptCookies() {
+        localStorage.setItem('cookies-accepted', 'true');
+        document.getElementById('cookie-banner').classList.add('hidden');
+        
+        // Activar Google Analytics solo después de aceptar
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-BKHX0L9HGY');
+        
+        // Cargar el script de Google Analytics
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-BKHX0L9HGY';
+        document.head.appendChild(script);
+    }
+    </script>
 </body>
 </html>
