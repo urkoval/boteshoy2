@@ -65,20 +65,22 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
 @section('content')
 <div class="{{ $color['bg'] }} -mx-4 -mt-8 px-4 py-8 mb-8 text-white">
     <div class="container mx-auto">
-        <h1 class="text-3xl font-bold mb-2">{{ $juego->nombre }}</h1>
+        <h1 class="text-3xl font-bold mb-2">Últimos resultados de {{ $juego->nombre }}</h1>
         <p class="text-white/70">Sorteos: {{ str_replace(',', ', ', $juego->dias_sorteo) }}</p>
         <p class="text-white/70 mt-2">
-            Resultados de {{ $juego->nombre }} hoy:
             @if($latestSorteo)
-                último sorteo disponible {{ $latestFechaHuman }}. Consulta números ganadores, premios y el histórico por fechas.
+                Último sorteo disponible {{ $latestFechaHuman }}. Consulta números ganadores, premios y el histórico por fechas.
             @else
-                consulta el histórico por fechas cuando estén disponibles los sorteos.
+                Consulta el histórico por fechas cuando estén disponibles los sorteos.
             @endif
         </p>
     </div>
 </div>
 
 @if($sorteos->count() > 0)
+    <div class="container mx-auto mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Historial de sorteos</h2>
+    </div>
     <div class="space-y-3">
         @foreach($sorteos as $sorteo)
         <a href="{{ route('sorteo', [$juego->slug, $sorteo->fecha->format('Y-m-d')]) }}" 

@@ -14,14 +14,15 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - Canonical por página.
 - BreadcrumbList (schema) en página de sorteo.
 - OpenGraph/Twitter cards.
+- ~~Redirecciones 301 desde URLs antiguas (/lottery/*, /about)~~ ✅ **Hecho (2026-02-01)**
 
 ### Contenido
 - Mejorar home con contenidos generales (guías, explicación de conceptos y enlaces internos).
 
 ### Infra / Deploy
-- Revisar que el CLI de RunCloud use siempre PHP 8.2+ (evitar ejecutar artisan con PHP 7.4).
-- Migrar el proyecto publicado al dominio `boteshoy.com` y retirar/eliminar el sitio/proyecto anterior.
-- Inicializar repositorio Git y publicar en GitHub para control de versiones.
+- ~~Revisar que el CLI de RunCloud use siempre PHP 8.2+ (evitar ejecutar artisan con PHP 7.4)~~ ✅ **Hecho (2026-02-01)**
+- ~~Migrar el proyecto publicado al dominio `boteshoy.com`~~ ✅ **Hecho (2026-02-01)**
+- ~~Inicializar repositorio Git y publicar en GitHub~~ ✅ **Hecho (2026-02-01)**
 
 ## Next
 ### Juegos (pendientes)

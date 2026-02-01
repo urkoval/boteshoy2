@@ -2,6 +2,10 @@
 
 Web de resultados de loterías españolas. Muestra los últimos sorteos de Euromillones, Bonoloto, La Primitiva y El Gordo de la Primitiva.
 
+**URL producción:** https://boteshoy.com
+
+**Repositorio:** https://github.com/urkoval/boteshoy2 (privado)
+
 ## Seguimiento
 
 - [CHANGELOG.md](CHANGELOG.md)
@@ -104,24 +108,28 @@ python scraper.py
 | `/{juego}/{fecha}/` | Sorteo específico (fecha: YYYY-MM-DD) |
 | `/sitemap.xml` | Sitemap dinámico |
 
-## Deploy en RunCloud
+## Deploy en RunCloud (vía Git)
+
+El deploy se realiza mediante `git pull` desde el repositorio GitHub.
 
 ### Configuración inicial
 
 1. **Crear Empty Web App** en RunCloud
 2. **Public Path:** `/home/runcloud/webapps/NOMBRE_APP/web/public`
 3. **PHP Version:** 8.2+
+4. **Clonar el repo:**
+   ```bash
+   cd /home/runcloud/webapps/NOMBRE_APP
+   git clone https://github.com/urkoval/boteshoy2.git .
+   ```
 
-### Subir archivos (FileZilla como usuario `runcloud`)
+### Archivos no versionados (creados manualmente en servidor)
 
-```
-Local: boteshoy2/
-Remoto: /home/runcloud/webapps/NOMBRE_APP/
-```
+- `web/.env` - Configuración de Laravel (no subir a Git)
+- `web/database/database.sqlite` - Base de datos SQLite
+- `web/storage/` - Cachés y logs
 
-**No subir:** `web/vendor/`, `web/.env`
-
-### Comandos SSH post-deploy
+### Comandos SSH post-clone/inicial
 
 ```bash
 cd /home/runcloud/webapps/NOMBRE_APP/web
@@ -161,27 +169,53 @@ pip3 install -r requirements.txt
 
 Recomendación: los schedules con 3 ejecuciones (21/22/23) sirven como reintentos para capturar los premios si la fuente los publica con retraso.
 
-## Actualizar servidor
+### Actualizar servidor (deploy por Git)
 
-1. Subir archivos modificados con FileZilla (como `runcloud`)
-2. Si cambias dependencias PHP:
+1. **En tu PC local:** subir cambios a GitHub
    ```bash
-   /usr/local/lsws/lsphp82/bin/php /usr/sbin/composer install --no-dev
+   git add -A
+   git commit -m "descripción del cambio"
+   git push origin main
    ```
-3. Si cambias migraciones:
+
+2. **En el servidor (SSH):** actualizar desde GitHub
    ```bash
-   /usr/local/lsws/lsphp82/bin/php artisan migrate --force
-   ```
-4. Si cambias seeders:
-   ```bash
-   /usr/local/lsws/lsphp82/bin/php artisan db:seed --class=JuegosSeeder --force
-   ```
-5. Limpiar caché:
-   ```bash
+   cd /home/runcloud/webapps/NOMBRE_APP
+   git pull
+   cd web
    /usr/local/lsws/lsphp82/bin/php artisan view:clear
    /usr/local/lsws/lsphp82/bin/php artisan config:clear
    /usr/local/lsws/lsphp82/bin/php artisan cache:clear
    ```
+
+3. Si cambias dependencias PHP:
+   ```bash
+   /usr/local/lsws/lsphp82/bin/php /usr/sbin/composer install --no-dev --optimize-autoloader
+   ```
+
+4. Si cambias migraciones:
+   ```bash
+   /usr/local/lsws/lsphp82/bin/php artisan migrate --force
+   ```
+
+### Flujo de trabajo Git (resumen)
+
+- **Local:** trabajar → `git add` → `git commit` → `git push`
+- **Servidor:** `git pull` → limpiar cachés (view/config/cache)
+
+### Redirecciones SEO
+
+Para preservar SEO desde URLs antiguas, se han configurado redirecciones 301 en `.htaccess`:
+
+| Antigua | Nueva |
+|---------|-------|
+| `/lottery/primitiva` | `/la-primitiva` |
+| `/lottery/euromillones` | `/euromillones` |
+| `/lottery/bonoloto` | `/bonoloto` |
+| `/lottery/elgordo` | `/el-gordo` |
+| `/about` | `/` |
+
+Las reglas están en `web/public/.htaccess` y se aplican a nivel de webserver.
 
 ## Stack técnico
 
