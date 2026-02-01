@@ -1,0 +1,33 @@
+# Laravel
+/web/.env
+/web/.env.*
+/web/vendor/
+/web/node_modules/
+/web/public/hot
+/web/public/storage
+/web/storage/
+/web/bootstrap/cache/
+
+# SQLite / DB
+/web/database/*.sqlite
+/web/database/*.sqlite-journal
+
+# Logs / caches
+**/.DS_Store
+**/Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+*.swp
