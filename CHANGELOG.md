@@ -16,6 +16,7 @@ Formato inspirado en "Keep a Changelog".
 ### SEO
 - Configuradas redirecciones 301 desde URLs antiguas (`/lottery/*`, `/about`) a nuevas URLs del site.
 - Redirecciones implementadas en `.htaccess` a nivel de webserver.
+- Mejorados encabezados SEO en páginas de juego: H1 descriptivo “Últimos resultados de [Juego]” y H2 “Historial de sorteos”.
 
 ### Added
 - FAQs visibles y schema `FAQPage` en JSON-LD en páginas de juego y sorteo.

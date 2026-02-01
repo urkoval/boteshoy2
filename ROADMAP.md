@@ -15,6 +15,7 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - BreadcrumbList (schema) en página de sorteo.
 - OpenGraph/Twitter cards.
 - ~~Redirecciones 301 desde URLs antiguas (/lottery/*, /about)~~ ✅ **Hecho (2026-02-01)**
+- ~~Encabezados SEO en páginas de juego (H1/H2 descriptivos)~~ ✅ **Hecho (2026-02-01)**
 
 ### Contenido
 - Mejorar home con contenidos generales (guías, explicación de conceptos y enlaces internos).
