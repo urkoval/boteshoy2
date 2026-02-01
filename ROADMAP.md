@@ -22,6 +22,9 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 ### Contenido
 - Mejorar home con contenidos generales (guías, explicación de conceptos y enlaces internos).
 
+### Errores a corregir
+- Tabla de premios de Euromillones muestra cantidades incorrectas.
+
 ### Infra / Deploy
 - ~~Revisar que el CLI de RunCloud use siempre PHP 8.2+ (evitar ejecutar artisan con PHP 7.4)~~ ✅ **Hecho (2026-02-01)**
 - ~~Migrar el proyecto publicado al dominio `boteshoy.com`~~ ✅ **Hecho (2026-02-01)**
