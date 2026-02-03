@@ -160,6 +160,40 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
 <div class="bg-white rounded-xl shadow-lg p-6 mb-6 overflow-hidden">
     <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Tabla de Premios</h2>
     
+    @if($juego->slug === 'euromillones')
+    <!-- Tabla especial para Euromillones -->
+    <div class="overflow-x-auto -mx-6">
+        <table class="w-full text-left min-w-[500px]">
+            <thead class="{{ $color['bg'] }} text-white">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Categoría</th>
+                    <th class="px-6 py-3 font-medium text-center">Aciertos</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes Europa</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes España</th>
+                    <th class="px-6 py-3 font-medium text-right">Premio (€)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @foreach($sorteo->premios as $premio)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-center text-slate-600 font-medium">{{ $premio['aciertos'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes_europa'] ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes_espana'] ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-3 text-right font-semibold text-slate-800">
+                        @if(array_key_exists('premio', $premio) && $premio['premio'] === null)
+                            <span class="text-slate-500">Pendiente</span>
+                        @else
+                            {{ number_format($premio['premio'] ?? 0, 2, ',', '.') }}
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @else
+    <!-- Tabla normal para otros juegos -->
     <div class="overflow-x-auto -mx-6">
         <table class="w-full text-left min-w-[400px]">
             <thead class="{{ $color['bg'] }} text-white">
@@ -186,6 +220,7 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             </tbody>
         </table>
     </div>
+    @endif
 </div>
 @endif
 

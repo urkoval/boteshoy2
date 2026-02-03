@@ -163,7 +163,60 @@ class LotoluckScraper:
                 
                 for row in rows[2:]:  # Saltar encabezados
                     cells = row.find_all('td')
-                    if len(cells) >= 4:
+                    
+                    # Euromillones tiene 5 columnas: Categoria, Aciertos, Acertantes Europa, Acertantes España, Premios
+                    if self.slug == 'euromillones' and len(cells) >= 5:
+                        categoria = cells[0].get_text(strip=True)
+                        aciertos = cells[1].get_text(strip=True)
+                        acertantes_europa_text = cells[2].get_text(strip=True)
+                        acertantes_espana_text = cells[3].get_text(strip=True)
+                        premio_text = cells[4].get_text(strip=True)
+                        
+                        # Limpiar números
+                        try:
+                            acertantes_europa = int(re.sub(r'[^\d]', '', acertantes_europa_text) or 0)
+                        except:
+                            acertantes_europa = 0
+                            
+                        try:
+                            acertantes_espana = int(re.sub(r'[^\d]', '', acertantes_espana_text) or 0)
+                        except:
+                            acertantes_espana = 0
+
+                        def _parse_euro_amount(text):
+                            raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
+                            if not raw:
+                                return None
+
+                            # Formato típico ES: 1.234,56 -> 1234.56
+                            if '.' in raw and ',' in raw:
+                                raw = raw.replace('.', '').replace(',', '.')
+                            elif ',' in raw:
+                                raw = raw.replace(',', '.')
+
+                            try:
+                                return float(raw)
+                            except Exception:
+                                return None
+
+                        premio = _parse_euro_amount(premio_text)
+
+                        # Si no hay ningún dígito, probablemente es "Acumulado / Pendiente / ---".
+                        # Si hay acertantes, lo tratamos como pendiente (None). Si no hay acertantes, es 0.
+                        if not re.search(r'\d', premio_text or ''):
+                            premio = None if (acertantes_europa + acertantes_espana) > 0 else 0
+                        
+                        if categoria:
+                            premios.append({
+                                'categoria': categoria,
+                                'aciertos': aciertos,
+                                'acertantes_europa': acertantes_europa,
+                                'acertantes_espana': acertantes_espana,
+                                'premio': premio
+                            })
+                    
+                    # Para otros juegos: mantener lógica original (4 columnas)
+                    elif len(cells) >= 4:
                         categoria = cells[0].get_text(strip=True)
                         acertantes_text = cells[2].get_text(strip=True)
                         premio_text = cells[3].get_text(strip=True)
@@ -214,15 +267,18 @@ class LotoluckScraper:
         try:
             all_zero = True
             for p in premios:
-                if (p.get('acertantes') or 0) != 0:
-                    all_zero = False
-                    break
-                if (p.get('premio') or 0) != 0:
-                    all_zero = False
-                    break
+                if self.slug == 'euromillones':
+                    if (p.get('acertantes_europa') or 0) != 0 or (p.get('acertantes_espana') or 0) != 0:
+                        all_zero = False
+                        break
+                else:
+                    if (p.get('acertantes') or 0) != 0:
+                        all_zero = False
+                        break
+            
             if all_zero:
                 return None
-        except Exception:
+        except:
             pass
 
         return premios
