@@ -29,6 +29,17 @@ class Database:
             logger.error(f"Error al conectar a la base de datos: {e}")
             return False
     
+    def delete_sorteo(self, slug, fecha):
+        """Eliminar un sorteo específico"""
+        try:
+            self.cursor.execute("DELETE FROM sorteos WHERE slug = ? AND fecha = ?", (slug, fecha))
+            self.conn.commit()
+            logger.info(f"Sorteo eliminado: {slug} - {fecha}")
+            return True
+        except Exception as e:
+            logger.error(f"Error al eliminar sorteo: {e}")
+            return False
+
     def close(self):
         """Cerrar conexión"""
         if self.conn:
