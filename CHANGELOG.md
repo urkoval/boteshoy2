@@ -27,6 +27,8 @@ Formato inspirado en "Keep a Changelog".
 
 ### Fixed
 - Render incorrecto de `title`/`description` en Blade cuando se usaban secciones inline con contenido dinámico.
+- Tabla de premios de Euromillones: corregida estructura para mostrar columnas correctas (Aciertos, Acertantes Europa, Acertantes España, Premios).
+- Scraper de Euromillones: adaptado para extraer 5 columnas en lugar de 3.
 
 ### Docs
 - Añadido `view:clear` en la sección de limpieza de caché para RunCloud con PHP 8.2.
