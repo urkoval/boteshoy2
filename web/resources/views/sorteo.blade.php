@@ -208,11 +208,11 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                 @php
                     // Aciertos fijos para Bonoloto según categoría
                     $aciertosFijos = [
-                        '1a' => '6',
-                        '2a' => '5+C',
-                        '3a' => '5',
-                        '4a' => '4',
-                        '5a' => '3',
+                        '1ª' => '6',
+                        '2ª' => '5+C',
+                        '3ª' => '5',
+                        '4ª' => '4',
+                        '5ª' => '3',
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
@@ -251,12 +251,12 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     // Aciertos fijos para La Primitiva según categoría
                     $aciertosFijos = [
                         'Especial' => '6+R',
-                        '1a' => '6',
-                        '2a' => '5+C',
-                        '3a' => '5',
-                        '4a' => '4',
-                        '5a' => '3',
-                        '6a' => 'Reintegro',
+                        '1ª' => '6',
+                        '2ª' => '5+C',
+                        '3ª' => '5',
+                        '4ª' => '4',
+                        '5ª' => '3',
+                        '6ª' => 'Reintegro',
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
@@ -294,14 +294,14 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                 @php
                     // Aciertos fijos para El Gordo según categoría
                     $aciertosFijos = [
-                        '1a' => '5+1',
-                        '2a' => '5+0',
-                        '3a' => '4+1',
-                        '4a' => '4+0',
-                        '5a' => '3+1',
-                        '6a' => '3+0',
-                        '7a' => '2+1',
-                        '8a' => '2+0',
+                        '1ª' => '5+1',
+                        '2ª' => '5+0',
+                        '3ª' => '4+1',
+                        '4ª' => '4+0',
+                        '5ª' => '3+1',
+                        '6ª' => '3+0',
+                        '7ª' => '2+1',
+                        '8ª' => '2+0',
                         'Reintegro' => '0+1',
                     ];
                 @endphp
