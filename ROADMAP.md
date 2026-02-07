@@ -18,6 +18,7 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - ~~Encabezados SEO en páginas de juego (H1/H2 descriptivos)~~ ✅ **Hecho (2026-02-01)**
 - ~~Favicon y manifest añadidos~~ ✅ **Hecho (2026-02-01)**
 - ~~Google Analytics integrado~~ ✅ **Hecho (2026-02-01)**
+- ~~Columna Aciertos añadida en tablas de premios (Bonoloto, La Primitiva, El Gordo)~~ ✅ **Hecho (2026-02-07)**
 - Mejorar diseño del favicon para mejor legibilidad en pestañas de Chrome.
 
 ### Contenido
