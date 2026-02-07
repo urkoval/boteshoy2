@@ -234,6 +234,96 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             </tbody>
         </table>
     </div>
+    @elseif($juego->slug === 'la-primitiva')
+    <!-- Tabla especial para La Primitiva con Aciertos como dato fijo -->
+    <div class="overflow-x-auto -mx-6">
+        <table class="w-full text-left min-w-[450px]">
+            <thead class="{{ $color['bg'] }} text-white">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Categoría</th>
+                    <th class="px-6 py-3 font-medium text-center">Aciertos</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes</th>
+                    <th class="px-6 py-3 font-medium text-right">Premio (€)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @php
+                    // Aciertos fijos para La Primitiva según categoría
+                    $aciertosFijos = [
+                        'Especial' => '6+R',
+                        '1a' => '6',
+                        '2a' => '5+C',
+                        '3a' => '5',
+                        '4a' => '4',
+                        '5a' => '3',
+                        '6a' => 'Reintegro',
+                    ];
+                @endphp
+                @foreach($sorteo->premios as $premio)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-center text-slate-600 font-medium">
+                        {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
+                    </td>
+                    <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes'] ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-3 text-right font-semibold text-slate-800">
+                        @if(array_key_exists('premio', $premio) && $premio['premio'] === null)
+                            <span class="text-slate-500">Pendiente</span>
+                        @else
+                            {{ number_format($premio['premio'] ?? 0, 2, ',', '.') }}
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @elseif($juego->slug === 'el-gordo')
+    <!-- Tabla especial para El Gordo con Aciertos como dato fijo -->
+    <div class="overflow-x-auto -mx-6">
+        <table class="w-full text-left min-w-[450px]">
+            <thead class="{{ $color['bg'] }} text-white">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Categoría</th>
+                    <th class="px-6 py-3 font-medium text-center">Aciertos</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes</th>
+                    <th class="px-6 py-3 font-medium text-right">Premio (€)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @php
+                    // Aciertos fijos para El Gordo según categoría
+                    $aciertosFijos = [
+                        '1a' => '5+1',
+                        '2a' => '5+0',
+                        '3a' => '4+1',
+                        '4a' => '4+0',
+                        '5a' => '3+1',
+                        '6a' => '3+0',
+                        '7a' => '2+1',
+                        '8a' => '2+0',
+                        'Reintegro' => '0+1',
+                    ];
+                @endphp
+                @foreach($sorteo->premios as $premio)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-center text-slate-600 font-medium">
+                        {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
+                    </td>
+                    <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes'] ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-3 text-right font-semibold text-slate-800">
+                        @if(array_key_exists('premio', $premio) && $premio['premio'] === null)
+                            <span class="text-slate-500">Pendiente</span>
+                        @else
+                            {{ number_format($premio['premio'] ?? 0, 2, ',', '.') }}
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     @else
     <!-- Tabla normal para otros juegos -->
     <div class="overflow-x-auto -mx-6">
