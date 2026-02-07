@@ -216,8 +216,20 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
+                @php
+                    // Normalizar categoría a formato estándar para visualización
+                    $categoriaMostrar = $premio['categoria'] ?? '-';
+                    if ($categoriaMostrar === '1a') $categoriaMostrar = '1ª';
+                    elseif ($categoriaMostrar === '2a') $categoriaMostrar = '2ª';
+                    elseif ($categoriaMostrar === '3a') $categoriaMostrar = '3ª';
+                    elseif ($categoriaMostrar === '4a') $categoriaMostrar = '4ª';
+                    elseif ($categoriaMostrar === '5a') $categoriaMostrar = '5ª';
+                    elseif ($categoriaMostrar === '6a') $categoriaMostrar = '6ª';
+                    elseif ($categoriaMostrar === '7a') $categoriaMostrar = '7ª';
+                    elseif ($categoriaMostrar === '8a') $categoriaMostrar = '8ª';
+                @endphp
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-slate-700">{{ $categoriaMostrar }}</td>
                     <td class="px-6 py-3 text-center text-slate-600 font-medium">
                         {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
                     </td>
@@ -260,8 +272,20 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
+                @php
+                    // Normalizar categoría a formato estándar para visualización
+                    $categoriaMostrar = $premio['categoria'] ?? '-';
+                    if ($categoriaMostrar === '1a') $categoriaMostrar = '1ª';
+                    elseif ($categoriaMostrar === '2a') $categoriaMostrar = '2ª';
+                    elseif ($categoriaMostrar === '3a') $categoriaMostrar = '3ª';
+                    elseif ($categoriaMostrar === '4a') $categoriaMostrar = '4ª';
+                    elseif ($categoriaMostrar === '5a') $categoriaMostrar = '5ª';
+                    elseif ($categoriaMostrar === '6a') $categoriaMostrar = '6ª';
+                    elseif ($categoriaMostrar === '7a') $categoriaMostrar = '7ª';
+                    elseif ($categoriaMostrar === '8a') $categoriaMostrar = '8ª';
+                @endphp
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-slate-700">{{ $categoriaMostrar }}</td>
                     <td class="px-6 py-3 text-center text-slate-600 font-medium">
                         {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
                     </td>
@@ -306,8 +330,20 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
+                @php
+                    // Normalizar categoría a formato estándar para visualización
+                    $categoriaMostrar = $premio['categoria'] ?? '-';
+                    if ($categoriaMostrar === '1a') $categoriaMostrar = '1ª';
+                    elseif ($categoriaMostrar === '2a') $categoriaMostrar = '2ª';
+                    elseif ($categoriaMostrar === '3a') $categoriaMostrar = '3ª';
+                    elseif ($categoriaMostrar === '4a') $categoriaMostrar = '4ª';
+                    elseif ($categoriaMostrar === '5a') $categoriaMostrar = '5ª';
+                    elseif ($categoriaMostrar === '6a') $categoriaMostrar = '6ª';
+                    elseif ($categoriaMostrar === '7a') $categoriaMostrar = '7ª';
+                    elseif ($categoriaMostrar === '8a') $categoriaMostrar = '8ª';
+                @endphp
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-slate-700">{{ $categoriaMostrar }}</td>
                     <td class="px-6 py-3 text-center text-slate-600 font-medium">
                         {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
                     </td>
