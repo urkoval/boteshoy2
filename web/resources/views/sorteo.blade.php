@@ -193,7 +193,7 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
         </table>
     </div>
     @elseif($juego->slug === 'bonoloto')
-    <!-- Tabla especial para Bonoloto -->
+    <!-- Tabla especial para Bonoloto con Aciertos como dato fijo -->
     <div class="overflow-x-auto -mx-6">
         <table class="w-full text-left min-w-[450px]">
             <thead class="{{ $color['bg'] }} text-white">
@@ -205,10 +205,22 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
+                @php
+                    // Aciertos fijos para Bonoloto según categoría
+                    $aciertosFijos = [
+                        '1ª' => '6',
+                        '2ª' => '5+C',
+                        '3ª' => '5',
+                        '4ª' => '4',
+                        '5ª' => '3',
+                    ];
+                @endphp
                 @foreach($sorteo->premios as $premio)
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
-                    <td class="px-6 py-3 text-center text-slate-600 font-medium">{{ $premio['aciertos'] ?? '-' }}</td>
+                    <td class="px-6 py-3 text-center text-slate-600 font-medium">
+                        {{ $aciertosFijos[$premio['categoria']] ?? '-' }}
+                    </td>
                     <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes'] ?? 0, 0, ',', '.') }}</td>
                     <td class="px-6 py-3 text-right font-semibold text-slate-800">
                         @if(array_key_exists('premio', $premio) && $premio['premio'] === null)
