@@ -206,13 +206,13 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @php
-                    // Aciertos fijos para Bonoloto según categoría
+                    // Aciertos fijos para Bonoloto según categoría (compatible con ambos formatos)
                     $aciertosFijos = [
-                        '1ª' => '6',
-                        '2ª' => '5+C',
-                        '3ª' => '5',
-                        '4ª' => '4',
-                        '5ª' => '3',
+                        '1ª' => '6', '1a' => '6',
+                        '2ª' => '5+C', '2a' => '5+C',
+                        '3ª' => '5', '3a' => '5',
+                        '4ª' => '4', '4a' => '4',
+                        '5ª' => '3', '5a' => '3',
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
@@ -248,15 +248,15 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @php
-                    // Aciertos fijos para La Primitiva según categoría
+                    // Aciertos fijos para La Primitiva según categoría (compatible con ambos formatos)
                     $aciertosFijos = [
                         'Especial' => '6+R',
-                        '1ª' => '6',
-                        '2ª' => '5+C',
-                        '3ª' => '5',
-                        '4ª' => '4',
-                        '5ª' => '3',
-                        '6ª' => 'Reintegro',
+                        '1ª' => '6', '1a' => '6',
+                        '2ª' => '5+C', '2a' => '5+C',
+                        '3ª' => '5', '3a' => '5',
+                        '4ª' => '4', '4a' => '4',
+                        '5ª' => '3', '5a' => '3',
+                        '6ª' => 'Reintegro', '6a' => 'Reintegro',
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
@@ -292,16 +292,16 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @php
-                    // Aciertos fijos para El Gordo según categoría
+                    // Aciertos fijos para El Gordo según categoría (compatible con ambos formatos)
                     $aciertosFijos = [
-                        '1ª' => '5+1',
-                        '2ª' => '5+0',
-                        '3ª' => '4+1',
-                        '4ª' => '4+0',
-                        '5ª' => '3+1',
-                        '6ª' => '3+0',
-                        '7ª' => '2+1',
-                        '8ª' => '2+0',
+                        '1ª' => '5+1', '1a' => '5+1',
+                        '2ª' => '5+0', '2a' => '5+0',
+                        '3ª' => '4+1', '3a' => '4+1',
+                        '4ª' => '4+0', '4a' => '4+0',
+                        '5ª' => '3+1', '5a' => '3+1',
+                        '6ª' => '3+0', '6a' => '3+0',
+                        '7ª' => '2+1', '7a' => '2+1',
+                        '8ª' => '2+0', '8a' => '2+0',
                         'Reintegro' => '0+1',
                     ];
                 @endphp
