@@ -208,11 +208,11 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                 @php
                     // Aciertos fijos para Bonoloto según categoría
                     $aciertosFijos = [
-                        '1ª' => '6',
-                        '2ª' => '5+C',
-                        '3ª' => '5',
-                        '4ª' => '4',
-                        '5ª' => '3',
+                        '1a' => '6',
+                        '2a' => '5+C',
+                        '3a' => '5',
+                        '4a' => '4',
+                        '5a' => '3',
                     ];
                 @endphp
                 @foreach($sorteo->premios as $premio)
