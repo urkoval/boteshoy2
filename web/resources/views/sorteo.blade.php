@@ -88,7 +88,7 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
         </nav>
         @if($juego->slug === 'bonoloto')
             <div class="text-3xl font-bold mb-1">{{ $juego->nombre }}</div>
-            <h1 class="text-white/80 text-lg capitalize">Resultados de la Bonoloto del {{ $sorteo->fecha->translatedFormat('d \d\e F \d\e Y') }}</h1>
+            <h1 class="text-white/80 text-lg capitalize">Resultados de la Bonoloto del {{ $sorteo->fecha->translatedFormat('l, d \d\e F \d\e Y') }}</h1>
         @else
             <h1 class="text-3xl font-bold mb-1">{{ $juego->nombre }}</h1>
             <p class="text-white/80 text-lg capitalize">{{ $sorteo->fecha->translatedFormat('l, d \d\e F \d\e Y') }}</p>
