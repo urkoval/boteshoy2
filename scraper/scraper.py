@@ -215,6 +215,50 @@ class LotoluckScraper:
                                 'premio': premio
                             })
                     
+                    # El Gordo tiene 4 columnas: Categoria, Aciertos, Acertantes, Premios
+                    elif self.slug == 'el-gordo' and len(cells) >= 4:
+                        categoria = cells[0].get_text(strip=True)
+                        aciertos = cells[1].get_text(strip=True)  # 5+1, 5+0, etc.
+                        acertantes_text = cells[2].get_text(strip=True)  # número de ganadores
+                        premio_text = cells[3].get_text(strip=True)  # importe del premio
+                        
+                        # Limpiar número de acertantes
+                        try:
+                            acertantes = int(re.sub(r'[^\d]', '', acertantes_text) or 0)
+                        except:
+                            acertantes = 0
+
+                        def _parse_euro_amount(text):
+                            raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
+                            if not raw:
+                                return None
+
+                            # Formato típico ES: 1.234,56 -> 1234.56
+                            if '.' in raw and ',' in raw:
+                                raw = raw.replace('.', '').replace(',', '.')
+                            elif ',' in raw:
+                                raw = raw.replace(',', '.')
+
+                            try:
+                                return float(raw)
+                            except Exception:
+                                return None
+
+                        premio = _parse_euro_amount(premio_text)
+
+                        # Si no hay ningún dígito, probablemente es "Acumulado / Pendiente / ---".
+                        # Si hay acertantes, lo tratamos como pendiente (None). Si no hay acertantes, es 0.
+                        if not re.search(r'\d', premio_text or ''):
+                            premio = None if acertantes > 0 else 0
+                        
+                        if categoria:
+                            premios.append({
+                                'categoria': categoria,
+                                'aciertos': aciertos,
+                                'acertantes': acertantes,
+                                'premio': premio
+                            })
+                    
                     # Para otros juegos: mantener lógica original (3 columnas)
                     elif len(cells) >= 3:
                         categoria = cells[0].get_text(strip=True)
@@ -321,13 +365,27 @@ class LotoluckScraper:
         if not db.connect():
             return False
         
-        success = db.insert_sorteo(
-            slug=result['slug'],
-            fecha=result['fecha'],
-            numeros=result['numeros'],
-            complementarios=result['complementarios'],
-            premios=result['premios']
-        )
+        # Verificar si el sorteo ya existe
+        existing = db.get_sorteo(result['slug'], result['fecha'])
+        
+        if existing:
+            # Actualizar si ya existe
+            success = db.update_sorteo(
+                slug=result['slug'],
+                fecha=result['fecha'],
+                numeros=result['numeros'],
+                complementarios=result['complementarios'],
+                premios=result['premios']
+            )
+        else:
+            # Insertar si no existe
+            success = db.insert_sorteo(
+                slug=result['slug'],
+                fecha=result['fecha'],
+                numeros=result['numeros'],
+                complementarios=result['complementarios'],
+                premios=result['premios']
+            )
         
         db.close()
         return success

@@ -32,13 +32,72 @@ class Database:
     def delete_sorteo(self, slug, fecha):
         """Eliminar un sorteo específico"""
         try:
-            self.cursor.execute("DELETE FROM sorteos WHERE slug = ? AND fecha = ?", (slug, fecha))
+            # Primero obtener el juego_id desde la tabla juegos
+            self.cursor.execute("SELECT id FROM juegos WHERE slug = ?", (slug,))
+            juego_row = self.cursor.fetchone()
+            if not juego_row:
+                return False
+            
+            juego_id = juego_row[0]
+            
+            # Ahora eliminar el sorteo
+            self.cursor.execute("DELETE FROM sorteos WHERE juego_id = ? AND fecha = ?", (juego_id, fecha))
             self.conn.commit()
             logger.info(f"Sorteo eliminado: {slug} - {fecha}")
             return True
         except Exception as e:
             logger.error(f"Error al eliminar sorteo: {e}")
             return False
+
+    def update_sorteo(self, slug, fecha, numeros, complementarios, premios):
+        """Actualizar un sorteo existente"""
+        try:
+            # Primero obtener el juego_id desde la tabla juegos
+            self.cursor.execute("SELECT id FROM juegos WHERE slug = ?", (slug,))
+            juego_row = self.cursor.fetchone()
+            if not juego_row:
+                return False
+            
+            juego_id = juego_row[0]
+            
+            # Ahora actualizar el sorteo
+            self.cursor.execute("""
+                UPDATE sorteos 
+                SET numeros = ?, complementarios = ?, premios = ?, updated_at = ?
+                WHERE juego_id = ? AND fecha = ?
+            """, (
+                json.dumps(numeros),
+                json.dumps(complementarios) if complementarios else None,
+                json.dumps(premios),
+                datetime.now().isoformat(),
+                juego_id,
+                fecha
+            ))
+            self.conn.commit()
+            logger.info(f"Sorteo actualizado: {slug} - {fecha}")
+            return True
+        except Exception as e:
+            logger.error(f"Error al actualizar sorteo: {e}")
+            return False
+
+    def get_sorteo(self, slug, fecha):
+        """Obtener un sorteo específico"""
+        try:
+            # Primero obtener el juego_id desde la tabla juegos
+            self.cursor.execute("SELECT id FROM juegos WHERE slug = ?", (slug,))
+            juego_row = self.cursor.fetchone()
+            if not juego_row:
+                return None
+            
+            juego_id = juego_row[0]
+            
+            # Ahora buscar el sorteo
+            self.cursor.execute("SELECT * FROM sorteos WHERE juego_id = ? AND fecha = ?", (juego_id, fecha))
+            row = self.cursor.fetchone()
+            return row
+        except Exception as e:
+            logger.error(f"Error al obtener sorteo: {e}")
+            return None
 
     def close(self):
         """Cerrar conexión"""
