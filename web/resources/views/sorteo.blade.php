@@ -188,9 +188,14 @@ function marcarFechasDisponibles() {
                     const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dayText).padStart(2, '0')}`;
                     
                     if (fechasDisponibles.includes(fecha)) {
+                        // Destacar con recuadro de color verde
+                        day.style.backgroundColor = '#10b981';
+                        day.style.color = 'white';
+                        day.style.borderRadius = '4px';
                         day.style.fontWeight = 'bold';
-                        day.style.color = '#1f2937';
+                        day.style.border = '2px solid #059669';
                     } else {
+                        // Días sin resultados
                         day.style.opacity = '0.3';
                         day.style.cursor = 'not-allowed';
                     }
