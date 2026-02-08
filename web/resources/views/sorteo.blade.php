@@ -131,6 +131,76 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
     </div>
 </div>
 
+<script>
+// Fechas disponibles para validación
+const fechasDisponibles = @json($fechasDisponibles);
+
+function verResultadosFecha() {
+    const fechaSeleccionada = document.getElementById('fecha-selector').value;
+    if (!fechaSeleccionada) {
+        alert('Por favor, selecciona una fecha');
+        return;
+    }
+    
+    // Validar si la fecha tiene resultados disponibles
+    if (!fechasDisponibles.includes(fechaSeleccionada)) {
+        alert('No hay resultados disponibles para la fecha seleccionada. Por favor, elige una fecha marcada en negrita.');
+        return;
+    }
+    
+    // Construir URL para la fecha seleccionada
+    const url = `{{ route('juego', $juego->slug) }}/${fechaSeleccionada}`;
+    
+    // Redirigir a la página de resultados de esa fecha
+    window.location.href = url;
+}
+
+// Manejar tecla Enter en el input de fecha
+document.getElementById('fecha-selector').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        verResultadosFecha();
+    }
+});
+
+// Marcar fechas disponibles en negrita cuando se abre el calendario
+document.getElementById('fecha-selector').addEventListener('focus', function() {
+    marcarFechasDisponibles();
+});
+
+document.getElementById('fecha-selector').addEventListener('click', function() {
+    marcarFechasDisponibles();
+});
+
+function marcarFechasDisponibles() {
+    // Pequeño retraso para asegurar que el calendario se ha abierto
+    setTimeout(() => {
+        const calendar = document.querySelector('input[type="date"]');
+        if (calendar && calendar.shadowRoot) {
+            // Para navegadores que usan shadow DOM
+            const days = calendar.shadowRoot.querySelectorAll('td');
+            days.forEach(day => {
+                const dayText = day.textContent.trim();
+                if (dayText && !isNaN(dayText)) {
+                    const currentMonth = calendar.value ? new Date(calendar.value).getMonth() : new Date().getMonth();
+                    const currentYear = calendar.value ? new Date(calendar.value).getFullYear() : new Date().getFullYear();
+                    
+                    // Construir fecha en formato YYYY-MM-DD
+                    const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dayText).padStart(2, '0')}`;
+                    
+                    if (fechasDisponibles.includes(fecha)) {
+                        day.style.fontWeight = 'bold';
+                        day.style.color = '#1f2937';
+                    } else {
+                        day.style.opacity = '0.3';
+                        day.style.cursor = 'not-allowed';
+                    }
+                }
+            });
+        }
+    }, 100);
+}
+</script>
+
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
     <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Combinación Ganadora</h2>
     
@@ -468,28 +538,4 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
         </details>
     </div>
 </section>
-
-<script>
-function verResultadosFecha() {
-    const fechaSeleccionada = document.getElementById('fecha-selector').value;
-    if (!fechaSeleccionada) {
-        alert('Por favor, selecciona una fecha');
-        return;
-    }
-    
-    // Construir URL para la fecha seleccionada
-    const url = `{{ route('juego', $juego->slug) }}/${fechaSeleccionada}`;
-    
-    // Redirigir a la página de resultados de esa fecha
-    window.location.href = url;
-}
-
-// Manejar tecla Enter en el input de fecha
-document.getElementById('fecha-selector').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        verResultadosFecha();
-    }
-});
-</script>
-
 @endsection

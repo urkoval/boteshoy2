@@ -22,6 +22,16 @@ class JuegoController extends Controller
             ->where('fecha', $fecha)
             ->firstOrFail();
         
-        return view('sorteo', compact('juego', 'sorteo'));
+        // Obtener fechas disponibles para el calendario
+        $fechasDisponibles = $juego->sorteos()
+            ->where('fecha', '>=', now()->copy()->subYears(2))
+            ->where('fecha', '<=', now())
+            ->pluck('fecha')
+            ->map(function($fecha) {
+                return $fecha->format('Y-m-d');
+            })
+            ->toArray();
+        
+        return view('sorteo', compact('juego', 'sorteo', 'fechasDisponibles'));
     }
 }
