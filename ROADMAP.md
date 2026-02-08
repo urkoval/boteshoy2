@@ -26,6 +26,7 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 
 ### Errores a corregir
 - ~~Tabla de premios de Euromillones muestra cantidades incorrectas~~ ✅ **Resuelto (2026-02-03)**
+- ~~Scraping de El Gordo intercambia columnas (aciertos ↔ acertantes, acertantes ↔ premios)~~ ✅ **Resuelto (2026-02-09)**
 - Nota: Sorteo del 27/01/2026 falló en actualización, dejar pendiente para revisión manual.
 
 ### Infra / Deploy
