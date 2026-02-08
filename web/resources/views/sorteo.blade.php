@@ -86,13 +86,8 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
             <span class="mx-2">›</span>
             <span class="text-white">{{ $sorteo->fecha->format('d/m/Y') }}</span>
         </nav>
-        @if($juego->slug === 'bonoloto')
-            <div class="text-3xl font-bold mb-1">{{ $juego->nombre }}</div>
-            <h1 class="text-white/80 text-lg capitalize">Resultados de la Bonoloto del {{ $sorteo->fecha->translatedFormat('l, d \d\e F \d\e Y') }}</h1>
-        @else
-            <h1 class="text-3xl font-bold mb-1">{{ $juego->nombre }}</h1>
-            <p class="text-white/80 text-lg capitalize">{{ $sorteo->fecha->translatedFormat('l, d \d\e F \d\e Y') }}</p>
-        @endif
+        <div class="text-3xl font-bold mb-1">{{ $juego->nombre }}</div>
+        <h1 class="text-white/80 text-lg capitalize">Resultados de {{ $juego->nombre }} del {{ $sorteo->fecha->translatedFormat('l, d \d\e F \d\e Y') }}</h1>
         <p class="text-white/70 mt-2">
             Resultado de {{ $juego->nombre }} hoy: último sorteo disponible del {{ $sorteo->fecha->format('d/m/Y') }}. Consulta combinación ganadora, premios y acertantes.
         </p>
