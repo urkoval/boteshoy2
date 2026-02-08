@@ -144,7 +144,7 @@ function verResultadosFecha() {
     
     // Validar si la fecha tiene resultados disponibles
     if (!fechasDisponibles.includes(fechaSeleccionada)) {
-        alert('No hay resultados disponibles para la fecha seleccionada. Por favor, elige una fecha marcada en negrita.');
+        alert('No hay resultados disponibles para la fecha seleccionada. Por favor, elige otra fecha.');
         return;
     }
     
@@ -161,111 +161,6 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
         verResultadosFecha();
     }
 });
-
-// Marcar fechas disponibles en negrita cuando se abre el calendario
-document.getElementById('fecha-selector').addEventListener('focus', function() {
-    marcarFechasDisponibles();
-});
-
-document.getElementById('fecha-selector').addEventListener('click', function() {
-    marcarFechasDisponibles();
-});
-
-function marcarFechasDisponibles() {
-    // Pequeño retraso para asegurar que el calendario se ha abierto
-    setTimeout(() => {
-        const calendar = document.querySelector('input[type="date"]');
-        
-        // Método 1: Intentar con shadow DOM (Chrome/Safari)
-        if (calendar && calendar.shadowRoot) {
-            const days = calendar.shadowRoot.querySelectorAll('td');
-            days.forEach(day => {
-                const dayText = day.textContent.trim();
-                if (dayText && !isNaN(dayText)) {
-                    const currentMonth = calendar.value ? new Date(calendar.value).getMonth() : new Date().getMonth();
-                    const currentYear = calendar.value ? new Date(calendar.value).getFullYear() : new Date().getFullYear();
-                    
-                    // Construir fecha en formato YYYY-MM-DD
-                    const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dayText).padStart(2, '0')}`;
-                    
-                    if (fechasDisponibles.includes(fecha)) {
-                        // Destacar con recuadro de color verde
-                        day.style.backgroundColor = '#10b981';
-                        day.style.color = 'white';
-                        day.style.borderRadius = '4px';
-                        day.style.fontWeight = 'bold';
-                        day.style.border = '2px solid #059669';
-                    } else {
-                        // Días sin resultados
-                        day.style.opacity = '0.3';
-                        day.style.cursor = 'not-allowed';
-                    }
-                }
-            });
-        }
-        
-        // Método 2: Intentar con WebKit (Chrome antiguo)
-        if (calendar && calendar.webkitShadowRoot) {
-            const days = calendar.webkitShadowRoot.querySelectorAll('td');
-            days.forEach(day => {
-                const dayText = day.textContent.trim();
-                if (dayText && !isNaN(dayText)) {
-                    const currentMonth = calendar.value ? new Date(calendar.value).getMonth() : new Date().getMonth();
-                    const currentYear = calendar.value ? new Date(calendar.value).getFullYear() : new Date().getFullYear();
-                    
-                    const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dayText).padStart(2, '0')}`;
-                    
-                    if (fechasDisponibles.includes(fecha)) {
-                        day.style.backgroundColor = '#10b981';
-                        day.style.color = 'white';
-                        day.style.borderRadius = '4px';
-                        day.style.fontWeight = 'bold';
-                        day.style.border = '2px solid #059669';
-                    } else {
-                        day.style.opacity = '0.3';
-                        day.style.cursor = 'not-allowed';
-                    }
-                }
-            });
-        }
-        
-        // Método 3: Intentar con pseudo-elementos (Firefox)
-        // Esto es más limitado, pero al menos podemos mostrar información
-        const style = document.createElement('style');
-        style.textContent = `
-            input[type="date"]::-webkit-calendar-picker-indicator {
-                background: #10b981;
-                border-radius: 4px;
-                padding: 2px;
-                cursor: pointer;
-            }
-        `;
-        
-        if (!document.querySelector('style[data-calendar-style]')) {
-            style.setAttribute('data-calendar-style', 'true');
-            document.head.appendChild(style);
-        }
-        
-        // Método 4: Mostrar ayuda visual adicional
-        const helpText = document.createElement('div');
-        helpText.className = 'text-xs text-slate-500 mt-2';
-        helpText.innerHTML = '💡 <strong>Días disponibles:</strong> ' + 
-            fechasDisponibles.slice(-5).map(fecha => {
-                const date = new Date(fecha);
-                return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-            }).join(', ') + '...';
-        
-        // Reemplazar ayuda existente si hay
-        const existingHelp = document.querySelector('.calendar-help');
-        if (existingHelp) {
-            existingHelp.replaceWith(helpText);
-        } else {
-            helpText.className = 'calendar-help text-xs text-slate-500 mt-2';
-            document.querySelector('.bg-white.rounded-xl.shadow-lg.p-6.mb-6').appendChild(helpText);
-        }
-        
-    }, 100);
-}
 </script>
 
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
