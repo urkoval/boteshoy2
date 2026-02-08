@@ -107,25 +107,27 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
 
 <!-- Selector de calendario -->
 <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
             <label for="fecha-selector" class="text-sm font-medium text-slate-700">Ver resultados de otra fecha:</label>
-            <input 
-                type="date" 
-                id="fecha-selector" 
-                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                value="{{ $sorteo->fecha->format('Y-m-d') }}"
-                min="{{ $sorteo->fecha->copy()->subYears(2)->format('Y-m-d') }}"
-                max="{{ now()->format('Y-m-d') }}"
-            >
-            <button 
-                onclick="verResultadosFecha()" 
-                class="px-4 py-2 {{ $color['bg'] }} text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
-            >
-                Ver resultados
-            </button>
+            <div class="flex items-center gap-2">
+                <input 
+                    type="date" 
+                    id="fecha-selector" 
+                    class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    value="{{ $sorteo->fecha->format('Y-m-d') }}"
+                    min="{{ $sorteo->fecha->copy()->subYears(2)->format('Y-m-d') }}"
+                    max="{{ now()->format('Y-m-d') }}"
+                >
+                <button 
+                    onclick="verResultadosFecha()" 
+                    class="px-4 py-2 {{ $color['bg'] }} text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium whitespace-nowrap"
+                >
+                    Ver resultados
+                </button>
+            </div>
         </div>
-        <div class="text-xs text-slate-500">
+        <div class="text-xs text-slate-500 sm:text-right">
             Fechas disponibles hasta {{ now()->format('d/m/Y') }}
         </div>
     </div>
