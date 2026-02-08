@@ -105,6 +105,32 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
     </div>
 </div>
 
+<!-- Selector de calendario -->
+<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <label for="fecha-selector" class="text-sm font-medium text-slate-700">Ver resultados de otra fecha:</label>
+            <input 
+                type="date" 
+                id="fecha-selector" 
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                value="{{ $sorteo->fecha->format('Y-m-d') }}"
+                min="{{ $sorteo->fecha->copy()->subYears(2)->format('Y-m-d') }}"
+                max="{{ now()->format('Y-m-d') }}"
+            >
+            <button 
+                onclick="verResultadosFecha()" 
+                class="px-4 py-2 {{ $color['bg'] }} text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+            >
+                Ver resultados
+            </button>
+        </div>
+        <div class="text-xs text-slate-500">
+            Fechas disponibles hasta {{ now()->format('d/m/Y') }}
+        </div>
+    </div>
+</div>
+
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
     <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Combinación Ganadora</h2>
     
@@ -442,4 +468,28 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
         </details>
     </div>
 </section>
+
+<script>
+function verResultadosFecha() {
+    const fechaSeleccionada = document.getElementById('fecha-selector').value;
+    if (!fechaSeleccionada) {
+        alert('Por favor, selecciona una fecha');
+        return;
+    }
+    
+    // Construir URL para la fecha seleccionada
+    const url = `{{ route('juego', $juego->slug) }}/${fechaSeleccionada}`;
+    
+    // Redirigir a la página de resultados de esa fecha
+    window.location.href = url;
+}
+
+// Manejar tecla Enter en el input de fecha
+document.getElementById('fecha-selector').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        verResultadosFecha();
+    }
+});
+</script>
+
 @endsection
