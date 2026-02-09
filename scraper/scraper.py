@@ -259,6 +259,50 @@ class LotoluckScraper:
                                 'premio': premio
                             })
                     
+                    # La Primitiva tiene 4 columnas: Categoria, Aciertos, Acertantes, Premios
+                    elif self.slug == 'la-primitiva' and len(cells) >= 4:
+                        categoria = cells[0].get_text(strip=True)
+                        aciertos = cells[1].get_text(strip=True)  # 6+R, 6, 5+C, 5, 4, 3
+                        acertantes_text = cells[2].get_text(strip=True)  # número de ganadores
+                        premio_text = cells[3].get_text(strip=True)  # importe del premio
+                        
+                        # Limpiar número de acertantes
+                        try:
+                            acertantes = int(re.sub(r'[^\d]', '', acertantes_text) or 0)
+                        except:
+                            acertantes = 0
+
+                        def _parse_euro_amount(text):
+                            raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
+                            if not raw:
+                                return None
+
+                            # Formato típico ES: 1.234,56 -> 1234.56
+                            if '.' in raw and ',' in raw:
+                                raw = raw.replace('.', '').replace(',', '.')
+                            elif ',' in raw:
+                                raw = raw.replace(',', '.')
+
+                            try:
+                                return float(raw)
+                            except Exception:
+                                return None
+
+                        premio = _parse_euro_amount(premio_text)
+
+                        # Si no hay ningún dígito, probablemente es "Acumulado / Pendiente / ---".
+                        # Si hay acertantes, lo tratamos como pendiente (None). Si no hay acertantes, es 0.
+                        if not re.search(r'\d', premio_text or ''):
+                            premio = None if acertantes > 0 else 0
+                        
+                        if categoria:
+                            premios.append({
+                                'categoria': categoria,
+                                'aciertos': aciertos,
+                                'acertantes': acertantes,
+                                'premio': premio
+                            })
+                    
                     # Para otros juegos: mantener lógica original (3 columnas)
                     elif len(cells) >= 3:
                         categoria = cells[0].get_text(strip=True)
