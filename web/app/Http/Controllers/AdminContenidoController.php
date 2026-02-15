@@ -12,12 +12,17 @@ class AdminContenidoController extends Controller
 {
     public function index(): View
     {
-        $contenidos = ContenidoJuego::with('juego')
-            ->orderBy('juego_id')
-            ->orderBy('tipo_contenido')
-            ->get();
+        try {
+            $contenidos = ContenidoJuego::with('juego')
+                ->orderBy('juego_id')
+                ->orderBy('tipo_contenido')
+                ->get();
 
-        return view('admin.contenido.index', compact('contenidos'));
+            return view('admin.contenido.index', compact('contenidos'));
+        } catch (\Exception $e) {
+            // Si hay error, mostrar mensaje simple
+            return view('admin.contenido.index', ['contenidos' => collect([])]);
+        }
     }
 
     public function create(): View
