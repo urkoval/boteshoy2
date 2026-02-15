@@ -106,7 +106,53 @@ python scraper.py
 | `/` | Home con últimos resultados |
 | `/{juego}/` | Histórico de un juego |
 | `/{juego}/{fecha}/` | Sorteo específico (fecha: YYYY-MM-DD) |
+| `/{juego}/guia` | Guía del juego |
+| `/{juego}/apuestas-multiples` | Info de apuestas múltiples |
+| `/{juego}/apuestas-reducidas` | Info de apuestas reducidas |
+| `/{juego}/combinacion-ganadora` | Info de combinación ganadora |
 | `/sitemap.xml` | Sitemap dinámico |
+| `/admin/contenido` | CMS de contenido (protegido) |
+
+## CMS de Contenido
+
+Panel de administración para gestionar contenido SEO específico por juego.
+
+### Acceso
+
+El CMS está protegido con una clave secreta. Para acceder:
+
+```
+https://boteshoy.com/admin/contenido?key=TU_CLAVE_SECRETA
+```
+
+La clave se configura en `.env`:
+```
+ADMIN_KEY=tu-clave-secreta-aqui
+```
+
+**Clave por defecto (cambiar en producción):** `boteshoy-admin-2024`
+
+### Funcionalidades
+
+- **Listar contenidos:** `/admin/contenido`
+- **Crear contenido:** `/admin/contenido/create`
+- **Editar contenido:** `/admin/contenido/{id}/edit`
+- **Activar/desactivar:** Toggle de estado activo
+
+### Tipos de contenido
+
+| Tipo | Descripción |
+|------|-------------|
+| `apuestas_multiples` | Información sobre apuestas múltiples |
+| `apuestas_reducidas` | Información sobre apuestas reducidas |
+| `combinacion_ganadora` | Información sobre combinación ganadora |
+
+### Seguridad
+
+- La clave se pasa por URL solo la primera vez
+- Se guarda en sesión para navegación posterior
+- Sin clave válida, devuelve 404 (oculta existencia del panel)
+- **Recomendación:** Usar clave larga y compleja en producción
 
 ## Deploy en RunCloud (vía Git)
 
