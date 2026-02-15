@@ -608,12 +608,26 @@ def scrape_botes():
         if not fecha_iso or bote_int is None:
             continue
 
-        found[name_to_slug[nombre_key]] = {
-            'fecha_sorteo': fecha_iso,
-            'bote_eur': bote_int,
-            'nombre': nombre_txt,
-            'bote_raw': bote_txt,
-        }
+        # Si ya existe un bote para este juego, quedarse con el de fecha más cercana
+        slug = name_to_slug[nombre_key]
+        if slug in found:
+            existing_fecha = found[slug]['fecha_sorteo']
+            if fecha_iso < existing_fecha:
+                # El nuevo es más cercano, reemplazar
+                found[slug] = {
+                    'fecha_sorteo': fecha_iso,
+                    'bote_eur': bote_int,
+                    'nombre': nombre_txt,
+                    'bote_raw': bote_txt,
+                }
+            # Si no, mantener el existente (más cercano)
+        else:
+            found[slug] = {
+                'fecha_sorteo': fecha_iso,
+                'bote_eur': bote_int,
+                'nombre': nombre_txt,
+                'bote_raw': bote_txt,
+            }
 
     if not found:
         logger.error("No se encontraron botes en la página")
