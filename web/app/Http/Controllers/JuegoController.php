@@ -15,6 +15,13 @@ class JuegoController extends Controller
         return view('juego', compact('juego', 'sorteos'));
     }
 
+    public function guia(string $slug)
+    {
+        $juego = Juego::where('slug', $slug)->firstOrFail();
+        
+        return view('juego-guia', compact('juego'));
+    }
+
     public function sorteo(string $slug, string $fecha)
     {
         $juego = Juego::where('slug', $slug)->firstOrFail();
@@ -33,5 +40,48 @@ class JuegoController extends Controller
             ->toArray();
         
         return view('sorteo', compact('juego', 'sorteo', 'fechasDisponibles'));
+    }
+
+    public function apuestasMultiples(string $slug)
+    {
+        $juego = Juego::where('slug', $slug)->firstOrFail();
+        
+        // Buscar contenido en CMS
+        $contenido = $juego->contenidos()
+            ->porTipo('apuestas_multiples')
+            ->activos()
+            ->first();
+        
+        return view('juego-apuestas-multiples', compact('juego', 'contenido'));
+    }
+
+    public function apuestasReducidas(string $slug)
+    {
+        $juego = Juego::where('slug', $slug)->firstOrFail();
+        
+        // Buscar contenido en CMS
+        $contenido = $juego->contenidos()
+            ->porTipo('apuestas_reducidas')
+            ->activos()
+            ->first();
+        
+        return view('juego-apuestas-reducidas', compact('juego', 'contenido'));
+    }
+
+    public function combinacionGanadora(string $slug)
+    {
+        $juego = Juego::where('slug', $slug)->firstOrFail();
+        
+        // Buscar contenido en CMS
+        $contenido = $juego->contenidos()
+            ->porTipo('combinacion_ganadora')
+            ->activos()
+            ->first();
+        
+        $ultimoSorteo = $juego->sorteos()
+            ->orderBy('fecha', 'desc')
+            ->first();
+            
+        return view('juego-combinacion-ganadora', compact('juego', 'contenido', 'ultimoSorteo'));
     }
 }

@@ -113,5 +113,10 @@
         document.head.appendChild(script);
     }
     </script>
+    
+    <!-- TinyMCE para admin -->
+    @if(request()->is('admin/*'))
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    @endif
 </body>
 </html>

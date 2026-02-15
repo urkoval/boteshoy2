@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Juego extends Model
 {
@@ -16,5 +17,10 @@ class Juego extends Model
     public function ultimoSorteo()
     {
         return $this->hasOne(Sorteo::class)->latestOfMany('fecha');
+    }
+
+    public function contenidos(): HasMany
+    {
+        return $this->hasMany(ContenidoJuego::class);
     }
 }
