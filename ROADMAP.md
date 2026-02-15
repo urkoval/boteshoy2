@@ -52,6 +52,16 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - Revisar navegación e indexación del histórico: paginación, enlazado interno y relevancia de sorteos caducados (sin eliminar URLs).
 
 ## Later
+### Monetización
+- **Enlaces a vendedores de lotería:**
+  - Inspiración: lotoluck.com/botes muestra varios botes con enlaces a vendedores/socios
+  - Implementar sección de botes con enlaces de afiliados
+  - Cada bote con enlace a:
+    - Administraciones de lotería online
+    - Plataformas de compra de lotería
+    - Web oficial del usuario (administración de lotería propia)
+  - Objetivo: monetizar con ads o generar tráfico a la administración de lotería propia
+
 ### Juegos (pendientes)
 - Quíntuple Plus.
 - Lototurf.
