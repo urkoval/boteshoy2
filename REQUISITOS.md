@@ -20,11 +20,12 @@ Web de resultados de loterías españolas. Objetivo: posicionar en búsquedas de
 
 ### 2.2 Páginas
 
-| Ruta | Contenido |
-|------|-----------|
-| `/` | Home con últimos resultados de todos los juegos |
-| `/{juego}/` | Último resultado + listado histórico paginado |
-| `/{juego}/{fecha}/` | Resultado específico (ej: `/bonoloto/2025-01-17/`) |
+| Ruta | Contenido | Intención de Búsqueda |
+|------|-----------|----------------------|
+| `/` | Home con últimos resultados de todos los juegos | Consulta multi-juego |
+| `/{juego}/` | Último resultado + listado histórico paginado | Consulta resultados |
+| `/{juego}/{fecha}/` | Resultado específico (ej: `/bonoloto/2025-01-17/`) | Consulta sorteo específico |
+| `/{juego}/guia` | Guía completa del juego (cómo jugar, reglas, premios) | Aprender a jugar |
 
 ### 2.3 Datos por sorteo
 - Fecha del sorteo
@@ -109,10 +110,13 @@ Web de resultados de loterías españolas. Objetivo: posicionar en búsquedas de
 
 ## 6. SEO
 
+**PRINCIPIO FUNDAMENTAL:** Cada página debe responder a UNA ÚNICA intención de búsqueda. Este principio debe guiar todas las decisiones de desarrollo y estructura de contenido. Una página no puede rankear bien para dos intenciones diferentes.
+
 ### 6.1 Títulos (ejemplos)
 - Home: "Resultados Loterías España Hoy | Boteshoy"
-- Juego: "Resultados Bonoloto Hoy | Último Sorteo y Premios"
+- Juego (resultados): "Resultados Bonoloto Hoy | Último Sorteo y Premios"
 - Sorteo: "Resultado Bonoloto 17 enero 2025 | Números y Premios"
+- Guía: "Cómo se juega a Bonoloto | Guía Completa 2026”
 
 ### 6.2 URLs
 - Limpias, sin IDs
@@ -122,6 +126,25 @@ Web de resultados de loterías españolas. Objetivo: posicionar en búsquedas de
 ### 6.3 Sitemap
 - Autogenerado con todas las URLs de sorteos
 - Actualizado tras cada scraping
+
+### 6.4 Mapeo de URLs e Intenciones de Búsqueda
+
+Cada URL debe tener claramente definida su intención de búsqueda principal y el tipo de contenido que ofrece.
+
+| URL | Intención de Búsqueda | Finalidad | Contenido Principal |
+|-----|----------------------|-----------|---------------------|
+| `/` | "resultados loterías hoy" | Consulta rápida multi-juego | Últimos resultados de todos los juegos + botes destacados |
+| `/{juego}/` | "resultados {juego} hoy" | Consulta resultados específicos | Último resultado destacado + histórico paginado |
+| `/{juego}/{fecha}/` | "resultado {juego} {fecha}" | Consulta resultado específico | Números ganadores, premios, localidades del sorteo |
+| `/{juego}/guia` | "cómo se juega {juego}" | Hub completo informativo | Reglas básicas, conceptos, premios, probabilidades, horarios, FAQs |
+| `/{juego}/apuestas-multiples` | "apuestas múltiples {juego}" | Info jugadas avanzadas | Qué son, costes, tabla de combinaciones, ventajas, ejemplos |
+| `/{juego}/apuestas-reducidas` | "apuestas reducidas {juego}" | Sistemas optimizados | Concepto, garantías, comparación, dónde hacerlas |
+| `/{juego}/combinacion-ganadora` | "combinación ganadora {juego}" | Comprobar boleto | Qué es, cómo comprobar, dónde ver, qué hacer si ganas |
+
+**Criterios de separación:**
+- **Consultar datos:** → Páginas de resultados (mostrar números, premios, fechas)
+- **Aprender/Informarse:** → Páginas de guía (explicar reglas, conceptos, cómo jugar)
+- **Comparar/Elegir:** → Contenido general (futuro: comparativas entre juegos)
 
 ---
 

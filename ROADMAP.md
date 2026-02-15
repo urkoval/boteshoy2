@@ -56,5 +56,27 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - Quíntuple Plus.
 - Lototurf.
 
+### Contenido SEO (propuestas)
+- **Artículos de long-tail por juego:**
+  - "Números más frecuentes Euromillones 2025"
+  - "Cómo ganar en Bonoloto: estadísticas y consejos"
+  - "Historial de premios La Primitiva últimos 5 años"
+  - "El Gordo de la Primitiva: números clave históricos"
+- **Guías completas:**
+  - "Guía completa de loterías españolas 2025"
+  - "Cómo reclamar premios de lotería paso a paso"
+  - "Impuestos en premios de lotería: todo lo que necesitas saber"
+  - "Caducidad de premios: fechas y plazos por juego"
+- **Contenido estadístico:**
+  - "Análisis de frecuencia de números por sorteo"
+  - "Combinaciones menos probables en Euromillones"
+  - "Estadísticas históricas de botes acumulados"
+  - "Patrones de sorteo por día de la semana"
+- **Comparativas y rankings:**
+  - "Qué lotería tiene mejores probabilidades de ganar"
+  - "Comparación de costes vs premios por juego"
+  - "Ranking de botes más grandes de la historia"
+  - "Loterías más rentables según estadísticas"
+
 - Páginas de guía (cómo jugar, probabilidades, qué es reintegro/estrellas/número clave).
 - Alertas/monitoring: detectar cuando no se actualiza la fuente.
