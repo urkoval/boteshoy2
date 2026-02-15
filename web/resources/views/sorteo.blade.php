@@ -472,6 +472,86 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
     </a>
 </div>
 
+<!-- Enlaces estratégicos adicionales -->
+<div class="mt-6 bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200">
+    <h3 class="text-lg font-bold text-slate-800 mb-4">Explora más contenido</h3>
+    
+    <div class="grid gap-4 md:grid-cols-2">
+        <!-- Enlaces a guía del juego -->
+        <div>
+            <h4 class="font-semibold text-slate-700 mb-2">Guía de {{ $juego->nombre }}</h4>
+            <a href="{{ route('juego.guia', $juego->slug) }}" class="text-blue-600 hover:underline text-sm">
+                → Cómo jugar, premios y probabilidades
+            </a>
+        </div>
+        
+        <!-- Enlaces a conceptos según juego -->
+        <div>
+            <h4 class="font-semibold text-slate-700 mb-2">Conceptos básicos</h4>
+            @switch($juego->slug)
+                @case('euromillones')
+                    <a href="/#que-son-estrellas" class="text-blue-600 hover:underline text-sm block">
+                        → Qué son las estrellas
+                    </a>
+                    @break
+                @case('bonoloto')
+                    <a href="/#que-es-reintegro" class="text-blue-600 hover:underline text-sm block">
+                        → Qué es el reintegro
+                    </a>
+                    @break
+                @case('la-primitiva', 'el-gordo')
+                    <a href="/#numero-clave" class="text-blue-600 hover:underline text-sm block">
+                        → Número Clave explicado
+                    </a>
+                    @break
+            @endswitch
+        </div>
+        
+        <!-- Enlaces a otros juegos -->
+        <div>
+            <h4 class="font-semibold text-slate-700 mb-2">Otros sorteos</h4>
+            <div class="space-y-1">
+                @if($juego->slug !== 'euromillones')
+                    <a href="{{ route('juego', 'euromillones') }}" class="text-blue-600 hover:underline text-sm block">
+                        → Euromillones
+                    </a>
+                @endif
+                @if($juego->slug !== 'bonoloto')
+                    <a href="{{ route('juego', 'bonoloto') }}" class="text-blue-600 hover:underline text-sm block">
+                        → Bonoloto
+                    </a>
+                @endif
+                @if($juego->slug !== 'la-primitiva')
+                    <a href="{{ route('juego', 'la-primitiva') }}" class="text-blue-600 hover:underline text-sm block">
+                        → La Primitiva
+                    </a>
+                @endif
+                @if($juego->slug !== 'el-gordo')
+                    <a href="{{ route('juego', 'el-gordo') }}" class="text-blue-600 hover:underline text-sm block">
+                        → El Gordo
+                    </a>
+                @endif
+            </div>
+        </div>
+        
+        <!-- Enlaces a información general -->
+        <div>
+            <h4 class="font-semibold text-slate-700 mb-2">Información útil</h4>
+            <div class="space-y-1">
+                <a href="/#como-jugar" class="text-blue-600 hover:underline text-sm block">
+                    → Cómo reclamar premios
+                </a>
+                <a href="/#caducidad-premios" class="text-blue-600 hover:underline text-sm block">
+                    → Caducidad de premios
+                </a>
+                <a href="/#impuestos-premios" class="text-blue-600 hover:underline text-sm block">
+                    → Impuestos en premios
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="mt-10 bg-white rounded-xl shadow-lg p-6">
     <h2 class="text-lg font-bold text-slate-800 mb-4">Preguntas frecuentes sobre el sorteo</h2>
 

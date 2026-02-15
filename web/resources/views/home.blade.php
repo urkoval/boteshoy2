@@ -112,4 +112,87 @@ $colores = [
     </div>
     @endforeach
 </div>
+
+<!-- Sección Educativa -->
+<section class="mt-12">
+    <h2 class="text-2xl font-bold text-slate-800 mb-6">Guías por Juego</h2>
+
+    <div class="grid gap-6 md:grid-cols-2">
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-euro-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Euromillones</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'euromillones') }}" class="text-blue-600 hover:underline">Como se juega a Euromillones</a></li>
+                <li><a href="{{ route('juego.guia', 'euromillones') }}" class="text-blue-600 hover:underline">Premios y probabilidades de Euromillones</a></li>
+                <li><a href="{{ route('juego.guia', 'euromillones') }}" class="text-blue-600 hover:underline">Que son las estrellas en Euromillones</a></li>
+                <li><a href="{{ route('juego', 'euromillones') }}" class="text-blue-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-bono-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Bonoloto</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'bonoloto') }}" class="text-red-600 hover:underline">Como se juega a Bonoloto</a></li>
+                <li><a href="{{ route('juego.guia', 'bonoloto') }}" class="text-red-600 hover:underline">Premios y probabilidades de Bonoloto</a></li>
+                <li><a href="{{ route('juego.guia', 'bonoloto') }}" class="text-red-600 hover:underline">Reintegro y complementario en Bonoloto</a></li>
+                <li><a href="{{ route('juego', 'bonoloto') }}" class="text-red-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-primi-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">La Primitiva</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'la-primitiva') }}" class="text-emerald-600 hover:underline">Como se juega a La Primitiva</a></li>
+                <li><a href="{{ route('juego.guia', 'la-primitiva') }}" class="text-emerald-600 hover:underline">Premios y probabilidades de La Primitiva</a></li>
+                <li><a href="{{ route('juego.guia', 'la-primitiva') }}" class="text-emerald-600 hover:underline">Reintegro y complementario en La Primitiva</a></li>
+                <li><a href="{{ route('juego', 'la-primitiva') }}" class="text-emerald-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-gordo-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">El Gordo de la Primitiva</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'el-gordo') }}" class="text-purple-600 hover:underline">Como se juega a El Gordo de la Primitiva</a></li>
+                <li><a href="{{ route('juego.guia', 'el-gordo') }}" class="text-purple-600 hover:underline">Premios y probabilidades de El Gordo</a></li>
+                <li><a href="{{ route('juego.guia', 'el-gordo') }}" class="text-purple-600 hover:underline">Como funciona el Numero Clave</a></li>
+                <li><a href="{{ route('juego', 'el-gordo') }}" class="text-purple-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
+    </div>
+</section>
+
+    <!-- Enlaces internos estratégicos -->
+    <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200">
+        <h3 class="text-lg font-bold text-slate-800 mb-3">Explora por Juego</h3>
+        <div class="grid gap-3 md:grid-cols-2">
+            <a href="{{ route('juego', 'euromillones') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+                <span class="w-3 h-3 bg-blue-600 rounded-full mr-3"></span>
+                <div>
+                    <div class="font-medium text-slate-800">Euromillones</div>
+                    <div class="text-sm text-slate-600">Resultados y guía completa</div>
+                </div>
+            </a>
+            <a href="{{ route('juego', 'bonoloto') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+                <span class="w-3 h-3 bg-red-600 rounded-full mr-3"></span>
+                <div>
+                    <div class="font-medium text-slate-800">Bonoloto</div>
+                    <div class="text-sm text-slate-600">Sorteos diarios y premios</div>
+                </div>
+            </a>
+            <a href="{{ route('juego', 'la-primitiva') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+                <span class="w-3 h-3 bg-emerald-600 rounded-full mr-3"></span>
+                <div>
+                    <div class="font-medium text-slate-800">La Primitiva</div>
+                    <div class="text-sm text-slate-600">Historial y jackpots</div>
+                </div>
+            </a>
+            <a href="{{ route('juego', 'el-gordo') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+                <span class="w-3 h-3 bg-purple-600 rounded-full mr-3"></span>
+                <div>
+                    <div class="font-medium text-slate-800">El Gordo</div>
+                    <div class="text-sm text-slate-600">Números clave y premios</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
 @endsection
