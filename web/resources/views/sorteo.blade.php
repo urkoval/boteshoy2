@@ -499,7 +499,8 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
                         → Qué es el reintegro
                     </a>
                     @break
-                @case('la-primitiva', 'el-gordo')
+                @case('la-primitiva')
+                @case('el-gordo')
                     <a href="/#numero-clave" class="text-blue-600 hover:underline text-sm block">
                         → Número Clave explicado
                     </a>
