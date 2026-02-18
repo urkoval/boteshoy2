@@ -218,6 +218,7 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
                             8 => 56,     // C(8,5) = 56
                             9 => 126,    // C(9,5) = 126
                             10 => 252,   // C(10,5) = 252
+                            11 => 462,   // C(11,5) = 462
                         ];
                     } else {
                         // Combinaciones C(n,6) para Bonoloto, Primitiva, etc.
