@@ -13,6 +13,8 @@ $colores = [
 @endphp
 
 @section('content')
+<h1 class="text-3xl font-bold text-slate-800 mb-6">Resultados de Loterías en España Hoy</h1>
+
 @if(!empty($boteDestacado))
 <section class="mb-8">
     <div class="rounded-2xl bg-white shadow-lg overflow-hidden">
