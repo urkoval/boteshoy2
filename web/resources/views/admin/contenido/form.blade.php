@@ -115,13 +115,7 @@
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Head Extra (Schemas JSON-LD, meta tags)</h3>
                     <div>
                         <label for="head_extra" class="block text-sm font-medium text-gray-700 mb-2">Código para el &lt;head&gt;</label>
-                        <textarea name="head_extra" id="head_extra" rows="8" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs" placeholder='<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  ...
-}
-</script>'>{{ old('head_extra', $contenido->head_extra ?? '') }}</textarea>
+                        <textarea name="head_extra" id="head_extra" rows="8" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs" placeholder="Ejemplo: &lt;script type=&quot;application/ld+json&quot;&gt;{...}&lt;/script&gt;">{{ old('head_extra', $contenido->head_extra ?? '') }}</textarea>
                         <p class="mt-2 text-xs text-gray-500">Aquí puedes añadir schemas JSON-LD, meta tags adicionales, canonical, etc. Se inyectará en el &lt;head&gt; de la página.</p>
                     </div>
                 </div>
