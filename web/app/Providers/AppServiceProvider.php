@@ -37,7 +37,8 @@ class AppServiceProvider extends ServiceProvider
 
                 $rows = DB::table('botes')
                     ->select('juego_slug', 'fecha_sorteo', 'bote_eur', 'updated_at')
-                    ->orderByDesc('fecha_sorteo')
+                    ->where('fecha_sorteo', '>=', now()->format('Y-m-d'))
+                    ->orderBy('fecha_sorteo')
                     ->orderByDesc('updated_at')
                     ->get();
 

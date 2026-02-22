@@ -15,6 +15,7 @@ class ContenidoJuego extends Model
         'h1_principal',
         'contenido_html',
         'contenido_markdown',
+        'head_extra',
         'datos_especificos',
         'og_title',
         'og_description',

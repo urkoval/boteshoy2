@@ -1,12 +1,90 @@
 @extends('layouts.app')
 
+@if($contenido && $contenido->head_extra)
+@push('head')
+{!! $contenido->head_extra !!}
+@endpush
+@endif
+
 @section('title')
-{{ $contenido?->seo_title ?? "Combinación Ganadora {$juego->nombre} | Cómo Saber si Has Ganado" }}
+@if($juego->slug === 'euromillones')
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Euromillones | Cómo Comprobar y Qué Hacer si Ganas" }}
+@elseif($juego->slug === 'la-primitiva')
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Primitiva con Reintegro | Cómo Saber si He Ganado" }}
+@else
+    {{ $contenido?->seo_title ?? "Combinación Ganadora {$juego->nombre} | Cómo Saber si Has Ganado" }}
+@endif
 @endsection
 
 @section('description')
-{{ $contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de {$juego->nombre}: qué números buscar, dónde verificar y qué hacer si tienes premio." }}
+@if($juego->slug === 'euromillones')
+    {{ $contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de Euromillones: qué números y estrellas buscar, dónde verificar resultados, impuestos y qué hacer si tienes premio." }}
+@elseif($juego->slug === 'la-primitiva')
+    {{ $contenido?->meta_description ?? "Descubre cómo funciona la combinación ganadora de La Primitiva: 6 números, complementario y reintegro. Dónde comprobar, cómo cobrar premios y fiscalidad." }}
+@else
+    {{ $contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de {$juego->nombre}: qué números buscar, dónde verificar y qué hacer si tienes premio." }}
+@endif
 @endsection
+
+@php
+$structuredData = [
+    "@context" => "https://schema.org",
+    "@type" => "HowTo",
+    "name" => $juego->slug === 'euromillones' ? "Cómo comprobar la combinación ganadora de Euromillones" : 
+            ($juego->slug === 'la-primitiva' ? "Cómo comprobar la combinación ganadora de La Primitiva" : 
+            "Cómo comprobar la combinación ganadora de " . $juego->nombre),
+    "description" => $juego->slug === 'euromillones' ? 
+        "Guía paso a paso para comprobar si has ganado en Euromillones, incluyendo cómo verificar números y estrellas, y qué hacer si tienes premio" :
+        ($juego->slug === 'la-primitiva' ? 
+        "Aprende a comprobar la combinación ganadora de La Primitiva, incluyendo reintegro, complementario y cómo cobrar premios" :
+        "Guía completa para comprobar la combinación ganadora de " . $juego->nombre . " y cobrar premios"),
+    "image" => url("images/{$juego->slug}-combinacion-ganadora.jpg"),
+    "totalTime" => "PT5M",
+    "supply" => [
+        [
+            "@type" => "HowToSupply",
+            "name" => "Boleto de " . $juego->nombre
+        ]
+    ],
+    "tool" => [
+        [
+            "@type" => "HowToTool",
+            "name" => "Resultados oficiales de " . $juego->nombre
+        ]
+    ],
+    "step" => [
+        [
+            "@type" => "HowToStep",
+            "name" => "Busca resultados oficiales",
+            "text" => "Consulta la combinación ganadora oficial en fuentes fiables"
+        ],
+        [
+            "@type" => "HowToStep", 
+            "name" => "Compara tus números",
+            "text" => $juego->slug === 'euromillones' ? 
+                "Compara tus 5 números y 2 estrellas con los premiados" :
+                "Compara tus 6 números con los premiados"
+        ],
+        [
+            "@type" => "HowToStep",
+            "name" => "Verifica complementarios",
+            "text" => $juego->slug === 'euromillones' ? 
+                "No hay complementarios en Euromillones" :
+                "Comprueba complementario y reintegro si aplica"
+        ],
+        [
+            "@type" => "HowToStep",
+            "name" => "Consulta tabla de premios",
+            "text" => "Verifica qué categoría de premio has ganado según tus aciertos"
+        ],
+        [
+            "@type" => "HowToStep",
+            "name" => "Cobra tu premio",
+            "text" => "Sigue los pasos para cobrar tu premio según el importe"
+        ]
+    ]
+];
+@endphp
 
 @php
 $colores = [
@@ -19,6 +97,9 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
 @endphp
 
 @section('content')
+<script type="application/ld+json">
+{!! json_encode($structuredData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!}
+</script>
 <div class="mb-6">
     <a href="{{ route('juego.guia', $juego->slug) }}" class="{{ $color['text'] }} font-medium hover:underline inline-flex items-center gap-1">
         <span>←</span> Volver a la guía de {{ $juego->nombre }}
@@ -26,8 +107,24 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
 </div>
 
 <div class="{{ $color['bg'] }} rounded-xl shadow-lg p-6 mb-8">
-    <h1 class="text-3xl font-bold text-white">Combinación Ganadora de {{ $juego->nombre }}</h1>
-    <p class="text-white/90 mt-2">Aprende qué es y cómo comprobar si has ganado</p>
+    <h1 class="text-3xl font-bold text-white">
+        @if($juego->slug === 'euromillones')
+            Combinación Ganadora Euromillones
+        @elseif($juego->slug === 'la-primitiva')
+            Combinación Ganadora Primitiva
+        @else
+            Combinación Ganadora de {{ $juego->nombre }}
+        @endif
+    </h1>
+    <p class="text-white/90 mt-2">
+        @if($juego->slug === 'euromillones')
+            Aprende qué es y cómo comprobar si has ganado en Euromillones
+        @elseif($juego->slug === 'la-primitiva')
+            Guía para comprobar la combinación ganadora con reintegro
+        @else
+            Aprende qué es y cómo comprobar si has ganado
+        @endif
+    </p>
 </div>
 
 @if($ultimoSorteo)
@@ -91,11 +188,17 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
 @endif
 
 <section class="bg-white rounded-xl shadow-md p-6 mb-8">
-    <h2 class="text-xl font-bold text-slate-800 mb-6">¿Qué es la Combinación Ganadora?</h2>
+    <h2 class="text-xl font-bold text-slate-800 mb-6">¿Qué es la Combinación Ganadora de {{ $juego->nombre }}?</h2>
     
     <div class="prose max-w-none">
         <p class="text-slate-700 mb-4">
-            La combinación ganadora es el conjunto de números que resultan del sorteo oficial de {{ $juego->nombre }}. Para ganar el premio mayor, debes acertar todos estos números.
+            @if($juego->slug === 'euromillones')
+                La combinación ganadora de Euromillones consiste en 5 números principales (del 1 al 50) y 2 estrellas (del 1 al 12) que se extraen en cada sorteo. Para ganar el premio mayor (bote), debes acertar los 7 números: los 5 principales + las 2 estrellas.
+            @elseif($juego->slug === 'la-primitiva')
+                La combinación ganadora de La Primitiva está formada por 6 números principales (del 1 al 49), un número complementario y un reintegro (del 0 al 9). Para ganar el bote necesitas acertar los 6 números principales, pero hay muchas categorías de premios.
+            @else
+                La combinación ganadora es el conjunto de números que resultan del sorteo oficial de {{ $juego->nombre }}. Para ganar el premio mayor, debes acertar todos estos números.
+            @endif
         </p>
 
         <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">Componentes de la Combinación</h3>

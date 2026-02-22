@@ -60,11 +60,60 @@
     </header>
 
     <nav class="bg-slate-700 text-white shadow">
-        <div class="container mx-auto px-4 py-3 flex gap-2 sm:gap-4 overflow-x-auto">
-            <a href="{{ route('juego', 'euromillones') }}" class="px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
-            <a href="{{ route('juego', 'bonoloto') }}" class="px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
-            <a href="{{ route('juego', 'la-primitiva') }}" class="px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
-            <a href="{{ route('juego', 'el-gordo') }}" class="px-3 py-1.5 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm font-medium whitespace-nowrap transition">El Gordo</a>
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-wrap gap-2 sm:gap-4">
+                <!-- Main Games Navigation -->
+                <div class="flex gap-2 sm:gap-4 overflow-x-auto">
+                    <a href="{{ route('juego', 'euromillones') }}" class="px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
+                    <a href="{{ route('juego', 'bonoloto') }}" class="px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
+                    <a href="{{ route('juego', 'la-primitiva') }}" class="px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
+                    <a href="{{ route('juego', 'el-gordo') }}" class="px-3 py-1.5 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm font-medium whitespace-nowrap transition">El Gordo</a>
+                </div>
+                
+                <!-- SEO Content Sections -->
+                <div class="flex gap-2 sm:gap-4 overflow-x-auto border-l border-slate-600 pl-2 sm:pl-4">
+                    <div class="relative group">
+                        <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
+                            Guías <span class="text-xs">▼</span>
+                        </button>
+                        <div class="absolute top-full left-0 mt-1 bg-slate-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 min-w-[200px]">
+                            <a href="{{ route('juego.guia', 'euromillones') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Euromillones</a>
+                            <a href="{{ route('juego.guia', 'bonoloto') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Bonoloto</a>
+                            <a href="{{ route('juego.guia', 'la-primitiva') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Primitiva</a>
+                            <a href="{{ route('juego.guia', 'el-gordo') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía El Gordo</a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
+                            Estrategias <span class="text-xs">▼</span>
+                        </button>
+                        <div class="absolute top-full left-0 mt-1 bg-slate-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 min-w-[250px]">
+                            <div class="px-4 py-2 text-xs font-semibold text-slate-400 border-b border-slate-700">APUESTAS MÚLTIPLES</div>
+                            <a href="{{ route('juego.apuestas-multiples', 'euromillones') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Euromillones Múltiples</a>
+                            <a href="{{ route('juego.apuestas-multiples', 'bonoloto') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Bonoloto Múltiples</a>
+                            <a href="{{ route('juego.apuestas-multiples', 'la-primitiva') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Primitiva Múltiples</a>
+                            <a href="{{ route('juego.apuestas-multiples', 'el-gordo') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">El Gordo Múltiples</a>
+                            
+                            <div class="px-4 py-2 text-xs font-semibold text-slate-400 border-b border-slate-700 mt-2">APUESTAS REDUCIDAS</div>
+                            <a href="{{ route('juego.apuestas-reducidas', 'euromillones') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Euromillones Reducidas</a>
+                            <a href="{{ route('juego.apuestas-reducidas', 'bonoloto') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Bonoloto Reducidas</a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
+                            Comprobar <span class="text-xs">▼</span>
+                        </button>
+                        <div class="absolute top-full left-0 mt-1 bg-slate-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 min-w-[200px]">
+                            <a href="{{ route('juego.combinacion-ganadora', 'euromillones') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Euromillones</a>
+                            <a href="{{ route('juego.combinacion-ganadora', 'bonoloto') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Bonoloto</a>
+                            <a href="{{ route('juego.combinacion-ganadora', 'la-primitiva') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Primitiva</a>
+                            <a href="{{ route('juego.combinacion-ganadora', 'el-gordo') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">El Gordo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 
