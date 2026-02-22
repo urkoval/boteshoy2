@@ -24,6 +24,13 @@
         .ball { 
             box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.3);
         }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
     </style>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -63,7 +70,7 @@
         <div class="container mx-auto px-4 py-3">
             <div class="flex flex-wrap gap-2 sm:gap-4">
                 <!-- Main Games Navigation -->
-                <div class="flex gap-2 sm:gap-4 overflow-x-auto">
+                <div class="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-hide">
                     <a href="{{ route('juego', 'euromillones') }}" class="px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
                     <a href="{{ route('juego', 'bonoloto') }}" class="px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
                     <a href="{{ route('juego', 'la-primitiva') }}" class="px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
@@ -71,7 +78,7 @@
                 </div>
                 
                 <!-- SEO Content Sections -->
-                <div class="flex gap-2 sm:gap-4 overflow-x-auto border-l border-slate-600 pl-2 sm:pl-4">
+                <div class="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-hide border-l border-slate-600 pl-2 sm:pl-4">
                     <div class="relative group">
                         <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
                             Guías <span class="text-xs">▼</span>
