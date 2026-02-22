@@ -78,7 +78,7 @@
                 </div>
                 
                 <!-- SEO Content Sections -->
-                <div class="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-hide border-l border-slate-600 pl-2 sm:pl-4">
+                <div class="flex gap-2 sm:gap-4 border-l border-slate-600 pl-2 sm:pl-4">
                     <div class="relative group">
                         <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
                             Guías <span class="text-xs">▼</span>
