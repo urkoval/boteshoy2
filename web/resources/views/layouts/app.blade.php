@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Resultados Loterías España') | Boteshoy</title>
     <meta name="description" content="@yield('description', 'Resultados de loterías españolas: Euromillones, Bonoloto, La Primitiva y El Gordo. Consulta los últimos sorteos y premios.')">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
     <script>
         tailwind.config = {
             theme: {
