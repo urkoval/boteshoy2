@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminContenidoController;
 // Rutas públicas
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/politica-cookies', fn() => view('politica-cookies'))->name('politica-cookies');
 
 // Rutas de administración (ANTES de las rutas con {slug})
 Route::prefix('admin')->name('admin.')->middleware('admin.key')->group(function () {

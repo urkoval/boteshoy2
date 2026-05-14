@@ -130,6 +130,7 @@
 
     <footer class="bg-slate-900 text-slate-500 text-center py-6 mt-auto">
         <p class="text-sm">&copy; {{ date('Y') }} BotesHoy.com - Resultados de loterías españolas</p>
+        <p class="text-xs mt-2"><a href="{{ route('politica-cookies') }}" class="hover:text-slate-300 transition">Política de Cookies</a></p>
     </footer>
     
     <!-- Banner de cookies -->
