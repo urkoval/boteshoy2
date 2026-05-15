@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $botesHeader = [];
             $boteDestacado = null;
+            $boteProximo = null;
+            $boteSemana = null;
 
             try {
                 if (!Schema::hasTable('botes')) {
@@ -77,17 +79,52 @@ class AppServiceProvider extends ServiceProvider
                     ];
                 }
 
+                // Bote próximo: el más cercano en fecha
+                $hoy = now()->format('Y-m-d');
                 foreach ($botesHeader as $item) {
-                    if (!$boteDestacado || $item['bote_eur'] > $boteDestacado['bote_eur']) {
-                        $boteDestacado = $item;
+                    if (!$boteProximo || $item['fecha_sorteo'] <= $boteProximo['fecha_sorteo']) {
+                        if ($item['fecha_sorteo'] === $hoy || !$boteProximo) {
+                            $boteProximo = $item;
+                        } elseif ($item['fecha_sorteo'] < $boteProximo['fecha_sorteo']) {
+                            $boteProximo = $item;
+                        }
                     }
                 }
+
+                // Bote semana: el mayor de todos
+                foreach ($botesHeader as $item) {
+                    if (!$boteSemana || $item['bote_eur'] > $boteSemana['bote_eur']) {
+                        $boteSemana = $item;
+                    }
+                }
+
+                // Si son el mismo, buscar el segundo mayor para boteSemana
+                if ($boteProximo && $boteSemana && $boteProximo['slug'] === $boteSemana['slug']) {
+                    $segundoMayor = null;
+                    foreach ($botesHeader as $item) {
+                        if ($item['slug'] !== $boteProximo['slug']) {
+                            if (!$segundoMayor || $item['bote_eur'] > $segundoMayor['bote_eur']) {
+                                $segundoMayor = $item;
+                            }
+                        }
+                    }
+                    if ($segundoMayor) {
+                        $boteSemana = $segundoMayor;
+                    }
+                }
+
+                $boteDestacado = $boteSemana; // mantener compatibilidad
             } catch (\Throwable $e) {
                 $botesHeader = [];
                 $boteDestacado = null;
+                $boteProximo = null;
+                $boteSemana = null;
             }
 
-            $view->with('botesHeader', $botesHeader)->with('boteDestacado', $boteDestacado);
+            $view->with('botesHeader', $botesHeader)
+                 ->with('boteDestacado', $boteDestacado)
+                 ->with('boteProximo', $boteProximo)
+                 ->with('boteSemana', $boteSemana);
         });
     }
 }

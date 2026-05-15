@@ -16,17 +16,34 @@ $colores = [
 @section('content')
 <h1 class="text-3xl font-bold text-slate-800 mb-6">Resultados de Loterías en España Hoy</h1>
 
-@if(!empty($boteDestacado))
+@if(!empty($boteProximo) || !empty($boteSemana))
 <section class="mb-8">
-    <div class="rounded-2xl bg-white shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-5 text-white">
-            <div class="text-xs text-white/70">Bote destacado</div>
-            <div class="mt-2">
-                <div class="text-2xl font-extrabold">{{ $boteDestacado['nombre'] }}</div>
-                <div class="text-sm text-white/80">Próximo sorteo: {{ $boteDestacado['fecha_sorteo'] }}</div>
-                <div class="text-4xl sm:text-5xl font-extrabold mt-3">{{ number_format($boteDestacado['bote_eur'], 0, ',', '.') }} €</div>
+    <div class="grid gap-4 md:grid-cols-2">
+        @if(!empty($boteProximo))
+        <a href="{{ route('juego', $boteProximo['slug']) }}" class="block rounded-2xl bg-white shadow-lg overflow-hidden hover:shadow-xl transition">
+            <div class="bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-5 text-white">
+                <div class="text-xs text-white/80 font-medium uppercase tracking-wide">🎯 Próximo sorteo</div>
+                <div class="mt-2">
+                    <div class="text-xl font-bold">{{ $boteProximo['nombre'] }}</div>
+                    <div class="text-sm text-white/80">{{ \Carbon\Carbon::parse($boteProximo['fecha_sorteo'])->translatedFormat('l, j M') }}</div>
+                    <div class="text-3xl sm:text-4xl font-extrabold mt-2">{{ number_format($boteProximo['bote_eur'], 0, ',', '.') }} €</div>
+                </div>
             </div>
-        </div>
+        </a>
+        @endif
+
+        @if(!empty($boteSemana) && (!$boteProximo || $boteSemana['slug'] !== $boteProximo['slug']))
+        <a href="{{ route('juego', $boteSemana['slug']) }}" class="block rounded-2xl bg-white shadow-lg overflow-hidden hover:shadow-xl transition">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5 text-white">
+                <div class="text-xs text-white/80 font-medium uppercase tracking-wide">🏆 Mayor bote</div>
+                <div class="mt-2">
+                    <div class="text-xl font-bold">{{ $boteSemana['nombre'] }}</div>
+                    <div class="text-sm text-white/80">{{ \Carbon\Carbon::parse($boteSemana['fecha_sorteo'])->translatedFormat('l, j M') }}</div>
+                    <div class="text-3xl sm:text-4xl font-extrabold mt-2">{{ number_format($boteSemana['bote_eur'], 0, ',', '.') }} €</div>
+                </div>
+            </div>
+        </a>
+        @endif
     </div>
 </section>
 @endif
