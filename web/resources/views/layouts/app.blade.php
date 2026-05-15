@@ -42,7 +42,7 @@
     
     @stack('head')
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col overflow-x-hidden">
     <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg">
         <div class="container mx-auto px-4 py-5">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -54,7 +54,7 @@
                 </div>
 
                 @if(!empty($botesHeader))
-                    <div class="flex gap-2 overflow-x-auto md:overflow-visible pb-1">
+                    <div class="flex gap-2 overflow-x-auto scrollbar-hide md:overflow-visible pb-1 -mx-4 px-4 md:mx-0 md:px-0">
                         @foreach($botesHeader as $b)
                             <a href="{{ route('juego', $b['slug']) }}" class="shrink-0 rounded-full {{ $b['classes']['bg'] }} border {{ $b['classes']['border'] }} px-3 py-2 hover:opacity-90 transition">
                                 <div class="text-[11px] text-white/70">{{ $b['nombre'] }}</div>
@@ -128,7 +128,7 @@
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
+    <main class="container mx-auto px-4 py-8 flex-grow overflow-x-hidden">
         @yield('content')
     </main>
 
