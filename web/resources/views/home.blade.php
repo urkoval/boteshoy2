@@ -21,14 +21,10 @@ $colores = [
     <div class="rounded-2xl bg-white shadow-lg overflow-hidden">
         <div class="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-5 text-white">
             <div class="text-xs text-white/70">Bote destacado</div>
-            <div class="mt-1 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 sm:gap-4">
-                <div>
-                    <div class="text-xl sm:text-2xl font-extrabold">{{ $boteDestacado['nombre'] }}</div>
-                    <div class="text-sm text-white/80">Próximo sorteo: {{ $boteDestacado['fecha_sorteo'] }}</div>
-                </div>
-                <div class="text-left sm:text-right">
-                    <div class="text-2xl sm:text-3xl md:text-4xl font-extrabold">{{ number_format($boteDestacado['bote_eur'], 0, ',', '.') }} €</div>
-                </div>
+            <div class="mt-2">
+                <div class="text-2xl font-extrabold">{{ $boteDestacado['nombre'] }}</div>
+                <div class="text-sm text-white/80">Próximo sorteo: {{ $boteDestacado['fecha_sorteo'] }}</div>
+                <div class="text-4xl sm:text-5xl font-extrabold mt-3">{{ number_format($boteDestacado['bote_eur'], 0, ',', '.') }} €</div>
             </div>
         </div>
     </div>
