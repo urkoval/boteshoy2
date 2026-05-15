@@ -9,6 +9,11 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
   - Colores cyan en todas las vistas
   - Guía completa con FAQs
   - Sitemap actualizado con rutas de contenido
+- ~~Diseño responsive móvil~~ ✅ **Corregido (2026-05-16)**
+  - Header botes: grid 2x2 en móvil, fila en desktop
+  - Selectores de juegos: flex-wrap para apilarse
+  - Scroll horizontal eliminado
+  - 2 botes destacados: "Próximo sorteo" + "Mayor bote"
 - Lotería Nacional.
 - Lotería Nacional de Jueves.
 - Lotería de Navidad.
