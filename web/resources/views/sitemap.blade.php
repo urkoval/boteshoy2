@@ -12,6 +12,26 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+    <url>
+        <loc>{{ route('juego.guia', $juego->slug) }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ route('juego.combinacion-ganadora', $juego->slug) }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ route('juego.apuestas-multiples', $juego->slug) }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>{{ route('juego.apuestas-reducidas', $juego->slug) }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
     @endforeach
     
     @foreach($sorteos as $sorteo)
