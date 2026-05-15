@@ -362,18 +362,24 @@ class LotoluckScraper:
                                 'premio': premio
                             })
                     
-                    # Eurodreams: 4 columnas con premios mensuales (Categoria, Aciertos, Acertantes, Premio)
-                    elif self.slug == 'eurodreams' and len(cells) >= 4:
+                    # Eurodreams: 5 columnas como Euromillones (Categoria, Aciertos, Acertantes Europa, Acertantes España, Premio)
+                    elif self.slug == 'eurodreams' and len(cells) >= 5:
                         categoria = cells[0].get_text(strip=True)
                         aciertos = cells[1].get_text(strip=True)  # 6+1, 6+0, 5+1, etc.
-                        acertantes_text = cells[2].get_text(strip=True)
-                        premio_text = cells[3].get_text(strip=True)
+                        acertantes_europa_text = cells[2].get_text(strip=True)
+                        acertantes_espana_text = cells[3].get_text(strip=True)
+                        premio_text = cells[4].get_text(strip=True)
                         
-                        # Limpiar número de acertantes
+                        # Limpiar números de acertantes
                         try:
-                            acertantes = int(re.sub(r'[^\d]', '', acertantes_text) or 0)
+                            acertantes_europa = int(re.sub(r'[^\d]', '', acertantes_europa_text) or 0)
                         except:
-                            acertantes = 0
+                            acertantes_europa = 0
+                            
+                        try:
+                            acertantes_espana = int(re.sub(r'[^\d]', '', acertantes_espana_text) or 0)
+                        except:
+                            acertantes_espana = 0
 
                         # Eurodreams tiene premios especiales: "20.000€/mes" o "5.000€/mes"
                         # Guardamos el texto original para mostrar en la vista
@@ -399,13 +405,14 @@ class LotoluckScraper:
                                     return None
                             premio = _parse_euro_amount(premio_text)
                             if not re.search(r'\d', premio_text or ''):
-                                premio = None if acertantes > 0 else 0
+                                premio = None if (acertantes_europa + acertantes_espana) > 0 else 0
                         
                         if categoria:
                             premios.append({
                                 'categoria': categoria,
                                 'aciertos': aciertos,
-                                'acertantes': acertantes,
+                                'acertantes_europa': acertantes_europa,
+                                'acertantes_espana': acertantes_espana,
                                 'premio': premio
                             })
                     
