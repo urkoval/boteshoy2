@@ -1,14 +1,12 @@
-@extends('layouts.app')
+<?php $__env->startSection('title'); ?>
+Resultados <?php echo e($juego->nombre); ?> Hoy | Último Sorteo y Premios
+<?php $__env->stopSection(); ?>
 
-@section('title')
-Resultados {{ $juego->nombre }} Hoy | Último Sorteo y Premios
-@endsection
+<?php $__env->startSection('description'); ?>
+Consulta los últimos resultados de <?php echo e($juego->nombre); ?>. Números ganadores, premios y histórico de sorteos.
+<?php $__env->stopSection(); ?>
 
-@section('description')
-Consulta los últimos resultados de {{ $juego->nombre }}. Números ganadores, premios y histórico de sorteos.
-@endsection
-
-@php
+<?php
 $latestSorteo = $sorteos->first();
 $latestFechaHuman = $latestSorteo ? $latestSorteo->fecha->format('d/m/Y') : null;
 
@@ -46,13 +44,13 @@ $faqSchema = [
     '@type' => 'FAQPage',
     'mainEntity' => $faqJuego,
 ];
-@endphp
+?>
 
-@push('head')
-<script type="application/ld+json">@json($faqSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)</script>
-@endpush
+<?php $__env->startPush('head'); ?>
+<script type="application/ld+json"><?php echo json_encode($faqSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES, 512) ?></script>
+<?php $__env->stopPush(); ?>
 
-@php
+<?php
 $colores = [
     'euromillones' => ['bg' => 'bg-euro-500', 'ball' => 'bg-blue-600'],
     'bonoloto' => ['bg' => 'bg-bono-500', 'ball' => 'bg-red-600'],
@@ -61,136 +59,140 @@ $colores = [
     'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600'];
-@endphp
+?>
 
-@section('content')
-<div class="{{ $color['bg'] }} -mx-4 -mt-8 px-4 py-8 mb-8 text-white">
+<?php $__env->startSection('content'); ?>
+<div class="<?php echo e($color['bg']); ?> -mx-4 -mt-8 px-4 py-8 mb-8 text-white">
     <div class="container mx-auto">
-        <h1 class="text-3xl font-bold mb-2">Últimos resultados de {{ $juego->nombre }}</h1>
-        <p class="text-white/70">Sorteos: {{ str_replace(',', ', ', $juego->dias_sorteo) }}</p>
+        <h1 class="text-3xl font-bold mb-2">Últimos resultados de <?php echo e($juego->nombre); ?></h1>
+        <p class="text-white/70">Sorteos: <?php echo e(str_replace(',', ', ', $juego->dias_sorteo)); ?></p>
         <p class="text-white/70 mt-2">
-            @if($latestSorteo)
-                Último sorteo disponible {{ $latestFechaHuman }}. Consulta números ganadores, premios y el histórico por fechas.
-            @else
+            <?php if($latestSorteo): ?>
+                Último sorteo disponible <?php echo e($latestFechaHuman); ?>. Consulta números ganadores, premios y el histórico por fechas.
+            <?php else: ?>
                 Consulta el histórico por fechas cuando estén disponibles los sorteos.
-            @endif
+            <?php endif; ?>
         </p>
     </div>
 </div>
 
-@if($sorteos->count() > 0)
+<?php if($sorteos->count() > 0): ?>
     <div class="container mx-auto mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Historial de sorteos</h2>
     </div>
     <div class="space-y-3">
-        @foreach($sorteos as $sorteo)
-        <a href="{{ route('sorteo', [$juego->slug, $sorteo->fecha->format('Y-m-d')]) }}" 
-           class="block bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition border-l-4 {{ str_replace('bg-', 'border-', $color['ball']) }}">
+        <?php $__currentLoopData = $sorteos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sorteo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <a href="<?php echo e(route('sorteo', [$juego->slug, $sorteo->fecha->format('Y-m-d')])); ?>" 
+           class="block bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition border-l-4 <?php echo e(str_replace('bg-', 'border-', $color['ball'])); ?>">
             <div class="flex flex-wrap items-center justify-between gap-4">
                 <div class="min-w-[120px]">
-                    <p class="font-bold text-slate-800">{{ $sorteo->fecha->format('d/m/Y') }}</p>
-                    <p class="text-sm text-slate-500 capitalize">{{ $sorteo->fecha->translatedFormat('l') }}</p>
-                    @php
+                    <p class="font-bold text-slate-800"><?php echo e($sorteo->fecha->format('d/m/Y')); ?></p>
+                    <p class="text-sm text-slate-500 capitalize"><?php echo e($sorteo->fecha->translatedFormat('l')); ?></p>
+                    <?php
                         $caduca = $sorteo->fecha->copy()->addMonthsNoOverflow(3);
                         $diasCad = now()->startOfDay()->diffInDays($caduca->copy()->startOfDay(), false);
-                    @endphp
+                    ?>
                     <p class="text-xs text-slate-500 mt-1">
-                        @if($diasCad > 1)
-                            Caduca en {{ $diasCad }} días ({{ $caduca->format('d/m/Y') }})
-                        @elseif($diasCad === 1)
-                            Caduca en 1 día ({{ $caduca->format('d/m/Y') }})
-                        @elseif($diasCad === 0)
-                            Caduca hoy ({{ $caduca->format('d/m/Y') }})
-                        @else
-                            Caducado ({{ $caduca->format('d/m/Y') }})
-                        @endif
+                        <?php if($diasCad > 1): ?>
+                            Caduca en <?php echo e($diasCad); ?> días (<?php echo e($caduca->format('d/m/Y')); ?>)
+                        <?php elseif($diasCad === 1): ?>
+                            Caduca en 1 día (<?php echo e($caduca->format('d/m/Y')); ?>)
+                        <?php elseif($diasCad === 0): ?>
+                            Caduca hoy (<?php echo e($caduca->format('d/m/Y')); ?>)
+                        <?php else: ?>
+                            Caducado (<?php echo e($caduca->format('d/m/Y')); ?>)
+                        <?php endif; ?>
                     </p>
                 </div>
                 
                 <div class="flex flex-wrap gap-1.5 flex-1 justify-center">
-                    @foreach($sorteo->numeros as $numero)
-                        <span class="ball w-9 h-9 {{ $color['ball'] }} text-white rounded-full flex items-center justify-center font-bold text-sm">
-                            {{ $numero }}
+                    <?php $__currentLoopData = $sorteo->numeros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $numero): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <span class="ball w-9 h-9 <?php echo e($color['ball']); ?> text-white rounded-full flex items-center justify-center font-bold text-sm">
+                            <?php echo e($numero); ?>
+
                         </span>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     
-                    @if($sorteo->complementarios)
+                    <?php if($sorteo->complementarios): ?>
                         <span class="text-gray-300 mx-1">+</span>
-                        @foreach($sorteo->complementarios as $key => $valor)
-                            @if(is_array($valor))
-                                @foreach($valor as $v)
+                        <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(is_array($valor)): ?>
+                                <?php $__currentLoopData = $valor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <span class="ball w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
-                                        {{ $v }}
+                                        <?php echo e($v); ?>
+
                                     </span>
-                                @endforeach
-                            @else
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php else: ?>
                                 <span class="ball w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-xs">
-                                    {{ $valor }}
+                                    <?php echo e($valor); ?>
+
                                 </span>
-                            @endif
-                        @endforeach
-                    @endif
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endif; ?>
                 </div>
                 
-                @if($sorteo->bote)
+                <?php if($sorteo->bote): ?>
                     <p class="text-emerald-600 font-bold text-right min-w-[100px]">
-                        {{ number_format($sorteo->bote, 0, ',', '.') }} €
+                        <?php echo e(number_format($sorteo->bote, 0, ',', '.')); ?> €
                     </p>
-                @endif
+                <?php endif; ?>
             </div>
         </a>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
     
     <div class="mt-8">
-        {{ $sorteos->links() }}
+        <?php echo e($sorteos->links()); ?>
+
     </div>
-@else
+<?php else: ?>
     <div class="bg-white rounded-xl shadow-md p-12 text-center">
         <p class="text-gray-400 italic">No hay sorteos disponibles todavía.</p>
     </div>
-@endif
+<?php endif; ?>
 
 <!-- CTA a Guía -->
 <div class="mt-8 bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200">
-    <h3 class="text-lg font-bold text-slate-800 mb-2">¿No sabes cómo jugar a {{ $juego->nombre }}?</h3>
+    <h3 class="text-lg font-bold text-slate-800 mb-2">¿No sabes cómo jugar a <?php echo e($juego->nombre); ?>?</h3>
     <p class="text-slate-600 mb-4">Aprende las reglas, premios, probabilidades y todo lo que necesitas saber.</p>
-    <a href="{{ route('juego.guia', $juego->slug) }}" class="{{ $color['bg'] }} text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 inline-block">
-        Ver guía completa de {{ $juego->nombre }} →
+    <a href="<?php echo e(route('juego.guia', $juego->slug)); ?>" class="<?php echo e($color['bg']); ?> text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 inline-block">
+        Ver guía completa de <?php echo e($juego->nombre); ?> →
     </a>
 </div>
 
 <section class="mt-10 bg-white rounded-xl shadow-md p-6">
-    <h2 class="text-lg font-bold text-slate-800 mb-4">Preguntas frecuentes sobre {{ $juego->nombre }}</h2>
+    <h2 class="text-lg font-bold text-slate-800 mb-4">Preguntas frecuentes sobre <?php echo e($juego->nombre); ?></h2>
 
     <div class="space-y-3">
         <details class="rounded-lg border border-slate-200 p-4">
-            <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuál es el último sorteo de {{ $juego->nombre }}?</summary>
+            <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuál es el último sorteo de <?php echo e($juego->nombre); ?>?</summary>
             <div class="mt-2 text-slate-600">
-                @if($latestSorteo)
-                    El último sorteo disponible de {{ $juego->nombre }} es el {{ $latestFechaHuman }}.
-                @else
-                    Aún no hay sorteos disponibles para {{ $juego->nombre }}.
-                @endif
+                <?php if($latestSorteo): ?>
+                    El último sorteo disponible de <?php echo e($juego->nombre); ?> es el <?php echo e($latestFechaHuman); ?>.
+                <?php else: ?>
+                    Aún no hay sorteos disponibles para <?php echo e($juego->nombre); ?>.
+                <?php endif; ?>
             </div>
         </details>
 
         <details class="rounded-lg border border-slate-200 p-4">
-            <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué días se sortea {{ $juego->nombre }}?</summary>
+            <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué días se sortea <?php echo e($juego->nombre); ?>?</summary>
             <div class="mt-2 text-slate-600">
-                Días de sorteo: {{ str_replace(',', ', ', $juego->dias_sorteo) }}.
+                Días de sorteo: <?php echo e(str_replace(',', ', ', $juego->dias_sorteo)); ?>.
             </div>
         </details>
 
         <details class="rounded-lg border border-slate-200 p-4">
-            <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuándo caducan los premios de {{ $juego->nombre }}?</summary>
+            <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuándo caducan los premios de <?php echo e($juego->nombre); ?>?</summary>
             <div class="mt-2 text-slate-600">
                 Por norma general, los premios caducan a los 3 meses desde la fecha del sorteo. En cada sorteo mostramos la fecha de caducidad y cuánto falta.
             </div>
         </details>
 
-        @switch($juego->slug)
-            @case('euromillones')
+        <?php switch($juego->slug):
+            case ('euromillones'): ?>
                 <details class="rounded-lg border border-slate-200 p-4">
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué son las estrellas en Euromillones?</summary>
                     <div class="mt-2 text-slate-600">
@@ -211,9 +213,9 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                         En España, los premios hasta 20.000€ están exentos de impuestos. A partir de esa cantidad, se aplica un 20% de retención en la fuente.
                     </div>
                 </details>
-                @break
+                <?php break; ?>
 
-            @case('bonoloto')
+            <?php case ('bonoloto'): ?>
                 <details class="rounded-lg border border-slate-200 p-4">
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué es el reintegro en Bonoloto?</summary>
                     <div class="mt-2 text-slate-600">
@@ -234,9 +236,9 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                         Con 3 aciertos ya tienes premio (aproximadamente 6€). Los premios aumentan con más aciertos hasta el bote con 6 números acertados.
                     </div>
                 </details>
-                @break
+                <?php break; ?>
 
-            @case('la-primitiva')
+            <?php case ('la-primitiva'): ?>
                 <details class="rounded-lg border border-slate-200 p-4">
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué es "El Millón" en La Primitiva?</summary>
                     <div class="mt-2 text-slate-600">
@@ -257,9 +259,9 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                         Aunque ambos usan 6 números del 1-49, El Gordo tiene un coste mayor (1,50€ vs 1€), botes más altos (5M€ vs 3M€ mínimo) y se sortea solo los domingos.
                     </div>
                 </details>
-                @break
+                <?php break; ?>
 
-            @case('el-gordo')
+            <?php case ('el-gordo'): ?>
                 <details class="rounded-lg border border-slate-200 p-4">
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Por qué se llama "El Gordo" si es de La Primitiva?</summary>
                     <div class="mt-2 text-slate-600">
@@ -280,8 +282,8 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                         Cada apuesta de El Gordo cuesta 1,50€. Incluye el reintegro que te devuelve el importe completo si aciertas el número del 0 al 9.
                     </div>
                 </details>
-                @break
-        @endswitch
+                <?php break; ?>
+        <?php endswitch; ?>
 
         <details class="rounded-lg border border-slate-200 p-4">
             <summary class="font-semibold text-slate-800 cursor-pointer">¿Cómo se reclaman los premios?</summary>
@@ -305,4 +307,6 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
         </details>
     </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH G:\Nire unitatea\python\boteshoy2\web\resources\views/juego.blade.php ENDPATH**/ ?>

@@ -9,6 +9,7 @@ $colores = [
     'bonoloto' => ['bg' => 'bg-bono-500', 'border' => 'border-bono-500', 'text' => 'text-bono-500', 'ball' => 'bg-red-600'],
     'la-primitiva' => ['bg' => 'bg-primi-500', 'border' => 'border-primi-500', 'text' => 'text-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'border' => 'border-gordo-500', 'text' => 'text-gordo-500', 'ball' => 'bg-purple-600'],
+    'eurodreams' => ['bg' => 'bg-dream-500', 'border' => 'border-dream-500', 'text' => 'text-dream-500', 'ball' => 'bg-cyan-600'],
 ];
 @endphp
 
@@ -133,6 +134,16 @@ $colores = [
                 <li><a href="{{ route('juego', 'el-gordo') }}" class="text-purple-600 hover:underline">Ver ultimos resultados</a></li>
             </ul>
         </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-dream-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Eurodreams</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'eurodreams') }}" class="text-cyan-600 hover:underline">Como se juega a Eurodreams</a></li>
+                <li><a href="{{ route('juego.guia', 'eurodreams') }}" class="text-cyan-600 hover:underline">Premios y probabilidades de Eurodreams</a></li>
+                <li><a href="{{ route('juego.guia', 'eurodreams') }}" class="text-cyan-600 hover:underline">Que es el Numero Dream</a></li>
+                <li><a href="{{ route('juego', 'eurodreams') }}" class="text-cyan-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
     </div>
 </section>
 
@@ -166,6 +177,13 @@ $colores = [
             <div>
                 <div class="font-medium text-slate-800">El Gordo</div>
                 <div class="text-sm text-slate-600">Números clave y premios</div>
+            </div>
+        </a>
+        <a href="{{ route('juego', 'eurodreams') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+            <span class="w-3 h-3 bg-cyan-600 rounded-full mr-3"></span>
+            <div>
+                <div class="font-medium text-slate-800">Eurodreams</div>
+                <div class="text-sm text-slate-600">Premios mensuales de por vida</div>
             </div>
         </a>
     </div>

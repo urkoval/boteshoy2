@@ -72,6 +72,7 @@ $colores = [
     'bonoloto' => ['bg' => 'bg-bono-500', 'ball' => 'bg-red-600', 'text' => 'text-bono-500'],
     'la-primitiva' => ['bg' => 'bg-primi-500', 'ball' => 'bg-emerald-600', 'text' => 'text-primi-500'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'ball' => 'bg-purple-600', 'text' => 'text-gordo-500'],
+    'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600', 'text' => 'text-dream-500'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600', 'text' => 'text-gray-500'];
 @endphp

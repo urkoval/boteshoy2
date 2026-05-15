@@ -145,6 +145,21 @@ class LotoluckScraper:
                             img = cells[3].find('img', src=lambda s: s and 'Bola' in s)
                             if img:
                                 complementarios['clave'] = self._extract_number_from_image(img['src'])
+                    
+                    # Eurodreams: Número Dream (1-5, similar a estrellas pero solo 1)
+                    elif self.slug == 'eurodreams':
+                        # Buscar el Número Dream - puede estar en span o en imagen
+                        dream_span = table.find('span', class_='result_estrella')
+                        if dream_span:
+                            try:
+                                complementarios['dream'] = int(dream_span.get_text(strip=True))
+                            except:
+                                pass
+                        # Alternativa: buscar en cells[3] como imagen
+                        if not complementarios.get('dream') and len(cells) >= 4:
+                            img = cells[3].find('img', src=lambda s: s and 'Bola' in s)
+                            if img:
+                                complementarios['dream'] = self._extract_number_from_image(img['src'])
         
         except Exception as e:
             logger.error(f"Error extrayendo complementarios: {e}")
@@ -338,6 +353,53 @@ class LotoluckScraper:
                         # Si hay acertantes, lo tratamos como pendiente (None). Si no hay acertantes, es 0.
                         if not re.search(r'\d', premio_text or ''):
                             premio = None if acertantes > 0 else 0
+                        
+                        if categoria:
+                            premios.append({
+                                'categoria': categoria,
+                                'aciertos': aciertos,
+                                'acertantes': acertantes,
+                                'premio': premio
+                            })
+                    
+                    # Eurodreams: 4 columnas con premios mensuales (Categoria, Aciertos, Acertantes, Premio)
+                    elif self.slug == 'eurodreams' and len(cells) >= 4:
+                        categoria = cells[0].get_text(strip=True)
+                        aciertos = cells[1].get_text(strip=True)  # 6+1, 6+0, 5+1, etc.
+                        acertantes_text = cells[2].get_text(strip=True)
+                        premio_text = cells[3].get_text(strip=True)
+                        
+                        # Limpiar número de acertantes
+                        try:
+                            acertantes = int(re.sub(r'[^\d]', '', acertantes_text) or 0)
+                        except:
+                            acertantes = 0
+
+                        # Eurodreams tiene premios especiales: "20.000€/mes" o "5.000€/mes"
+                        # Guardamos el texto original para mostrar en la vista
+                        premio = premio_text.strip() if premio_text else None
+                        
+                        # Si es un premio mensual, lo guardamos como string descriptivo
+                        # Si es cantidad fija, parseamos el número
+                        if premio and ('mes' in premio.lower() or 'año' in premio.lower()):
+                            # Mantener como string descriptivo: "20.000€/mes x 30 años"
+                            pass
+                        else:
+                            def _parse_euro_amount(text):
+                                raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
+                                if not raw:
+                                    return None
+                                if '.' in raw and ',' in raw:
+                                    raw = raw.replace('.', '').replace(',', '.')
+                                elif ',' in raw:
+                                    raw = raw.replace(',', '.')
+                                try:
+                                    return float(raw)
+                                except Exception:
+                                    return None
+                            premio = _parse_euro_amount(premio_text)
+                            if not re.search(r'\d', premio_text or ''):
+                                premio = None if acertantes > 0 else 0
                         
                         if categoria:
                             premios.append({

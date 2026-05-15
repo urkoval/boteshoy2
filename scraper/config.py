@@ -21,6 +21,7 @@ URLS = {
     'euromillones': 'https://lotoluck.com/juegos/onlae/euromillones',
     'la-primitiva': 'https://lotoluck.com/juegos/onlae/primitiva',
     'el-gordo': 'https://lotoluck.com/juegos/onlae/el-gordo',
+    'eurodreams': 'https://lotoluck.com/juegos/onlae/eurodreams',
 }
 
 # Página agregada de botes
