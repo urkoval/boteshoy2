@@ -4,7 +4,11 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 
 ## Now (próximo)
 ### Juegos (pendientes)
-- Eurodreams.
+- ~~Eurodreams~~ ✅ **Implementado (2026-05-15)**
+  - Scraper adaptado (6 números + Número Dream, acertantes Europa/España, premios mensuales)
+  - Colores cyan en todas las vistas
+  - Guía completa con FAQs
+  - Sitemap actualizado con rutas de contenido
 - Lotería Nacional.
 - Lotería Nacional de Jueves.
 - Lotería de Navidad.
