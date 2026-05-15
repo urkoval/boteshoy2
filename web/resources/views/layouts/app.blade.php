@@ -43,8 +43,8 @@
     @stack('head')
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col overflow-x-hidden">
-    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg">
-        <div class="container mx-auto px-4 py-5">
+    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 py-5">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div class="flex items-baseline gap-2">
                     <a href="{{ route('home') }}" class="text-2xl font-bold tracking-tight">
@@ -54,33 +54,36 @@
                 </div>
 
                 @if(!empty($botesHeader))
-                    <div class="flex gap-2 overflow-x-auto scrollbar-hide md:overflow-visible pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-                        @foreach($botesHeader as $b)
-                            <a href="{{ route('juego', $b['slug']) }}" class="shrink-0 rounded-full {{ $b['classes']['bg'] }} border {{ $b['classes']['border'] }} px-3 py-2 hover:opacity-90 transition">
-                                <div class="text-[11px] text-white/70">{{ $b['nombre'] }}</div>
-                                <div class="text-sm font-extrabold">{{ number_format($b['bote_eur'], 0, ',', '.') }} €</div>
-                            </a>
-                        @endforeach
+                    <div class="-mx-4 px-4 md:mx-0 md:px-0">
+                        <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+                            @foreach($botesHeader as $b)
+                                <a href="{{ route('juego', $b['slug']) }}" class="shrink-0 rounded-full {{ $b['classes']['bg'] }} border {{ $b['classes']['border'] }} px-3 py-2 hover:opacity-90 transition">
+                                    <div class="text-[11px] text-white/70">{{ $b['nombre'] }}</div>
+                                    <div class="text-sm font-extrabold">{{ number_format($b['bote_eur'], 0, ',', '.') }} €</div>
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
                 @endif
             </div>
         </div>
     </header>
 
-    <nav class="bg-slate-700 text-white shadow">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex flex-wrap gap-2 sm:gap-4">
-                <!-- Main Games Navigation -->
-                <div class="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-hide">
-                    <a href="{{ route('juego', 'euromillones') }}" class="px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
-                    <a href="{{ route('juego', 'bonoloto') }}" class="px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
-                    <a href="{{ route('juego', 'la-primitiva') }}" class="px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
-                    <a href="{{ route('juego', 'el-gordo') }}" class="px-3 py-1.5 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm font-medium whitespace-nowrap transition">El Gordo</a>
-                    <a href="{{ route('juego', 'eurodreams') }}" class="px-3 py-1.5 rounded-full bg-dream-500 hover:bg-dream-600 text-sm font-medium whitespace-nowrap transition">Eurodreams</a>
+    <nav class="bg-slate-700 text-white shadow overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <!-- Main Games Navigation - scrollable row -->
+            <div class="-mx-4 px-4 mb-2">
+                <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+                    <a href="{{ route('juego', 'euromillones') }}" class="shrink-0 px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
+                    <a href="{{ route('juego', 'bonoloto') }}" class="shrink-0 px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
+                    <a href="{{ route('juego', 'la-primitiva') }}" class="shrink-0 px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
+                    <a href="{{ route('juego', 'el-gordo') }}" class="shrink-0 px-3 py-1.5 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm font-medium whitespace-nowrap transition">El Gordo</a>
+                    <a href="{{ route('juego', 'eurodreams') }}" class="shrink-0 px-3 py-1.5 rounded-full bg-dream-500 hover:bg-dream-600 text-sm font-medium whitespace-nowrap transition">Eurodreams</a>
                 </div>
-                
-                <!-- SEO Content Sections -->
-                <div class="flex gap-2 sm:gap-4 border-l border-slate-600 pl-2 sm:pl-4">
+            </div>
+            
+            <!-- SEO Content Sections -->
+            <div class="flex gap-2 sm:gap-4">
                     <div class="relative group">
                         <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
                             Guías <span class="text-xs">▼</span>
@@ -123,7 +126,6 @@
                             <a href="{{ route('juego.combinacion-ganadora', 'eurodreams') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Eurodreams</a>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </nav>
