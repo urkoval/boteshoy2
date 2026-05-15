@@ -230,6 +230,57 @@ class LotoluckScraper:
                                 'premio': premio
                             })
                     
+                    # Eurodreams: 5 columnas como Euromillones (Categoria, Aciertos, Acertantes Europa, Acertantes España, Premio)
+                    elif self.slug == 'eurodreams' and len(cells) >= 5:
+                        categoria = cells[0].get_text(strip=True)
+                        aciertos = cells[1].get_text(strip=True)  # 6+1, 6+0, 5+1, etc.
+                        acertantes_europa_text = cells[2].get_text(strip=True)
+                        acertantes_espana_text = cells[3].get_text(strip=True)
+                        premio_text = cells[4].get_text(strip=True)
+                        
+                        # Limpiar números de acertantes
+                        try:
+                            acertantes_europa = int(re.sub(r'[^\d]', '', acertantes_europa_text) or 0)
+                        except:
+                            acertantes_europa = 0
+                            
+                        try:
+                            acertantes_espana = int(re.sub(r'[^\d]', '', acertantes_espana_text) or 0)
+                        except:
+                            acertantes_espana = 0
+
+                        # Eurodreams tiene premios especiales: "20.000€/mes" o "5.000€/mes"
+                        premio = premio_text.strip() if premio_text else None
+                        
+                        # Si es un premio mensual, lo guardamos como string descriptivo
+                        if premio and ('mes' in premio.lower() or 'año' in premio.lower()):
+                            pass
+                        else:
+                            def _parse_euro_amount(text):
+                                raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
+                                if not raw:
+                                    return None
+                                if '.' in raw and ',' in raw:
+                                    raw = raw.replace('.', '').replace(',', '.')
+                                elif ',' in raw:
+                                    raw = raw.replace(',', '.')
+                                try:
+                                    return float(raw)
+                                except Exception:
+                                    return None
+                            premio = _parse_euro_amount(premio_text)
+                            if not re.search(r'\d', premio_text or ''):
+                                premio = None if (acertantes_europa + acertantes_espana) > 0 else 0
+                        
+                        if categoria:
+                            premios.append({
+                                'categoria': categoria,
+                                'aciertos': aciertos,
+                                'acertantes_europa': acertantes_europa,
+                                'acertantes_espana': acertantes_espana,
+                                'premio': premio
+                            })
+                    
                     # El Gordo tiene 4 columnas: Categoria, Aciertos, Acertantes, Premios
                     elif self.slug == 'el-gordo' and len(cells) >= 4:
                         categoria = cells[0].get_text(strip=True)
@@ -362,60 +413,6 @@ class LotoluckScraper:
                                 'premio': premio
                             })
                     
-                    # Eurodreams: 5 columnas como Euromillones (Categoria, Aciertos, Acertantes Europa, Acertantes España, Premio)
-                    elif self.slug == 'eurodreams' and len(cells) >= 5:
-                        categoria = cells[0].get_text(strip=True)
-                        aciertos = cells[1].get_text(strip=True)  # 6+1, 6+0, 5+1, etc.
-                        acertantes_europa_text = cells[2].get_text(strip=True)
-                        acertantes_espana_text = cells[3].get_text(strip=True)
-                        premio_text = cells[4].get_text(strip=True)
-                        
-                        # Limpiar números de acertantes
-                        try:
-                            acertantes_europa = int(re.sub(r'[^\d]', '', acertantes_europa_text) or 0)
-                        except:
-                            acertantes_europa = 0
-                            
-                        try:
-                            acertantes_espana = int(re.sub(r'[^\d]', '', acertantes_espana_text) or 0)
-                        except:
-                            acertantes_espana = 0
-
-                        # Eurodreams tiene premios especiales: "20.000€/mes" o "5.000€/mes"
-                        # Guardamos el texto original para mostrar en la vista
-                        premio = premio_text.strip() if premio_text else None
-                        
-                        # Si es un premio mensual, lo guardamos como string descriptivo
-                        # Si es cantidad fija, parseamos el número
-                        if premio and ('mes' in premio.lower() or 'año' in premio.lower()):
-                            # Mantener como string descriptivo: "20.000€/mes x 30 años"
-                            pass
-                        else:
-                            def _parse_euro_amount(text):
-                                raw = re.sub(r'[^\d,.]', '', (text or '')).strip()
-                                if not raw:
-                                    return None
-                                if '.' in raw and ',' in raw:
-                                    raw = raw.replace('.', '').replace(',', '.')
-                                elif ',' in raw:
-                                    raw = raw.replace(',', '.')
-                                try:
-                                    return float(raw)
-                                except Exception:
-                                    return None
-                            premio = _parse_euro_amount(premio_text)
-                            if not re.search(r'\d', premio_text or ''):
-                                premio = None if (acertantes_europa + acertantes_espana) > 0 else 0
-                        
-                        if categoria:
-                            premios.append({
-                                'categoria': categoria,
-                                'aciertos': aciertos,
-                                'acertantes_europa': acertantes_europa,
-                                'acertantes_espana': acertantes_espana,
-                                'premio': premio
-                            })
-                    
                     # Para otros juegos: mantener lógica original (3 columnas)
                     elif len(cells) >= 3:
                         categoria = cells[0].get_text(strip=True)
@@ -468,7 +465,7 @@ class LotoluckScraper:
         try:
             all_zero = True
             for p in premios:
-                if self.slug == 'euromillones':
+                if self.slug in ['euromillones', 'eurodreams']:
                     if (p.get('acertantes_europa') or 0) != 0 or (p.get('acertantes_espana') or 0) != 0:
                         all_zero = False
                         break
