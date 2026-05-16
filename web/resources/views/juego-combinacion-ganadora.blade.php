@@ -8,9 +8,15 @@
 
 @section('title')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->seo_title ?? "Combinación Ganadora Euromillones | Cómo Comprobar y Qué Hacer si Ganas" }}
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Euromillones: Cómo Comprobar si He Ganado" }}
 @elseif($juego->slug === 'la-primitiva')
-    {{ $contenido?->seo_title ?? "Combinación Ganadora Primitiva con Reintegro | Cómo Saber si He Ganado" }}
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Primitiva: Reintegro, Complementario y Premios" }}
+@elseif($juego->slug === 'bonoloto')
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Bonoloto: Cómo Saber si He Ganado Hoy" }}
+@elseif($juego->slug === 'el-gordo')
+    {{ $contenido?->seo_title ?? "Combinación Ganadora El Gordo: Comprobar Boleto y Premios" }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->seo_title ?? "Combinación Ganadora Eurodreams: Número Dream y Premios Mensuales" }}
 @else
     {{ $contenido?->seo_title ?? "Combinación Ganadora {$juego->nombre} | Cómo Saber si Has Ganado" }}
 @endif
@@ -18,9 +24,15 @@
 
 @section('description')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de Euromillones: qué números y estrellas buscar, dónde verificar resultados, impuestos y qué hacer si tienes premio." }}
+    {{ $contenido?->meta_description ?? "Cómo comprobar la combinación ganadora de Euromillones paso a paso: números y estrellas, dónde verificar, impuestos sobre premios y qué hacer si has ganado." }}
 @elseif($juego->slug === 'la-primitiva')
-    {{ $contenido?->meta_description ?? "Descubre cómo funciona la combinación ganadora de La Primitiva: 6 números, complementario y reintegro. Dónde comprobar, cómo cobrar premios y fiscalidad." }}
+    {{ $contenido?->meta_description ?? "Combinación ganadora de La Primitiva explicada: 6 números, complementario, reintegro. Cómo comprobar tu boleto, dónde cobrar y fiscalidad de premios." }}
+@elseif($juego->slug === 'bonoloto')
+    {{ $contenido?->meta_description ?? "Cómo saber si he ganado en Bonoloto: comprobar combinación ganadora, reintegro, dónde cobrar premios y plazos de caducidad." }}
+@elseif($juego->slug === 'el-gordo')
+    {{ $contenido?->meta_description ?? "Comprobar combinación ganadora de El Gordo de la Primitiva: números, Número Clave, dónde verificar y cómo cobrar premios." }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->meta_description ?? "Combinación ganadora Eurodreams: cómo comprobar números y Número Dream, premios mensuales de 20.000€ y dónde cobrar." }}
 @else
     {{ $contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de {$juego->nombre}: qué números buscar, dónde verificar y qué hacer si tienes premio." }}
 @endif

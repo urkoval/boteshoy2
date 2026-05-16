@@ -8,9 +8,15 @@
 
 @section('title')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->seo_title ?? "Apuestas Reducidas Euromillones | Sistemas Reducidos y Garantías 2024" }}
+    {{ $contenido?->seo_title ?? "Apuestas Reducidas Euromillones: Qué Son, Garantías y Ejemplos 2026" }}
 @elseif($juego->slug === 'bonoloto')
-    {{ $contenido?->seo_title ?? "Apuestas Reducidas Bonoloto Baratas | Sistemas 3 si 5 y Ejemplos" }}
+    {{ $contenido?->seo_title ?? "Apuestas Reducidas Bonoloto Baratas: Sistema 3 si 5 Explicado" }}
+@elseif($juego->slug === 'la-primitiva')
+    {{ $contenido?->seo_title ?? "Apuestas Reducidas Primitiva: Sistemas Económicos y Garantías" }}
+@elseif($juego->slug === 'el-gordo')
+    {{ $contenido?->seo_title ?? "Apuestas Reducidas El Gordo: Cómo Ahorrar Jugando Más Números" }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->seo_title ?? "Apuestas Reducidas Eurodreams: Sistemas y Garantías 2026" }}
 @else
     {{ $contenido?->seo_title ?? "Apuestas Reducidas en {$juego->nombre} | Sistemas Optimizados para Ahorrar" }}
 @endif
@@ -18,9 +24,15 @@
 
 @section('description')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->meta_description ?? "Descubre cómo funcionan las apuestas reducidas en Euromillones: sistemas reducidos, garantías matemáticas, costes y dónde hacer apuestas reducidas baratas." }}
+    {{ $contenido?->meta_description ?? "Qué son las apuestas reducidas en Euromillones y cómo funcionan. Sistemas reducidos con garantías matemáticas, ejemplos prácticos y dónde hacerlas baratas." }}
 @elseif($juego->slug === 'bonoloto')
-    {{ $contenido?->meta_description ?? "Aprende sobre apuestas reducidas en Bonoloto: qué son, cómo funcionan, sistemas 3 si 5, ejemplos prácticos y dónde hacerlas económicamente." }}
+    {{ $contenido?->meta_description ?? "Apuestas reducidas Bonoloto explicadas: sistema 3 si 5, garantías matemáticas, ejemplos prácticos y cómo jugar más números pagando menos." }}
+@elseif($juego->slug === 'la-primitiva')
+    {{ $contenido?->meta_description ?? "Cómo funcionan las apuestas reducidas en La Primitiva: sistemas económicos, garantías de acierto y ejemplos para jugar más números con menos coste." }}
+@elseif($juego->slug === 'el-gordo')
+    {{ $contenido?->meta_description ?? "Apuestas reducidas en El Gordo de la Primitiva: qué son, cómo funcionan los sistemas reducidos y ejemplos prácticos para ahorrar." }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->meta_description ?? "Sistemas de apuestas reducidas en Eurodreams: cómo jugar más números con garantías matemáticas y menor coste." }}
 @else
     {{ $contenido?->meta_description ?? "Aprende cómo funcionan las apuestas reducidas en {$juego->nombre}: qué son, garantías, costes y dónde hacerlas." }}
 @endif

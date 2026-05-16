@@ -1,11 +1,35 @@
 @extends('layouts.app')
 
 @section('title')
-Cómo se juega a {{ $juego->nombre }} | Guía Completa 2026
+@if($juego->slug === 'euromillones')
+    Cómo se Juega a Euromillones: Reglas, Estrellas y Premios 2026
+@elseif($juego->slug === 'bonoloto')
+    Cómo se Juega a Bonoloto: Reglas, Reintegro y Probabilidades
+@elseif($juego->slug === 'la-primitiva')
+    Cómo se Juega a La Primitiva Paso a Paso: Guía Completa 2026
+@elseif($juego->slug === 'el-gordo')
+    Cómo se Juega a El Gordo de la Primitiva: Número Clave y Premios
+@elseif($juego->slug === 'eurodreams')
+    Cómo se Juega a Eurodreams: Número Dream y Premios Mensuales
+@else
+    Cómo se juega a {{ $juego->nombre }} | Guía Completa 2026
+@endif
 @endsection
 
 @section('description')
-Aprende cómo se juega a {{ $juego->nombre }}: reglas, premios, probabilidades y consejos. Guía completa paso a paso actualizada.
+@if($juego->slug === 'euromillones')
+    Aprende cómo se juega a Euromillones paso a paso: seleccionar números y estrellas, coste de apuesta, probabilidades de ganar y categorías de premios.
+@elseif($juego->slug === 'bonoloto')
+    Guía completa de Bonoloto: cómo jugar, qué es el reintegro, probabilidades de acertar y tabla de premios actualizada. La lotería más económica.
+@elseif($juego->slug === 'la-primitiva')
+    Cómo jugar a La Primitiva explicado: 6 números, complementario, reintegro, El Millón de los jueves. Probabilidades y premios actualizados.
+@elseif($juego->slug === 'el-gordo')
+    Guía de El Gordo de la Primitiva: cómo funciona el Número Clave, probabilidades, premios y diferencias con La Primitiva normal.
+@elseif($juego->slug === 'eurodreams')
+    Cómo se juega a Eurodreams: 6 números + Número Dream, premio de 20.000€/mes durante 30 años. Reglas, probabilidades y países participantes.
+@else
+    Aprende cómo se juega a {{ $juego->nombre }}: reglas, premios, probabilidades y consejos. Guía completa paso a paso actualizada.
+@endif
 @endsection
 
 @php

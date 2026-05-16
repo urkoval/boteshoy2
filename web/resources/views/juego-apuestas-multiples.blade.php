@@ -8,13 +8,15 @@
 
 @section('title')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->seo_title ?? "Cómo Hacer Apuestas Múltiples en Euromillones | Guía Completa 2024" }}
+    {{ $contenido?->seo_title ?? "Apuestas Múltiples Euromillones: Cómo Jugar, Costes y Ejemplos 2026" }}
 @elseif($juego->slug === 'bonoloto')
-    {{ $contenido?->seo_title ?? "Apuestas Múltiples Bonoloto | Coste, Ejemplos y Cómo Jugar" }}
+    {{ $contenido?->seo_title ?? "Apuestas Múltiples Bonoloto Baratas: Coste Real y Cómo Hacerlas" }}
 @elseif($juego->slug === 'la-primitiva')
-    {{ $contenido?->seo_title ?? "Apuestas Múltiples Primitiva | Sistemas, Precios y Estrategias" }}
+    {{ $contenido?->seo_title ?? "Apuestas Múltiples Primitiva: Sistemas, Costes y Estrategias 2026" }}
 @elseif($juego->slug === 'el-gordo')
-    {{ $contenido?->seo_title ?? "Apuestas Múltiples Gordo de la Primitiva | Cómo Funcionan" }}
+    {{ $contenido?->seo_title ?? "Apuestas Múltiples El Gordo: Cómo Funcionan y Cuánto Cuestan" }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->seo_title ?? "Apuestas Múltiples Eurodreams: Guía Completa y Costes 2026" }}
 @else
     {{ $contenido?->seo_title ?? "Apuestas Múltiples en {$juego->nombre} | Cómo Funcionan y Cuánto Cuestan" }}
 @endif
@@ -22,13 +24,15 @@
 
 @section('description')
 @if($juego->slug === 'euromillones')
-    {{ $contenido?->meta_description ?? "Aprende cómo hacer apuestas múltiples en Euromillones paso a paso: coste real, ejemplos prácticos, ventajas y cómo rellenar tu boleto múltiple." }}
+    {{ $contenido?->meta_description ?? "Aprende cómo hacer apuestas múltiples en Euromillones paso a paso. Tabla de costes actualizada, ejemplos prácticos de 6 a 11 números y calculadora de combinaciones." }}
 @elseif($juego->slug === 'bonoloto')
-    {{ $contenido?->meta_description ?? "Descubre cómo funcionan las apuestas múltiples en Bonoloto: tablas de costes, ejemplos de 7 a 11 números, y estrategias para jugar más combinaciones." }}
+    {{ $contenido?->meta_description ?? "Apuestas múltiples en Bonoloto explicadas: tabla de costes desde 3,50€, ejemplos de 7 a 11 números y cómo rellenar el boleto múltiple paso a paso." }}
 @elseif($juego->slug === 'la-primitiva')
-    {{ $contenido?->meta_description ?? "Guía completa de apuestas múltiples en La Primitiva: cómo jugar, costes por número, sistemas múltiples y consejos para maximizar tus probabilidades." }}
+    {{ $contenido?->meta_description ?? "Guía completa de apuestas múltiples en La Primitiva: costes reales por número (7€ a 693€), sistemas múltiples y estrategias para maximizar probabilidades." }}
 @elseif($juego->slug === 'el-gordo')
-    {{ $contenido?->meta_description ?? "Aprende a hacer apuestas múltiples en el Gordo de la Primitiva: costes, combinaciones posibles y cómo rellenar boletos múltiples." }}
+    {{ $contenido?->meta_description ?? "Cómo hacer apuestas múltiples en El Gordo de la Primitiva: tabla de costes, combinaciones posibles y ejemplos prácticos para jugar más números." }}
+@elseif($juego->slug === 'eurodreams')
+    {{ $contenido?->meta_description ?? "Apuestas múltiples en Eurodreams: cómo jugar más números y Número Dream, tabla de costes y ejemplos para aumentar tus probabilidades." }}
 @else
     {{ $contenido?->meta_description ?? "Aprende cómo hacer apuestas múltiples en {$juego->nombre}: qué son, ventajas, coste y cómo rellenar el boleto." }}
 @endif
