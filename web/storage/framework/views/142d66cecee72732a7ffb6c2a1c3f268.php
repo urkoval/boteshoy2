@@ -432,6 +432,41 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
             </tbody>
         </table>
     </div>
+    <?php elseif($juego->slug === 'eurodreams'): ?>
+    <!-- Tabla especial para Eurodreams (similar a Euromillones con acertantes Europa/España) -->
+    <div class="overflow-x-auto -mx-6">
+        <table class="w-full text-left min-w-[500px]">
+            <thead class="<?php echo e($color['bg']); ?> text-white">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Categoría</th>
+                    <th class="px-6 py-3 font-medium text-center">Aciertos</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes Europa</th>
+                    <th class="px-6 py-3 font-medium text-right">Acertantes España</th>
+                    <th class="px-6 py-3 font-medium text-right">Premio</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <?php $__currentLoopData = $sorteo->premios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $premio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-3 text-slate-700"><?php echo e($premio['categoria'] ?? '-'); ?></td>
+                    <td class="px-6 py-3 text-center text-slate-600 font-medium"><?php echo e($premio['aciertos'] ?? '-'); ?></td>
+                    <td class="px-6 py-3 text-right text-slate-600"><?php echo e(number_format($premio['acertantes_europa'] ?? 0, 0, ',', '.')); ?></td>
+                    <td class="px-6 py-3 text-right text-slate-600"><?php echo e(number_format($premio['acertantes_espana'] ?? 0, 0, ',', '.')); ?></td>
+                    <td class="px-6 py-3 text-right font-semibold text-slate-800">
+                        <?php if(array_key_exists('premio', $premio) && $premio['premio'] === null): ?>
+                            <span class="text-slate-500">Pendiente</span>
+                        <?php elseif(is_string($premio['premio'] ?? null) && (str_contains($premio['premio'], 'mes') || str_contains($premio['premio'], 'año'))): ?>
+                            <?php echo e($premio['premio']); ?>
+
+                        <?php else: ?>
+                            <?php echo e(number_format($premio['premio'] ?? 0, 2, ',', '.')); ?> €
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
+    </div>
     <?php else: ?>
     <!-- Tabla normal para otros juegos -->
     <div class="overflow-x-auto -mx-6">

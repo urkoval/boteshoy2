@@ -67,10 +67,10 @@
         </div>
     </header>
 
-    <nav class="bg-slate-700 text-white shadow relative z-20">
+    <nav class="bg-slate-700 text-white shadow overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <!-- Main Games Navigation -->
-            <div class="flex flex-wrap gap-2 mb-2 overflow-x-hidden">
+            <div class="flex flex-wrap gap-2 mb-2">
                 <a href="{{ route('juego', 'euromillones') }}" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-euro-500 hover:bg-euro-600 text-sm sm:text-base font-medium transition">Euromillones</a>
                 <a href="{{ route('juego', 'bonoloto') }}" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-bono-500 hover:bg-bono-600 text-sm sm:text-base font-medium transition">Bonoloto</a>
                 <a href="{{ route('juego', 'la-primitiva') }}" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primi-500 hover:bg-primi-600 text-sm sm:text-base font-medium transition">Primitiva</a>
