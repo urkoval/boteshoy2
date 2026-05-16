@@ -67,7 +67,7 @@
         </div>
     </header>
 
-    <nav class="bg-slate-700 text-white shadow overflow-hidden">
+    <nav class="bg-slate-700 text-white shadow overflow-x-clip">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <!-- Main Games Navigation -->
             <div class="flex flex-wrap gap-2 mb-2">
