@@ -20,6 +20,10 @@ Documento de planificación a alto nivel. Ajustar según necesidades.
 - Lotería del Niño.
 
 ### SEO
+- ~~Estrategia Long Tail implementada~~ ✅ **Hecho (2026-05-16)**
+  - Titles y descriptions optimizados para keywords long tail
+  - 20 páginas de contenido SEO (guías, apuestas múltiples/reducidas, combinación ganadora)
+  - Keywords objetivo: "cómo se juega", "apuestas múltiples/reducidas", "combinación ganadora"
 - Canonical por página.
 - BreadcrumbList (schema) en página de sorteo.
 - OpenGraph/Twitter cards.
