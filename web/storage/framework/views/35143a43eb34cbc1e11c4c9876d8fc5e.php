@@ -14,21 +14,34 @@ $colores = [
 <?php $__env->startSection('content'); ?>
 <h1 class="text-3xl font-bold text-slate-800 mb-6">Resultados de Loterías en España Hoy</h1>
 
-<?php if(!empty($boteDestacado)): ?>
+<?php if(!empty($boteProximo) || !empty($boteSemana)): ?>
 <section class="mb-8">
-    <div class="rounded-2xl bg-white shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-5 text-white">
-            <div class="text-xs text-white/70">Bote destacado</div>
-            <div class="mt-1 flex items-end justify-between gap-4">
-                <div>
-                    <div class="text-2xl font-extrabold"><?php echo e($boteDestacado['nombre']); ?></div>
-                    <div class="text-sm text-white/80">Próximo sorteo: <?php echo e($boteDestacado['fecha_sorteo']); ?></div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl md:text-4xl font-extrabold"><?php echo e(number_format($boteDestacado['bote_eur'], 0, ',', '.')); ?> €</div>
+    <div class="grid gap-4 md:grid-cols-2">
+        <?php if(!empty($boteProximo)): ?>
+        <a href="<?php echo e(route('juego', $boteProximo['slug'])); ?>" class="block rounded-2xl bg-white shadow-lg overflow-hidden hover:shadow-xl transition">
+            <div class="bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-5 text-white">
+                <div class="text-xs text-white/80 font-medium uppercase tracking-wide">🎯 Próximo sorteo</div>
+                <div class="mt-2">
+                    <div class="text-xl font-bold"><?php echo e($boteProximo['nombre']); ?></div>
+                    <div class="text-sm text-white/80"><?php echo e(\Carbon\Carbon::parse($boteProximo['fecha_sorteo'])->translatedFormat('l, j M')); ?></div>
+                    <div class="text-3xl sm:text-4xl font-extrabold mt-2"><?php echo e(number_format($boteProximo['bote_eur'], 0, ',', '.')); ?> €</div>
                 </div>
             </div>
-        </div>
+        </a>
+        <?php endif; ?>
+
+        <?php if(!empty($boteSemana) && (!$boteProximo || $boteSemana['slug'] !== $boteProximo['slug'])): ?>
+        <a href="<?php echo e(route('juego', $boteSemana['slug'])); ?>" class="block rounded-2xl bg-white shadow-lg overflow-hidden hover:shadow-xl transition">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5 text-white">
+                <div class="text-xs text-white/80 font-medium uppercase tracking-wide">🏆 Mayor bote</div>
+                <div class="mt-2">
+                    <div class="text-xl font-bold"><?php echo e($boteSemana['nombre']); ?></div>
+                    <div class="text-sm text-white/80"><?php echo e(\Carbon\Carbon::parse($boteSemana['fecha_sorteo'])->translatedFormat('l, j M')); ?></div>
+                    <div class="text-3xl sm:text-4xl font-extrabold mt-2"><?php echo e(number_format($boteSemana['bote_eur'], 0, ',', '.')); ?> €</div>
+                </div>
+            </div>
+        </a>
+        <?php endif; ?>
     </div>
 </section>
 <?php endif; ?>
@@ -135,6 +148,16 @@ $colores = [
                 <li><a href="<?php echo e(route('juego', 'el-gordo')); ?>" class="text-purple-600 hover:underline">Ver ultimos resultados</a></li>
             </ul>
         </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-dream-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Eurodreams</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="<?php echo e(route('juego.guia', 'eurodreams')); ?>" class="text-cyan-600 hover:underline">Como se juega a Eurodreams</a></li>
+                <li><a href="<?php echo e(route('juego.guia', 'eurodreams')); ?>" class="text-cyan-600 hover:underline">Premios y probabilidades de Eurodreams</a></li>
+                <li><a href="<?php echo e(route('juego.guia', 'eurodreams')); ?>" class="text-cyan-600 hover:underline">Que es el Numero Dream</a></li>
+                <li><a href="<?php echo e(route('juego', 'eurodreams')); ?>" class="text-cyan-600 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
     </div>
 </section>
 
@@ -168,6 +191,13 @@ $colores = [
             <div>
                 <div class="font-medium text-slate-800">El Gordo</div>
                 <div class="text-sm text-slate-600">Números clave y premios</div>
+            </div>
+        </a>
+        <a href="<?php echo e(route('juego', 'eurodreams')); ?>" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+            <span class="w-3 h-3 bg-cyan-600 rounded-full mr-3"></span>
+            <div>
+                <div class="font-medium text-slate-800">Eurodreams</div>
+                <div class="text-sm text-slate-600">Premios mensuales de por vida</div>
             </div>
         </a>
     </div>

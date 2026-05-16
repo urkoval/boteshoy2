@@ -1,9 +1,33 @@
 <?php $__env->startSection('title'); ?>
-Cómo se juega a <?php echo e($juego->nombre); ?> | Guía Completa 2026
+<?php if($juego->slug === 'euromillones'): ?>
+    Cómo se Juega a Euromillones: Reglas, Estrellas y Premios 2026
+<?php elseif($juego->slug === 'bonoloto'): ?>
+    Cómo se Juega a Bonoloto: Reglas, Reintegro y Probabilidades
+<?php elseif($juego->slug === 'la-primitiva'): ?>
+    Cómo se Juega a La Primitiva Paso a Paso: Guía Completa 2026
+<?php elseif($juego->slug === 'el-gordo'): ?>
+    Cómo se Juega a El Gordo de la Primitiva: Número Clave y Premios
+<?php elseif($juego->slug === 'eurodreams'): ?>
+    Cómo se Juega a Eurodreams: Número Dream y Premios Mensuales
+<?php else: ?>
+    Cómo se juega a <?php echo e($juego->nombre); ?> | Guía Completa 2026
+<?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('description'); ?>
-Aprende cómo se juega a <?php echo e($juego->nombre); ?>: reglas, premios, probabilidades y consejos. Guía completa paso a paso actualizada.
+<?php if($juego->slug === 'euromillones'): ?>
+    Aprende cómo se juega a Euromillones paso a paso: seleccionar números y estrellas, coste de apuesta, probabilidades de ganar y categorías de premios.
+<?php elseif($juego->slug === 'bonoloto'): ?>
+    Guía completa de Bonoloto: cómo jugar, qué es el reintegro, probabilidades de acertar y tabla de premios actualizada. La lotería más económica.
+<?php elseif($juego->slug === 'la-primitiva'): ?>
+    Cómo jugar a La Primitiva explicado: 6 números, complementario, reintegro, El Millón de los jueves. Probabilidades y premios actualizados.
+<?php elseif($juego->slug === 'el-gordo'): ?>
+    Guía de El Gordo de la Primitiva: cómo funciona el Número Clave, probabilidades, premios y diferencias con La Primitiva normal.
+<?php elseif($juego->slug === 'eurodreams'): ?>
+    Cómo se juega a Eurodreams: 6 números + Número Dream, premio de 20.000€/mes durante 30 años. Reglas, probabilidades y países participantes.
+<?php else: ?>
+    Aprende cómo se juega a <?php echo e($juego->nombre); ?>: reglas, premios, probabilidades y consejos. Guía completa paso a paso actualizada.
+<?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php
@@ -12,6 +36,7 @@ $colores = [
     'bonoloto' => ['bg' => 'bg-bono-500', 'border' => 'border-bono-500', 'text' => 'text-bono-500', 'ball' => 'bg-red-600'],
     'la-primitiva' => ['bg' => 'bg-primi-500', 'border' => 'border-primi-500', 'text' => 'text-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'border' => 'border-gordo-500', 'text' => 'text-gordo-500', 'ball' => 'bg-purple-600'],
+    'eurodreams' => ['bg' => 'bg-dream-500', 'border' => 'border-dream-500', 'text' => 'text-dream-500', 'ball' => 'bg-cyan-600'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-gray-500', 'text' => 'text-gray-500', 'ball' => 'bg-gray-600'];
 ?>
@@ -192,6 +217,51 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
                 </div>
             </div>
             <?php break; ?>
+            
+        <?php case ('eurodreams'): ?>
+            <div class="space-y-6">
+                <div class="bg-cyan-50 border-l-4 border-cyan-500 p-4">
+                    <h3 class="font-bold text-cyan-800 mb-2">¿Cómo se juega a Eurodreams?</h3>
+                    <p class="text-cyan-700">Selecciona 6 números del 1 al 40 y 1 Número Dream del 1 al 5. El coste es de 2,50€ por apuesta.</p>
+                </div>
+                
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Premios únicos</h4>
+                        <ul class="text-sm text-slate-600 space-y-1">
+                            <li>• 6 + Dream: <strong>20.000€/mes durante 30 años</strong></li>
+                            <li>• 6 números: 2.000€/mes durante 5 años</li>
+                            <li>• 5 números: Aprox. 200€</li>
+                            <li>• 4 números: Aprox. 15€</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Probabilidades</h4>
+                        <ul class="text-sm text-slate-600 space-y-1">
+                            <li>• Premio mayor: 1 entre 19.191.900</li>
+                            <li>• 6 números: 1 entre 4.797.975</li>
+                            <li>• 5 números: 1 entre 23.520</li>
+                            <li>• Cualquier premio: 1 entre 6</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-teal-50 border-l-4 border-teal-500 p-4">
+                    <h4 class="font-semibold text-teal-800 mb-2">¿Qué es el Número Dream?</h4>
+                    <p class="text-sm text-teal-700">El Número Dream es un número adicional del 1 al 5 que determina si ganas el premio máximo (renta mensual de 20.000€ durante 30 años) o el segundo premio (renta de 2.000€/mes durante 5 años).</p>
+                </div>
+                
+                <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4">
+                    <h4 class="font-semibold text-indigo-800 mb-2">Datos importantes</h4>
+                    <ul class="text-sm text-indigo-700 space-y-1">
+                        <li>• Días de sorteo: Lunes y Jueves a las 21:30h</li>
+                        <li>• Sorteo europeo: participan varios países</li>
+                        <li>• Premio en forma de renta mensual</li>
+                        <li>• Impuestos: Exento hasta 20.000€ en España</li>
+                    </ul>
+                </div>
+            </div>
+            <?php break; ?>
     <?php endswitch; ?>
     
     <div class="mt-6 p-4 bg-slate-50 rounded-lg">
@@ -336,6 +406,36 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-g
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuánto cuesta jugar a El Gordo?</summary>
                     <div class="mt-2 text-slate-600">
                         Cada apuesta de El Gordo cuesta 1,50€. Incluye el reintegro que te devuelve el importe completo si aciertas el número del 0 al 9.
+                    </div>
+                </details>
+                <?php break; ?>
+
+            <?php case ('eurodreams'): ?>
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué es el Número Dream en Eurodreams?</summary>
+                    <div class="mt-2 text-slate-600">
+                        El Número Dream es un número adicional del 1 al 5 que debes acertar junto con los 6 números principales para ganar el premio máximo: una renta de 20.000€ al mes durante 30 años.
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Cómo funcionan los premios mensuales de Eurodreams?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Los dos premios principales de Eurodreams se pagan como renta mensual: el primer premio son 20.000€/mes durante 30 años (7,2 millones en total), y el segundo premio son 2.000€/mes durante 5 años (120.000€ en total).
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿En qué países se juega Eurodreams?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Eurodreams es un sorteo europeo en el que participan España, Francia, Portugal, Bélgica, Luxemburgo, Irlanda y Suiza. Los sorteos se celebran los lunes y jueves.
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuánto cuesta jugar a Eurodreams?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Cada apuesta de Eurodreams cuesta 2,50€. Puedes elegir 6 números del 1 al 40 y 1 Número Dream del 1 al 5.
                     </div>
                 </details>
                 <?php break; ?>

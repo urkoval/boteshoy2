@@ -7,10 +7,19 @@
 
 <?php $__env->startSection('title'); ?>
 <?php if($juego->slug === 'euromillones'): ?>
-    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Euromillones | Cómo Comprobar y Qué Hacer si Ganas"); ?>
+    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Euromillones: Cómo Comprobar si He Ganado"); ?>
 
 <?php elseif($juego->slug === 'la-primitiva'): ?>
-    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Primitiva con Reintegro | Cómo Saber si He Ganado"); ?>
+    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Primitiva: Reintegro, Complementario y Premios"); ?>
+
+<?php elseif($juego->slug === 'bonoloto'): ?>
+    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Bonoloto: Cómo Saber si He Ganado Hoy"); ?>
+
+<?php elseif($juego->slug === 'el-gordo'): ?>
+    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora El Gordo: Comprobar Boleto y Premios"); ?>
+
+<?php elseif($juego->slug === 'eurodreams'): ?>
+    <?php echo e($contenido?->seo_title ?? "Combinación Ganadora Eurodreams: Número Dream y Premios Mensuales"); ?>
 
 <?php else: ?>
     <?php echo e($contenido?->seo_title ?? "Combinación Ganadora {$juego->nombre} | Cómo Saber si Has Ganado"); ?>
@@ -20,10 +29,19 @@
 
 <?php $__env->startSection('description'); ?>
 <?php if($juego->slug === 'euromillones'): ?>
-    <?php echo e($contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de Euromillones: qué números y estrellas buscar, dónde verificar resultados, impuestos y qué hacer si tienes premio."); ?>
+    <?php echo e($contenido?->meta_description ?? "Cómo comprobar la combinación ganadora de Euromillones paso a paso: números y estrellas, dónde verificar, impuestos sobre premios y qué hacer si has ganado."); ?>
 
 <?php elseif($juego->slug === 'la-primitiva'): ?>
-    <?php echo e($contenido?->meta_description ?? "Descubre cómo funciona la combinación ganadora de La Primitiva: 6 números, complementario y reintegro. Dónde comprobar, cómo cobrar premios y fiscalidad."); ?>
+    <?php echo e($contenido?->meta_description ?? "Combinación ganadora de La Primitiva explicada: 6 números, complementario, reintegro. Cómo comprobar tu boleto, dónde cobrar y fiscalidad de premios."); ?>
+
+<?php elseif($juego->slug === 'bonoloto'): ?>
+    <?php echo e($contenido?->meta_description ?? "Cómo saber si he ganado en Bonoloto: comprobar combinación ganadora, reintegro, dónde cobrar premios y plazos de caducidad."); ?>
+
+<?php elseif($juego->slug === 'el-gordo'): ?>
+    <?php echo e($contenido?->meta_description ?? "Comprobar combinación ganadora de El Gordo de la Primitiva: números, Número Clave, dónde verificar y cómo cobrar premios."); ?>
+
+<?php elseif($juego->slug === 'eurodreams'): ?>
+    <?php echo e($contenido?->meta_description ?? "Combinación ganadora Eurodreams: cómo comprobar números y Número Dream, premios mensuales de 20.000€ y dónde cobrar."); ?>
 
 <?php else: ?>
     <?php echo e($contenido?->meta_description ?? "Aprende cómo comprobar la combinación ganadora de {$juego->nombre}: qué números buscar, dónde verificar y qué hacer si tienes premio."); ?>
@@ -97,6 +115,7 @@ $colores = [
     'bonoloto' => ['bg' => 'bg-bono-500', 'border' => 'border-bono-500', 'text' => 'text-bono-500', 'ball' => 'bg-red-600'],
     'la-primitiva' => ['bg' => 'bg-primi-500', 'border' => 'border-primi-500', 'text' => 'text-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'border' => 'border-gordo-500', 'text' => 'text-gordo-500', 'ball' => 'bg-purple-600'],
+    'eurodreams' => ['bg' => 'bg-dream-500', 'border' => 'border-dream-500', 'text' => 'text-dream-500', 'ball' => 'bg-cyan-600'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-gray-500', 'text' => 'text-gray-500', 'ball' => 'bg-gray-600'];
 ?>

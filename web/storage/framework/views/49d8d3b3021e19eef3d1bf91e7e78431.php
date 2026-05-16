@@ -42,9 +42,9 @@
     
     <?php echo $__env->yieldPushContent('head'); ?>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col">
-    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg">
-        <div class="container mx-auto px-4 py-5">
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col overflow-x-hidden">
+    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 py-5">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div class="flex items-baseline gap-2">
                     <a href="<?php echo e(route('home')); ?>" class="text-2xl font-bold tracking-tight">
@@ -54,11 +54,11 @@
                 </div>
 
                 <?php if(!empty($botesHeader)): ?>
-                    <div class="flex gap-2 overflow-x-auto md:overflow-visible pb-1">
+                    <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-3">
                         <?php $__currentLoopData = $botesHeader; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <a href="<?php echo e(route('juego', $b['slug'])); ?>" class="shrink-0 rounded-full <?php echo e($b['classes']['bg']); ?> border <?php echo e($b['classes']['border']); ?> px-3 py-2 hover:opacity-90 transition">
-                                <div class="text-[11px] text-white/70"><?php echo e($b['nombre']); ?></div>
-                                <div class="text-sm font-extrabold"><?php echo e(number_format($b['bote_eur'], 0, ',', '.')); ?> €</div>
+                            <a href="<?php echo e(route('juego', $b['slug'])); ?>" class="rounded-lg <?php echo e($b['classes']['bg']); ?> border <?php echo e($b['classes']['border']); ?> px-4 py-3 hover:opacity-90 transition text-center sm:text-left">
+                                <div class="text-xs text-white/80"><?php echo e($b['nombre']); ?></div>
+                                <div class="text-base sm:text-lg font-extrabold"><?php echo e(number_format($b['bote_eur'], 0, ',', '.')); ?> €</div>
                             </a>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
@@ -67,20 +67,19 @@
         </div>
     </header>
 
-    <nav class="bg-slate-700 text-white shadow">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex flex-wrap gap-2 sm:gap-4">
-                <!-- Main Games Navigation -->
-                <div class="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-hide">
-                    <a href="<?php echo e(route('juego', 'euromillones')); ?>" class="px-3 py-1.5 rounded-full bg-euro-500 hover:bg-euro-600 text-sm font-medium whitespace-nowrap transition">Euromillones</a>
-                    <a href="<?php echo e(route('juego', 'bonoloto')); ?>" class="px-3 py-1.5 rounded-full bg-bono-500 hover:bg-bono-600 text-sm font-medium whitespace-nowrap transition">Bonoloto</a>
-                    <a href="<?php echo e(route('juego', 'la-primitiva')); ?>" class="px-3 py-1.5 rounded-full bg-primi-500 hover:bg-primi-600 text-sm font-medium whitespace-nowrap transition">La Primitiva</a>
-                    <a href="<?php echo e(route('juego', 'el-gordo')); ?>" class="px-3 py-1.5 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm font-medium whitespace-nowrap transition">El Gordo</a>
-                    <a href="<?php echo e(route('juego', 'eurodreams')); ?>" class="px-3 py-1.5 rounded-full bg-dream-500 hover:bg-dream-600 text-sm font-medium whitespace-nowrap transition">Eurodreams</a>
-                </div>
-                
-                <!-- SEO Content Sections -->
-                <div class="flex gap-2 sm:gap-4 border-l border-slate-600 pl-2 sm:pl-4">
+    <nav class="bg-slate-700 text-white shadow relative z-20">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <!-- Main Games Navigation -->
+            <div class="flex flex-wrap gap-2 mb-2">
+                <a href="<?php echo e(route('juego', 'euromillones')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-euro-500 hover:bg-euro-600 text-sm sm:text-base font-medium transition">Euromillones</a>
+                <a href="<?php echo e(route('juego', 'bonoloto')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-bono-500 hover:bg-bono-600 text-sm sm:text-base font-medium transition">Bonoloto</a>
+                <a href="<?php echo e(route('juego', 'la-primitiva')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primi-500 hover:bg-primi-600 text-sm sm:text-base font-medium transition">Primitiva</a>
+                <a href="<?php echo e(route('juego', 'el-gordo')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm sm:text-base font-medium transition">El Gordo</a>
+                <a href="<?php echo e(route('juego', 'eurodreams')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-dream-500 hover:bg-dream-600 text-sm sm:text-base font-medium transition">Eurodreams</a>
+            </div>
+            
+            <!-- SEO Content Sections -->
+            <div class="flex gap-2 sm:gap-4">
                     <div class="relative group">
                         <button class="px-3 py-1.5 rounded-full bg-slate-600 hover:bg-slate-500 text-sm font-medium whitespace-nowrap transition flex items-center gap-1">
                             Guías <span class="text-xs">▼</span>
@@ -123,12 +122,11 @@
                             <a href="<?php echo e(route('juego.combinacion-ganadora', 'eurodreams')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Eurodreams</a>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
+    <main class="container mx-auto px-4 py-8 flex-grow overflow-x-hidden">
         <?php echo $__env->yieldContent('content'); ?>
     </main>
 
