@@ -166,6 +166,115 @@ class LotoluckScraper:
         
         return complementarios if complementarios else None
     
+    def _extract_loteria_nacional(self, soup):
+        """Extraer resultados de Lotería Nacional (estructura diferente)"""
+        resultado = {
+            'primer_premio': None,
+            'primer_premio_euros': None,
+            'segundo_premio': None,
+            'segundo_premio_euros': None,
+            'reintegros': [],
+            'reintegro_euros': None,
+            'terminaciones': [],
+            'premios_tabla': []
+        }
+        
+        def parse_euros(texto):
+            """Convertir texto de euros a float"""
+            try:
+                # Quitar puntos de miles y cambiar coma por punto
+                limpio = re.sub(r'[^\d,.]', '', texto)
+                limpio = limpio.replace('.', '').replace(',', '.')
+                return float(limpio) if limpio else None
+            except:
+                return None
+        
+        try:
+            tables = soup.find_all('table')
+            for table in tables:
+                rows = table.find_all('tr')
+                if not rows:
+                    continue
+                
+                # Detectar tipo de tabla por contenido
+                table_text = table.get_text(strip=True).lower()
+                
+                # Primer premio
+                if 'primer premio' in table_text and 'segundo' not in table_text:
+                    for row in rows:
+                        cells = row.find_all('td')
+                        if len(cells) >= 2:
+                            numero = cells[0].get_text(strip=True)
+                            premio_text = cells[1].get_text(strip=True)
+                            if numero and numero.isdigit() and len(numero) == 5:
+                                resultado['primer_premio'] = numero
+                                resultado['primer_premio_euros'] = parse_euros(premio_text)
+                                resultado['premios_tabla'].append({
+                                    'categoria': 'Primer Premio',
+                                    'numero': numero,
+                                    'premio': resultado['primer_premio_euros']
+                                })
+                                break
+                
+                # Segundo premio
+                elif 'segundo premio' in table_text:
+                    for row in rows:
+                        cells = row.find_all('td')
+                        if len(cells) >= 2:
+                            numero_text = cells[0].get_text(strip=True)
+                            premio_text = cells[1].get_text(strip=True)
+                            numero_match = re.search(r'(\d{5})', numero_text)
+                            if numero_match:
+                                resultado['segundo_premio'] = numero_match.group(1)
+                                resultado['segundo_premio_euros'] = parse_euros(premio_text)
+                                resultado['premios_tabla'].append({
+                                    'categoria': 'Segundo Premio',
+                                    'numero': resultado['segundo_premio'],
+                                    'premio': resultado['segundo_premio_euros']
+                                })
+                                break
+                
+                # Reintegros
+                elif 'reintegros' in table_text and 'terminacion' not in table_text:
+                    for row in rows:
+                        cells = row.find_all('td')
+                        if len(cells) >= 2:
+                            numeros_text = cells[0].get_text(strip=True)
+                            premio_text = cells[1].get_text(strip=True)
+                            if '-' in numeros_text or numeros_text.isdigit():
+                                reintegros = [n.strip() for n in numeros_text.replace(' ', '').split('-') if n.strip().isdigit()]
+                                if reintegros:
+                                    resultado['reintegros'] = reintegros
+                                    resultado['reintegro_euros'] = parse_euros(premio_text)
+                                    resultado['premios_tabla'].append({
+                                        'categoria': 'Reintegros',
+                                        'numeros': reintegros,
+                                        'premio': resultado['reintegro_euros']
+                                    })
+                                    break
+                
+            # Terminaciones - están en divs con clase ln-termina-col, no en tablas
+            term_cols = soup.find_all('div', class_='ln-termina-col')
+            for col in term_cols:
+                spans = col.find_all('span')
+                # Los spans vienen en pares: terminación, premio, terminación, premio...
+                for i in range(0, len(spans) - 1, 2):
+                    term_text = spans[i].get_text(strip=True)
+                    premio_text = spans[i + 1].get_text(strip=True)
+                    
+                    if term_text and term_text.isdigit() and premio_text:
+                        premio = parse_euros(premio_text)
+                        if premio and premio > 0:
+                            resultado['terminaciones'].append({
+                                'cifras': term_text,
+                                'premio': premio
+                            })
+        
+        except Exception as e:
+            logger.error(f"Error extrayendo Lotería Nacional: {e}")
+        
+        return resultado
+
     def _extract_premios(self, soup):
         """Extraer tabla de premios"""
         premios = []
@@ -490,6 +599,42 @@ class LotoluckScraper:
             return None
         
         fecha = self._extract_date(soup)
+        
+        # Lotería Nacional tiene estructura diferente
+        if self.slug == 'loteria-nacional':
+            ln_result = self._extract_loteria_nacional(soup)
+            if not ln_result['primer_premio']:
+                logger.error(f"No se encontró primer premio para {self.slug}")
+                return None
+            
+            # Guardar número ganador principal como array (para compatibilidad)
+            numeros = [ln_result['primer_premio']]
+            
+            # Complementarios con toda la info de Lotería Nacional
+            complementarios = {
+                'primer_premio': ln_result['primer_premio'],
+                'primer_premio_euros': ln_result['primer_premio_euros'],
+                'segundo_premio': ln_result['segundo_premio'],
+                'segundo_premio_euros': ln_result['segundo_premio_euros'],
+                'reintegros': ln_result['reintegros'],
+                'reintegro_euros': ln_result['reintegro_euros'],
+                'terminaciones': ln_result['terminaciones']
+            }
+            
+            # Premios en formato tabla
+            premios = ln_result['premios_tabla']
+            
+            result = {
+                'slug': self.slug,
+                'fecha': fecha,
+                'numeros': numeros,
+                'complementarios': complementarios,
+                'premios': premios
+            }
+            
+            logger.info(f"Resultado LN: {fecha} - 1º:{ln_result['primer_premio']}, 2º:{ln_result['segundo_premio'] or 'N/A'}, Terminaciones:{len(ln_result['terminaciones'])}")
+            return result
+        
         numeros = self._extract_numbers(soup)
         complementarios = self._extract_complementarios(soup)
         premios = self._extract_premios(soup)

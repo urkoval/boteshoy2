@@ -73,6 +73,7 @@ $colores = [
     'la-primitiva' => ['bg' => 'bg-primi-500', 'ball' => 'bg-emerald-600', 'text' => 'text-primi-500'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'ball' => 'bg-purple-600', 'text' => 'text-gordo-500'],
     'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600', 'text' => 'text-dream-500'],
+    'loteria-nacional' => ['bg' => 'bg-loteria-500', 'ball' => 'bg-amber-700', 'text' => 'text-loteria-500'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600', 'text' => 'text-gray-500'];
 @endphp
@@ -167,34 +168,83 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
 </script>
 
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
-    <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Combinación Ganadora</h2>
-    
-    <div class="flex flex-wrap gap-3 mb-6 justify-center">
-        @foreach($sorteo->numeros as $numero)
-            <span class="ball w-14 h-14 {{ $color['ball'] }} text-white rounded-full flex items-center justify-center font-bold text-xl">
-                {{ $numero }}
-            </span>
-        @endforeach
-        
-        @if($sorteo->complementarios)
-            <span class="flex items-center text-gray-300 mx-2 text-2xl">+</span>
-            @foreach($sorteo->complementarios as $key => $valor)
-                @if(is_array($valor))
-                    @foreach($valor as $v)
-                        <span class="ball w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl" title="{{ ucfirst($key) }}">
-                            {{ $v }}
-                        </span>
-                    @endforeach
-                @else
-                    <span class="ball w-14 h-14 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-lg" title="{{ ucfirst($key) }}">
-                        {{ $valor }}
-                    </span>
-                @endif
-            @endforeach
+    <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">
+        @if($juego->slug === 'loteria-nacional')
+            Números Premiados
+        @else
+            Combinación Ganadora
         @endif
-    </div>
+    </h2>
     
-    @if($sorteo->complementarios)
+    @if($juego->slug === 'loteria-nacional')
+        <div class="flex flex-col gap-6 mb-6">
+            @if(isset($sorteo->complementarios['primer_premio']))
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Primer Premio</span>
+                    <span class="px-6 py-3 {{ $color['ball'] }} text-white rounded-xl font-bold text-3xl tracking-widest">
+                        {{ $sorteo->complementarios['primer_premio'] }}
+                    </span>
+                </div>
+            @endif
+            @if(isset($sorteo->complementarios['segundo_premio']))
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Segundo Premio</span>
+                    @if(is_array($sorteo->complementarios['segundo_premio']))
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            @foreach($sorteo->complementarios['segundo_premio'] as $sp)
+                                <span class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold text-3xl tracking-widest">
+                                    {{ $sp }}
+                                </span>
+                            @endforeach
+                        </div>
+                    @else
+                        <span class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold text-3xl tracking-widest">
+                            {{ $sorteo->complementarios['segundo_premio'] }}
+                        </span>
+                    @endif
+                </div>
+            @endif
+            @if(isset($sorteo->complementarios['reintegros']) && is_array($sorteo->complementarios['reintegros']))
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Reintegros</span>
+                    <div class="flex gap-3">
+                        @foreach($sorteo->complementarios['reintegros'] as $r)
+                            <span class="w-12 h-12 bg-slate-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                {{ $r }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </div>
+    @else
+        <div class="flex flex-wrap gap-3 mb-6 justify-center">
+            @foreach($sorteo->numeros as $numero)
+                <span class="ball w-14 h-14 {{ $color['ball'] }} text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    {{ $numero }}
+                </span>
+            @endforeach
+            
+            @if($sorteo->complementarios)
+                <span class="flex items-center text-gray-300 mx-2 text-2xl">+</span>
+                @foreach($sorteo->complementarios as $key => $valor)
+                    @if(is_array($valor))
+                        @foreach($valor as $v)
+                            <span class="ball w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl" title="{{ ucfirst($key) }}">
+                                {{ $v }}
+                            </span>
+                        @endforeach
+                    @else
+                        <span class="ball w-14 h-14 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-lg" title="{{ ucfirst($key) }}">
+                            {{ $valor }}
+                        </span>
+                    @endif
+                @endforeach
+            @endif
+        </div>
+    @endif
+    
+    @if($sorteo->complementarios && $juego->slug !== 'loteria-nacional')
         <div class="flex flex-wrap gap-4 justify-center text-sm text-slate-500">
             @foreach($sorteo->complementarios as $key => $valor)
                 <span>
@@ -470,12 +520,14 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
                 @foreach($sorteo->premios as $premio)
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-3 text-slate-700">{{ $premio['categoria'] ?? '-' }}</td>
-                    <td class="px-6 py-3 text-right text-slate-600">{{ number_format($premio['acertantes'] ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-3 text-right text-slate-600">{{ is_numeric($premio['acertantes'] ?? '') ? number_format((float)($premio['acertantes'] ?? 0), 0, ',', '.') : ($premio['acertantes'] ?? '-') }}</td>
                     <td class="px-6 py-3 text-right font-semibold text-slate-800">
                         @if(array_key_exists('premio', $premio) && $premio['premio'] === null)
                             <span class="text-slate-500">Pendiente</span>
+                        @elseif(is_numeric($premio['premio'] ?? ''))
+                            {{ number_format((float)($premio['premio'] ?? 0), 2, ',', '.') }} €
                         @else
-                            {{ number_format($premio['premio'] ?? 0, 2, ',', '.') }} €
+                            {{ $premio['premio'] ?? '-' }}
                         @endif
                     </td>
                 </tr>

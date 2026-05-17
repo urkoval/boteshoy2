@@ -39,6 +39,11 @@ class JuegoController extends Controller
             })
             ->toArray();
         
+        // Vista específica para Lotería Nacional
+        if ($slug === 'loteria-nacional') {
+            return view('sorteo-loteria', compact('juego', 'sorteo', 'fechasDisponibles'));
+        }
+        
         return view('sorteo', compact('juego', 'sorteo', 'fechasDisponibles'));
     }
 

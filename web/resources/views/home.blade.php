@@ -10,6 +10,7 @@ $colores = [
     'la-primitiva' => ['bg' => 'bg-primi-500', 'border' => 'border-primi-500', 'text' => 'text-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'border' => 'border-gordo-500', 'text' => 'text-gordo-500', 'ball' => 'bg-purple-600'],
     'eurodreams' => ['bg' => 'bg-dream-500', 'border' => 'border-dream-500', 'text' => 'text-dream-500', 'ball' => 'bg-cyan-600'],
+    'loteria-nacional' => ['bg' => 'bg-loteria-500', 'border' => 'border-loteria-500', 'text' => 'text-loteria-500', 'ball' => 'bg-amber-700'],
 ];
 @endphp
 
@@ -157,6 +158,16 @@ $colores = [
                 <li><a href="{{ route('juego', 'eurodreams') }}" class="text-cyan-600 hover:underline">Ver ultimos resultados</a></li>
             </ul>
         </article>
+
+        <article class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-loteria-500">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Loteria Nacional</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li><a href="{{ route('juego.guia', 'loteria-nacional') }}" class="text-amber-700 hover:underline">Como se juega a Loteria Nacional</a></li>
+                <li><a href="{{ route('juego.guia', 'loteria-nacional') }}" class="text-amber-700 hover:underline">Premios y probabilidades de Loteria Nacional</a></li>
+                <li><a href="{{ route('juego.guia', 'loteria-nacional') }}" class="text-amber-700 hover:underline">Sorteos de Loteria Nacional Jueves y Sabado</a></li>
+                <li><a href="{{ route('juego', 'loteria-nacional') }}" class="text-amber-700 hover:underline">Ver ultimos resultados</a></li>
+            </ul>
+        </article>
     </div>
 </section>
 
@@ -197,6 +208,13 @@ $colores = [
             <div>
                 <div class="font-medium text-slate-800">Eurodreams</div>
                 <div class="text-sm text-slate-600">Premios mensuales de por vida</div>
+            </div>
+        </a>
+        <a href="{{ route('juego', 'loteria-nacional') }}" class="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow">
+            <span class="w-3 h-3 bg-amber-700 rounded-full mr-3"></span>
+            <div>
+                <div class="font-medium text-slate-800">Loteria Nacional</div>
+                <div class="text-sm text-slate-600">Sorteos Jueves y Sabado</div>
             </div>
         </a>
     </div>

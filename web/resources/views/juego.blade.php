@@ -59,6 +59,7 @@ $colores = [
     'la-primitiva' => ['bg' => 'bg-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'ball' => 'bg-purple-600'],
     'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600'],
+    'loteria-nacional' => ['bg' => 'bg-loteria-500', 'ball' => 'bg-amber-700'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600'];
 @endphp
@@ -107,28 +108,65 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     </p>
                 </div>
                 
-                <div class="flex flex-wrap gap-1.5 flex-1 justify-center">
-                    @foreach($sorteo->numeros as $numero)
-                        <span class="ball w-9 h-9 {{ $color['ball'] }} text-white rounded-full flex items-center justify-center font-bold text-sm">
-                            {{ $numero }}
-                        </span>
-                    @endforeach
-                    
-                    @if($sorteo->complementarios)
-                        <span class="text-gray-300 mx-1">+</span>
-                        @foreach($sorteo->complementarios as $key => $valor)
-                            @if(is_array($valor))
-                                @foreach($valor as $v)
-                                    <span class="ball w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
-                                        {{ $v }}
+                <div class="flex flex-wrap gap-1.5 flex-1 justify-center items-center">
+                    @if($juego->slug === 'loteria-nacional')
+                        @if(isset($sorteo->complementarios['primer_premio']))
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500">1º</span>
+                                <span class="px-3 py-1.5 {{ $color['ball'] }} text-white rounded-lg font-bold text-lg tracking-wider">
+                                    {{ $sorteo->complementarios['primer_premio'] }}
+                                </span>
+                            </div>
+                        @endif
+                        @if(isset($sorteo->complementarios['segundo_premio']))
+                            <div class="flex items-center gap-2 ml-3">
+                                <span class="text-xs text-slate-500">2º</span>
+                                @if(is_array($sorteo->complementarios['segundo_premio']))
+                                    @foreach($sorteo->complementarios['segundo_premio'] as $sp)
+                                        <span class="px-3 py-1.5 bg-amber-600 text-white rounded-lg font-bold text-lg tracking-wider">
+                                            {{ $sp }}
+                                        </span>
+                                    @endforeach
+                                @else
+                                    <span class="px-3 py-1.5 bg-amber-600 text-white rounded-lg font-bold text-lg tracking-wider">
+                                        {{ $sorteo->complementarios['segundo_premio'] }}
+                                    </span>
+                                @endif
+                            </div>
+                        @endif
+                        @if(isset($sorteo->complementarios['reintegros']) && is_array($sorteo->complementarios['reintegros']))
+                            <div class="flex items-center gap-1 ml-3">
+                                <span class="text-xs text-slate-500">R:</span>
+                                @foreach($sorteo->complementarios['reintegros'] as $r)
+                                    <span class="w-7 h-7 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                        {{ $r }}
                                     </span>
                                 @endforeach
-                            @else
-                                <span class="ball w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-xs">
-                                    {{ $valor }}
-                                </span>
-                            @endif
+                            </div>
+                        @endif
+                    @else
+                        @foreach($sorteo->numeros as $numero)
+                            <span class="ball w-9 h-9 {{ $color['ball'] }} text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                {{ $numero }}
+                            </span>
                         @endforeach
+                        
+                        @if($sorteo->complementarios)
+                            <span class="text-gray-300 mx-1">+</span>
+                            @foreach($sorteo->complementarios as $key => $valor)
+                                @if(is_array($valor))
+                                    @foreach($valor as $v)
+                                        <span class="ball w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                            {{ $v }}
+                                        </span>
+                                    @endforeach
+                                @else
+                                    <span class="ball w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-xs">
+                                        {{ $valor }}
+                                    </span>
+                                @endif
+                            @endforeach
+                        @endif
                     @endif
                 </div>
                 
@@ -278,6 +316,29 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuánto cuesta jugar a El Gordo?</summary>
                     <div class="mt-2 text-slate-600">
                         Cada apuesta de El Gordo cuesta 1,50€. Incluye el reintegro que te devuelve el importe completo si aciertas el número del 0 al 9.
+                    </div>
+                </details>
+                @break
+
+            @case('loteria-nacional')
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué es un décimo en Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Un décimo es una fracción de un billete completo. Cada billete se divide en 10 décimos, y cada décimo cuesta el precio establecido para ese sorteo (normalmente entre 3€ y 20€ según el tipo de sorteo).
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuántos números tiene Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Cada sorteo de Lotería Nacional emite 100.000 números diferentes (del 00000 al 99999), divididos en series. El primer premio se extrae entre estos números.
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué son los reintegros en Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Los reintegros son las últimas cifras del número premiado. Si tu décimo termina en una de esas cifras, recuperas el importe jugado. Normalmente hay 3 reintegros por sorteo.
                     </div>
                 </details>
                 @break

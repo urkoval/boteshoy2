@@ -57,6 +57,7 @@ $colores = [
     'la-primitiva' => ['bg' => 'bg-primi-500', 'ball' => 'bg-emerald-600'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'ball' => 'bg-purple-600'],
     'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600'],
+    'loteria-nacional' => ['bg' => 'bg-loteria-500', 'ball' => 'bg-amber-700'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600'];
 ?>
@@ -280,6 +281,29 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuánto cuesta jugar a El Gordo?</summary>
                     <div class="mt-2 text-slate-600">
                         Cada apuesta de El Gordo cuesta 1,50€. Incluye el reintegro que te devuelve el importe completo si aciertas el número del 0 al 9.
+                    </div>
+                </details>
+                <?php break; ?>
+
+            <?php case ('loteria-nacional'): ?>
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué es un décimo en Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Un décimo es una fracción de un billete completo. Cada billete se divide en 10 décimos, y cada décimo cuesta el precio establecido para ese sorteo (normalmente entre 3€ y 20€ según el tipo de sorteo).
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Cuántos números tiene Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Cada sorteo de Lotería Nacional emite 100.000 números diferentes (del 00000 al 99999), divididos en series. El primer premio se extrae entre estos números.
+                    </div>
+                </details>
+
+                <details class="rounded-lg border border-slate-200 p-4">
+                    <summary class="font-semibold text-slate-800 cursor-pointer">¿Qué son los reintegros en Lotería Nacional?</summary>
+                    <div class="mt-2 text-slate-600">
+                        Los reintegros son las últimas cifras del número premiado. Si tu décimo termina en una de esas cifras, recuperas el importe jugado. Normalmente hay 3 reintegros por sorteo.
                     </div>
                 </details>
                 <?php break; ?>

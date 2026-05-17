@@ -16,6 +16,7 @@
                         'primi': { 500: '#059669', 600: '#047857' },
                         'gordo': { 500: '#7c3aed', 600: '#6d28d9' },
                         'dream': { 500: '#0891b2', 600: '#0e7490' },
+                        'loteria': { 500: '#b45309', 600: '#92400e' },
                     }
                 }
             }
@@ -76,6 +77,7 @@
                 <a href="<?php echo e(route('juego', 'la-primitiva')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primi-500 hover:bg-primi-600 text-sm sm:text-base font-medium transition">Primitiva</a>
                 <a href="<?php echo e(route('juego', 'el-gordo')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gordo-500 hover:bg-gordo-600 text-sm sm:text-base font-medium transition">El Gordo</a>
                 <a href="<?php echo e(route('juego', 'eurodreams')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-dream-500 hover:bg-dream-600 text-sm sm:text-base font-medium transition">Eurodreams</a>
+                <a href="<?php echo e(route('juego', 'loteria-nacional')); ?>" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-loteria-500 hover:bg-loteria-600 text-sm sm:text-base font-medium transition">Lotería Nacional</a>
             </div>
             
             <!-- SEO Content Sections -->
@@ -90,6 +92,7 @@
                             <a href="<?php echo e(route('juego.guia', 'la-primitiva')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Primitiva</a>
                             <a href="<?php echo e(route('juego.guia', 'el-gordo')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía El Gordo</a>
                             <a href="<?php echo e(route('juego.guia', 'eurodreams')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Eurodreams</a>
+                            <a href="<?php echo e(route('juego.guia', 'loteria-nacional')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Guía Lotería Nacional</a>
                         </div>
                     </div>
                     
@@ -120,6 +123,7 @@
                             <a href="<?php echo e(route('juego.combinacion-ganadora', 'la-primitiva')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Primitiva</a>
                             <a href="<?php echo e(route('juego.combinacion-ganadora', 'el-gordo')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">El Gordo</a>
                             <a href="<?php echo e(route('juego.combinacion-ganadora', 'eurodreams')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Eurodreams</a>
+                            <a href="<?php echo e(route('juego.combinacion-ganadora', 'loteria-nacional')); ?>" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Lotería Nacional</a>
                         </div>
                     </div>
             </div>

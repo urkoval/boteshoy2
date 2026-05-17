@@ -71,6 +71,7 @@ $colores = [
     'la-primitiva' => ['bg' => 'bg-primi-500', 'ball' => 'bg-emerald-600', 'text' => 'text-primi-500'],
     'el-gordo' => ['bg' => 'bg-gordo-500', 'ball' => 'bg-purple-600', 'text' => 'text-gordo-500'],
     'eurodreams' => ['bg' => 'bg-dream-500', 'ball' => 'bg-cyan-600', 'text' => 'text-dream-500'],
+    'loteria-nacional' => ['bg' => 'bg-loteria-500', 'ball' => 'bg-amber-700', 'text' => 'text-loteria-500'],
 ];
 $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-600', 'text' => 'text-gray-500'];
 ?>
@@ -166,37 +167,90 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
 </script>
 
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
-    <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Combinación Ganadora</h2>
+    <h2 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">
+        <?php if($juego->slug === 'loteria-nacional'): ?>
+            Números Premiados
+        <?php else: ?>
+            Combinación Ganadora
+        <?php endif; ?>
+    </h2>
     
-    <div class="flex flex-wrap gap-3 mb-6 justify-center">
-        <?php $__currentLoopData = $sorteo->numeros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $numero): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <span class="ball w-14 h-14 <?php echo e($color['ball']); ?> text-white rounded-full flex items-center justify-center font-bold text-xl">
-                <?php echo e($numero); ?>
-
-            </span>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        
-        <?php if($sorteo->complementarios): ?>
-            <span class="flex items-center text-gray-300 mx-2 text-2xl">+</span>
-            <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if(is_array($valor)): ?>
-                    <?php $__currentLoopData = $valor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <span class="ball w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl" title="<?php echo e(ucfirst($key)); ?>">
-                            <?php echo e($v); ?>
-
-                        </span>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php else: ?>
-                    <span class="ball w-14 h-14 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-lg" title="<?php echo e(ucfirst($key)); ?>">
-                        <?php echo e($valor); ?>
+    <?php if($juego->slug === 'loteria-nacional'): ?>
+        <div class="flex flex-col gap-6 mb-6">
+            <?php if(isset($sorteo->complementarios['primer_premio'])): ?>
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Primer Premio</span>
+                    <span class="px-6 py-3 <?php echo e($color['ball']); ?> text-white rounded-xl font-bold text-3xl tracking-widest">
+                        <?php echo e($sorteo->complementarios['primer_premio']); ?>
 
                     </span>
-                <?php endif; ?>
+                </div>
+            <?php endif; ?>
+            <?php if(isset($sorteo->complementarios['segundo_premio'])): ?>
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Segundo Premio</span>
+                    <?php if(is_array($sorteo->complementarios['segundo_premio'])): ?>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            <?php $__currentLoopData = $sorteo->complementarios['segundo_premio']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <span class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold text-3xl tracking-widest">
+                                    <?php echo e($sp); ?>
+
+                                </span>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    <?php else: ?>
+                        <span class="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold text-3xl tracking-widest">
+                            <?php echo e($sorteo->complementarios['segundo_premio']); ?>
+
+                        </span>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+            <?php if(isset($sorteo->complementarios['reintegros']) && is_array($sorteo->complementarios['reintegros'])): ?>
+                <div class="flex flex-col items-center">
+                    <span class="text-sm text-slate-500 mb-2">Reintegros</span>
+                    <div class="flex gap-3">
+                        <?php $__currentLoopData = $sorteo->complementarios['reintegros']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="w-12 h-12 bg-slate-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                                <?php echo e($r); ?>
+
+                            </span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="flex flex-wrap gap-3 mb-6 justify-center">
+            <?php $__currentLoopData = $sorteo->numeros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $numero): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <span class="ball w-14 h-14 <?php echo e($color['ball']); ?> text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    <?php echo e($numero); ?>
+
+                </span>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endif; ?>
-    </div>
+            
+            <?php if($sorteo->complementarios): ?>
+                <span class="flex items-center text-gray-300 mx-2 text-2xl">+</span>
+                <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if(is_array($valor)): ?>
+                        <?php $__currentLoopData = $valor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="ball w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl" title="<?php echo e(ucfirst($key)); ?>">
+                                <?php echo e($v); ?>
+
+                            </span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php else: ?>
+                        <span class="ball w-14 h-14 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-lg" title="<?php echo e(ucfirst($key)); ?>">
+                            <?php echo e($valor); ?>
+
+                        </span>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     
-    <?php if($sorteo->complementarios): ?>
+    <?php if($sorteo->complementarios && $juego->slug !== 'loteria-nacional'): ?>
         <div class="flex flex-wrap gap-4 justify-center text-sm text-slate-500">
             <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <span>
@@ -482,12 +536,15 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
                 <?php $__currentLoopData = $sorteo->premios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $premio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-3 text-slate-700"><?php echo e($premio['categoria'] ?? '-'); ?></td>
-                    <td class="px-6 py-3 text-right text-slate-600"><?php echo e(number_format($premio['acertantes'] ?? 0, 0, ',', '.')); ?></td>
+                    <td class="px-6 py-3 text-right text-slate-600"><?php echo e(is_numeric($premio['acertantes'] ?? '') ? number_format((float)($premio['acertantes'] ?? 0), 0, ',', '.') : ($premio['acertantes'] ?? '-')); ?></td>
                     <td class="px-6 py-3 text-right font-semibold text-slate-800">
                         <?php if(array_key_exists('premio', $premio) && $premio['premio'] === null): ?>
                             <span class="text-slate-500">Pendiente</span>
+                        <?php elseif(is_numeric($premio['premio'] ?? '')): ?>
+                            <?php echo e(number_format((float)($premio['premio'] ?? 0), 2, ',', '.')); ?> €
                         <?php else: ?>
-                            <?php echo e(number_format($premio['premio'] ?? 0, 2, ',', '.')); ?> €
+                            <?php echo e($premio['premio'] ?? '-'); ?>
+
                         <?php endif; ?>
                     </td>
                 </tr>
