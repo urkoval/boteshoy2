@@ -204,7 +204,7 @@ document.getElementById('fecha-selector').addEventListener('keypress', function(
             </div>
             @if($reintegroEuros)
             <div class="mt-2 text-sm text-slate-600">
-                {{ number_format($reintegroEuros, 2, ',', '.') }} € / décimo
+                {{ number_format($reintegroEuros / 10, 2, ',', '.') }} € / décimo
             </div>
             @endif
         </div>

@@ -106,31 +106,72 @@ $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'ball' => 'bg-gray-60
                     </p>
                 </div>
                 
-                <div class="flex flex-wrap gap-1.5 flex-1 justify-center">
-                    <?php $__currentLoopData = $sorteo->numeros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $numero): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <span class="ball w-9 h-9 <?php echo e($color['ball']); ?> text-white rounded-full flex items-center justify-center font-bold text-sm">
-                            <?php echo e($numero); ?>
+                <div class="flex flex-wrap gap-1.5 flex-1 justify-center items-center">
+                    <?php if($juego->slug === 'loteria-nacional'): ?>
+                        <?php if(isset($sorteo->complementarios['primer_premio'])): ?>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500">1º</span>
+                                <span class="px-3 py-1.5 <?php echo e($color['ball']); ?> text-white rounded-lg font-bold text-lg tracking-wider">
+                                    <?php echo e($sorteo->complementarios['primer_premio']); ?>
 
-                        </span>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    
-                    <?php if($sorteo->complementarios): ?>
-                        <span class="text-gray-300 mx-1">+</span>
-                        <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if(is_array($valor)): ?>
-                                <?php $__currentLoopData = $valor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <span class="ball w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
-                                        <?php echo e($v); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
+                        <?php if(isset($sorteo->complementarios['segundo_premio'])): ?>
+                            <div class="flex items-center gap-2 ml-3">
+                                <span class="text-xs text-slate-500">2º</span>
+                                <?php if(is_array($sorteo->complementarios['segundo_premio'])): ?>
+                                    <?php $__currentLoopData = $sorteo->complementarios['segundo_premio']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <span class="px-3 py-1.5 bg-amber-600 text-white rounded-lg font-bold text-lg tracking-wider">
+                                            <?php echo e($sp); ?>
+
+                                        </span>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <span class="px-3 py-1.5 bg-amber-600 text-white rounded-lg font-bold text-lg tracking-wider">
+                                        <?php echo e($sorteo->complementarios['segundo_premio']); ?>
+
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if(isset($sorteo->complementarios['reintegros']) && is_array($sorteo->complementarios['reintegros'])): ?>
+                            <div class="flex items-center gap-1 ml-3">
+                                <span class="text-xs text-slate-500">R:</span>
+                                <?php $__currentLoopData = $sorteo->complementarios['reintegros']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <span class="w-7 h-7 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                        <?php echo e($r); ?>
 
                                     </span>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php else: ?>
-                                <span class="ball w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-xs">
-                                    <?php echo e($valor); ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?php $__currentLoopData = $sorteo->numeros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $numero): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="ball w-9 h-9 <?php echo e($color['ball']); ?> text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                <?php echo e($numero); ?>
 
-                                </span>
-                            <?php endif; ?>
+                            </span>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
+                        <?php if($sorteo->complementarios): ?>
+                            <span class="text-gray-300 mx-1">+</span>
+                            <?php $__currentLoopData = $sorteo->complementarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if(is_array($valor)): ?>
+                                    <?php $__currentLoopData = $valor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <span class="ball w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                            <?php echo e($v); ?>
+
+                                        </span>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <span class="ball w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-xs">
+                                        <?php echo e($valor); ?>
+
+                                    </span>
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 
