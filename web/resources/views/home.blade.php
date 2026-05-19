@@ -52,6 +52,9 @@ $colores = [
 <!-- Juegos Principales -->
 <div class="grid gap-6 md:grid-cols-2 mb-8">
     @foreach($juegos as $juego)
+    @if($juego->slug === 'loteria-nacional')
+        @continue
+    @endif
     @php
     $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-gray-500', 'text' => 'text-gray-500', 'ball' => 'bg-gray-600'];
     @endphp
@@ -103,6 +106,88 @@ $colores = [
     </div>
     @endforeach
 </div>
+
+<!-- Lotería Nacional: Jueves y Sábado -->
+@if($loteriaJueves || $loteriaSabado)
+<section class="mb-8">
+    <h2 class="text-xl font-bold text-slate-800 mb-4">Lotería Nacional</h2>
+    <div class="grid gap-4 md:grid-cols-2">
+        @if($loteriaJueves)
+        @php
+            $compJ = $loteriaJueves->complementarios ?? [];
+            $primerJ = $compJ['primer_premio'] ?? null;
+            $reintegrosJ = $compJ['reintegros'] ?? [];
+        @endphp
+        <a href="{{ route('loteria.jueves') }}" class="block rounded-xl bg-white shadow-lg overflow-hidden border-t-4 border-amber-600 hover:shadow-xl transition">
+            <div class="bg-amber-600 px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-white">Sorteo del Jueves</h3>
+                    <span class="text-sm text-white/80">{{ $loteriaJueves->fecha->format('d/m/Y') }}</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500">1º Premio</span>
+                        @if($primerJ)
+                        <div class="text-2xl font-bold text-amber-700 tracking-wider">{{ $primerJ }}</div>
+                        @endif
+                    </div>
+                    @if(!empty($reintegrosJ))
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500">Reintegros</span>
+                        <div class="flex gap-1 mt-1">
+                            @foreach($reintegrosJ as $r)
+                            <span class="w-7 h-7 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xs">{{ $r }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                </div>
+                <div class="mt-3 text-amber-600 text-sm font-medium">Ver todos los jueves →</div>
+            </div>
+        </a>
+        @endif
+
+        @if($loteriaSabado)
+        @php
+            $compS = $loteriaSabado->complementarios ?? [];
+            $primerS = $compS['primer_premio'] ?? null;
+            $reintegrosS = $compS['reintegros'] ?? [];
+        @endphp
+        <a href="{{ route('loteria.sabado') }}" class="block rounded-xl bg-white shadow-lg overflow-hidden border-t-4 border-amber-700 hover:shadow-xl transition">
+            <div class="bg-amber-700 px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-white">Sorteo del Sábado</h3>
+                    <span class="text-sm text-white/80">{{ $loteriaSabado->fecha->format('d/m/Y') }}</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500">1º Premio</span>
+                        @if($primerS)
+                        <div class="text-2xl font-bold text-amber-800 tracking-wider">{{ $primerS }}</div>
+                        @endif
+                    </div>
+                    @if(!empty($reintegrosS))
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500">Reintegros</span>
+                        <div class="flex gap-1 mt-1">
+                            @foreach($reintegrosS as $r)
+                            <span class="w-7 h-7 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xs">{{ $r }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                </div>
+                <div class="mt-3 text-amber-700 text-sm font-medium">Ver todos los sábados →</div>
+            </div>
+        </a>
+        @endif
+    </div>
+</section>
+@endif
 
 <!-- Sección Educativa -->
 <section class="mt-12">

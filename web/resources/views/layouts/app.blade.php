@@ -123,7 +123,7 @@
                             <a href="{{ route('juego.combinacion-ganadora', 'la-primitiva') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Primitiva</a>
                             <a href="{{ route('juego.combinacion-ganadora', 'el-gordo') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">El Gordo</a>
                             <a href="{{ route('juego.combinacion-ganadora', 'eurodreams') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Eurodreams</a>
-                            <a href="{{ route('juego.combinacion-ganadora', 'loteria-nacional') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Lotería Nacional</a>
+                            <a href="{{ route('loteria.decimo-premiado') }}" class="block px-4 py-2 text-sm hover:bg-slate-700 transition">Lotería Nacional</a>
                         </div>
                     </div>
             </div>

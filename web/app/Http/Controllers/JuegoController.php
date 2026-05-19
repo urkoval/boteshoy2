@@ -49,6 +49,11 @@ class JuegoController extends Controller
 
     public function apuestasMultiples(string $slug)
     {
+        // Lotería Nacional no tiene apuestas múltiples
+        if ($slug === 'loteria-nacional') {
+            abort(404);
+        }
+        
         $juego = Juego::where('slug', $slug)->firstOrFail();
         
         // Buscar contenido en CMS
@@ -62,6 +67,11 @@ class JuegoController extends Controller
 
     public function apuestasReducidas(string $slug)
     {
+        // Lotería Nacional no tiene apuestas reducidas
+        if ($slug === 'loteria-nacional') {
+            abort(404);
+        }
+        
         $juego = Juego::where('slug', $slug)->firstOrFail();
         
         // Buscar contenido en CMS
@@ -75,6 +85,11 @@ class JuegoController extends Controller
 
     public function combinacionGanadora(string $slug)
     {
+        // Lotería Nacional no tiene combinación ganadora (son décimos, no combinaciones)
+        if ($slug === 'loteria-nacional') {
+            abort(404);
+        }
+        
         $juego = Juego::where('slug', $slug)->firstOrFail();
         
         // Buscar contenido en CMS
@@ -88,5 +103,53 @@ class JuegoController extends Controller
             ->first();
             
         return view('juego-combinacion-ganadora', compact('juego', 'contenido', 'ultimoSorteo'));
+    }
+
+    public function decimoPremiado()
+    {
+        $juego = Juego::where('slug', 'loteria-nacional')->firstOrFail();
+        
+        // Últimos sorteos de jueves y sábado
+        $ultimoJueves = $juego->sorteos()
+            ->whereRaw('strftime("%w", fecha) = "4"')
+            ->orderBy('fecha', 'desc')
+            ->first();
+        
+        $ultimoSabado = $juego->sorteos()
+            ->whereRaw('strftime("%w", fecha) = "6"')
+            ->orderBy('fecha', 'desc')
+            ->first();
+        
+        return view('loteria-decimo-premiado', compact('juego', 'ultimoJueves', 'ultimoSabado'));
+    }
+
+    public function loteriaNacionalJueves()
+    {
+        $juego = Juego::where('slug', 'loteria-nacional')->firstOrFail();
+        
+        // Filtrar solo sorteos de jueves (día 4)
+        $sorteos = $juego->sorteos()
+            ->whereRaw('strftime("%w", fecha) = "4"')
+            ->orderBy('fecha', 'desc')
+            ->paginate(20);
+        
+        $diaSemana = 'jueves';
+        
+        return view('juego-loteria-dia', compact('juego', 'sorteos', 'diaSemana'));
+    }
+
+    public function loteriaNacionalSabado()
+    {
+        $juego = Juego::where('slug', 'loteria-nacional')->firstOrFail();
+        
+        // Filtrar solo sorteos de sábado (día 6)
+        $sorteos = $juego->sorteos()
+            ->whereRaw('strftime("%w", fecha) = "6"')
+            ->orderBy('fecha', 'desc')
+            ->paginate(20);
+        
+        $diaSemana = 'sabado';
+        
+        return view('juego-loteria-dia', compact('juego', 'sorteos', 'diaSemana'));
     }
 }

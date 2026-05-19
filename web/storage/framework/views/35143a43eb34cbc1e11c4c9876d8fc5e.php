@@ -50,6 +50,9 @@ $colores = [
 <!-- Juegos Principales -->
 <div class="grid gap-6 md:grid-cols-2 mb-8">
     <?php $__currentLoopData = $juegos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $juego): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if($juego->slug === 'loteria-nacional'): ?>
+        <?php continue; ?>
+    <?php endif; ?>
     <?php
     $color = $colores[$juego->slug] ?? ['bg' => 'bg-gray-500', 'border' => 'border-gray-500', 'text' => 'text-gray-500', 'ball' => 'bg-gray-600'];
     ?>
@@ -104,6 +107,88 @@ $colores = [
     </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
+
+<!-- Lotería Nacional: Jueves y Sábado -->
+<?php if($loteriaJueves || $loteriaSabado): ?>
+<section class="mb-8">
+    <h2 class="text-xl font-bold text-slate-800 mb-4">Lotería Nacional</h2>
+    <div class="grid gap-4 md:grid-cols-2">
+        <?php if($loteriaJueves): ?>
+        <?php
+            $compJ = $loteriaJueves->complementarios ?? [];
+            $primerJ = $compJ['primer_premio'] ?? null;
+            $reintegrosJ = $compJ['reintegros'] ?? [];
+        ?>
+        <a href="<?php echo e(route('loteria.jueves')); ?>" class="block rounded-xl bg-white shadow-lg overflow-hidden border-t-4 border-amber-600 hover:shadow-xl transition">
+            <div class="bg-amber-600 px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-white">Sorteo del Jueves</h3>
+                    <span class="text-sm text-white/80"><?php echo e($loteriaJueves->fecha->format('d/m/Y')); ?></span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500">1º Premio</span>
+                        <?php if($primerJ): ?>
+                        <div class="text-2xl font-bold text-amber-700 tracking-wider"><?php echo e($primerJ); ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <?php if(!empty($reintegrosJ)): ?>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500">Reintegros</span>
+                        <div class="flex gap-1 mt-1">
+                            <?php $__currentLoopData = $reintegrosJ; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="w-7 h-7 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xs"><?php echo e($r); ?></span>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <div class="mt-3 text-amber-600 text-sm font-medium">Ver todos los jueves →</div>
+            </div>
+        </a>
+        <?php endif; ?>
+
+        <?php if($loteriaSabado): ?>
+        <?php
+            $compS = $loteriaSabado->complementarios ?? [];
+            $primerS = $compS['primer_premio'] ?? null;
+            $reintegrosS = $compS['reintegros'] ?? [];
+        ?>
+        <a href="<?php echo e(route('loteria.sabado')); ?>" class="block rounded-xl bg-white shadow-lg overflow-hidden border-t-4 border-amber-700 hover:shadow-xl transition">
+            <div class="bg-amber-700 px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-white">Sorteo del Sábado</h3>
+                    <span class="text-sm text-white/80"><?php echo e($loteriaSabado->fecha->format('d/m/Y')); ?></span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500">1º Premio</span>
+                        <?php if($primerS): ?>
+                        <div class="text-2xl font-bold text-amber-800 tracking-wider"><?php echo e($primerS); ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <?php if(!empty($reintegrosS)): ?>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500">Reintegros</span>
+                        <div class="flex gap-1 mt-1">
+                            <?php $__currentLoopData = $reintegrosS; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="w-7 h-7 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xs"><?php echo e($r); ?></span>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <div class="mt-3 text-amber-700 text-sm font-medium">Ver todos los sábados →</div>
+            </div>
+        </a>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Sección Educativa -->
 <section class="mt-12">

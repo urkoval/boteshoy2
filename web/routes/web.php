@@ -22,6 +22,11 @@ Route::prefix('admin')->name('admin.')->middleware('admin.key')->group(function 
     Route::patch('/contenido/{contenido}/toggle', [AdminContenidoController::class, 'toggleActive'])->name('contenido.toggle');
 });
 
+// Rutas específicas Lotería Nacional (ANTES de {slug} genérico)
+Route::get('/loteria-nacional/jueves', [JuegoController::class, 'loteriaNacionalJueves'])->name('loteria.jueves');
+Route::get('/loteria-nacional/sabado', [JuegoController::class, 'loteriaNacionalSabado'])->name('loteria.sabado');
+Route::get('/loteria-nacional/decimo-premiado', [JuegoController::class, 'decimoPremiado'])->name('loteria.decimo-premiado');
+
 // Rutas de juegos (AL FINAL porque {slug} captura todo)
 Route::get('/{slug}/guia', [JuegoController::class, 'guia'])->name('juego.guia');
 Route::get('/{slug}/apuestas-multiples', [JuegoController::class, 'apuestasMultiples'])->name('juego.apuestas-multiples');
