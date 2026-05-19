@@ -19,6 +19,11 @@ class JuegoController extends Controller
     {
         $juego = Juego::where('slug', $slug)->firstOrFail();
         
+        // Vista específica para Lotería Nacional
+        if ($slug === 'loteria-nacional') {
+            return view('guia-loteria-nacional', compact('juego'));
+        }
+        
         return view('juego-guia', compact('juego'));
     }
 
